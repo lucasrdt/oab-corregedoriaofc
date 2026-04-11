@@ -1,0 +1,17 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(*)",
+      "ReadFile(*)",
+      "WriteFile:*",
+      "EditFile:*",
+      "DeleteFile:*",
+      "LS",
+      "Grep",
+      "Glob",
+      "NPM:*",
+      "Git:*",
+      "Curl:*"
+    ]
+  }
+}

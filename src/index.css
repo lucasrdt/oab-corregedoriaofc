@@ -1,0 +1,207 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Scroll animations */
+.scroll-fade-in {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1),
+    transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.scroll-fade-in.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Fix for whitespace text nodes creating margins */
+#root {
+  font-size: 0;
+}
+
+#root>* {
+  font-size: 1rem;
+}
+
+/* Smooth scroll behavior */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Custom scrollbar styles */
+.overflow-y-auto::-webkit-scrollbar {
+  width: 6px;
+}
+
+.overflow-y-auto::-webkit-scrollbar-track {
+  background: hsl(var(--muted));
+  border-radius: 10px;
+}
+
+.overflow-y-auto::-webkit-scrollbar-thumb {
+  background: hsl(var(--primary));
+  border-radius: 10px;
+}
+
+.overflow-y-auto::-webkit-scrollbar-thumb:hover {
+  background: hsl(var(--secondary));
+}
+
+/* Template Ivaldo - Design System */
+
+@layer base {
+  :root {
+    /* Base variables – Profissional Minimalista (Midnight & Slate) */
+    --primary: 220 37% 16%;           /* Midnight Navy #1A2238 */
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 222 47% 11%;         /* Changed from Gold to Navy Deep #0A1121 */
+    --secondary-foreground: 0 0% 100%;
+
+    --navy-deep: 222 47% 11%;         /* Deep Navy derived from TJRN style */
+
+    --accent: 220 20% 95%;            /* Soft accent surface */
+    --accent-foreground: 220 37% 16%;
+
+    /* Backgrounds */
+    --background: 210 17% 98%;        /* Light Off-White #F8F9FA */
+    --foreground: 180 6% 19%;         /* Dark Graphite #2D3436 */
+
+    --card: 0 0% 100%;
+    --card-foreground: 180 6% 19%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 180 6% 19%;
+
+    /* Muted elements */
+    --muted: 220 14% 96%;
+    --muted-foreground: 220 9% 46%;
+
+    /* Borders and inputs */
+    --border: 220 13% 91%;
+    --input: 220 13% 91%;
+    --ring: 220 37% 16%;
+
+    /* Destructive */
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+
+    --radius: 8px;
+
+    /* Custom template tokens */
+    --color-primary: var(--primary);
+    --color-secondary: var(--secondary);
+    --color-background: var(--background);
+    --color-text-dark: var(--foreground);
+    --color-text-light: var(--muted-foreground);
+
+    /* Gradients */
+    --gradient-primary: linear-gradient(135deg, hsl(var(--primary)) 0%, hsl(220 37% 22%) 100%);
+    --gradient-secondary: linear-gradient(135deg, hsl(var(--secondary)) 0%, hsl(42 43% 47%) 100%);
+    --gradient-hero: linear-gradient(110deg, #0f172a 0%, #1e293b 100%);
+    --navy-gradient: linear-gradient(180deg, #0a0e1a 0%, #1a2238 100%);
+
+    /* Shadows */
+    --shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.08);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+
+    /* Typography */
+    --font-heading: 'Roboto', sans-serif;
+    --font-body: 'Roboto', sans-serif;
+  }
+
+  /* Full Screen Menu Anims */
+  .menu-overlay-enter {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  .menu-overlay-enter-active {
+    opacity: 1;
+    transform: scale(1);
+    transition: opacity 300ms ease-out, transform 300ms ease-out;
+  }
+  .menu-overlay-exit {
+    opacity: 1;
+    transform: scale(1);
+  }
+  .menu-overlay-exit-active {
+    opacity: 0;
+    transform: scale(1.05);
+    transition: opacity 300ms ease-in, transform 300ms ease-in;
+  }
+
+  .dark {
+    --background: 220 30% 10%;
+    --foreground: 210 17% 95%;
+    --card: 220 30% 14%;
+    --card-foreground: 210 17% 95%;
+    --popover: 220 30% 14%;
+    --popover-foreground: 210 17% 95%;
+    --primary: 42 43% 57%;             /* Gold becomes primary in dark */
+    --primary-foreground: 220 37% 10%;
+    --secondary: 220 37% 70%;
+    --secondary-foreground: 220 37% 10%;
+    --muted: 220 30% 18%;
+    --muted-foreground: 220 12% 65%;
+    --border: 220 30% 20%;
+    --input: 220 30% 20%;
+    --ring: 42 43% 57%;
+  }
+
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground antialiased min-h-screen;
+    font-family: var(--font-body);
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-bold tracking-tight;
+    font-family: var(--font-heading);
+  }
+}
+
+@layer components {
+  /* Glassmorphism */
+  .glass-effect {
+    @apply backdrop-blur-md bg-white/80 border-b border-border/50 sticky top-0 z-50;
+    backdrop-filter: blur(var(--glass-blur));
+  }
+
+  /* Skeleton Loading Animation */
+  .skeleton {
+    @apply bg-muted animate-pulse rounded-md;
+    background-image: linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0) 0,
+      rgba(255, 255, 255, 0.2) 20%,
+      rgba(255, 255, 255, 0.5) 60%,
+      rgba(255, 255, 255, 0)
+    );
+    background-size: 200% 100%;
+  }
+
+  /* Table styles */
+  .table-container {
+    @apply overflow-hidden border border-border rounded-lg bg-card shadow-sm;
+  }
+
+  .table-row {
+    @apply border-b border-border transition-colors hover:bg-muted/30 last:border-0;
+  }
+
+  /* Active indicator */
+  .nav-active::after {
+    content: '';
+    @apply absolute bottom-0 left-0 w-full h-0.5 bg-primary rounded-full transition-all duration-300;
+  }
+
+  /* Responsive Container */
+  .container-padding {
+    @apply px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto;
+  }
+}

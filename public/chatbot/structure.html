@@ -1,0 +1,29 @@
+<!-- 
+  Copy and paste this manually if you prefer NOT to use the JS injection.
+  Ensure you also link the CSS file: <link rel="stylesheet" href="/chatbot/style.css">
+-->
+
+<div id="chatbot-container">
+    <div class="chatbot-window" id="chatbot-window">
+        <div class="chatbot-header">
+            <span class="chatbot-title">Atendimento Jurídico</span>
+            <button class="chatbot-close" id="chatbot-close">✕</button>
+        </div>
+        <div class="chatbot-messages" id="chatbot-messages">
+            <div class="message bot">Olá! Sou o assistente virtual do escritório. Como posso te ajudar hoje?</div>
+            <div class="chatbot-options" id="chatbot-options">
+                <!-- Options are loaded dynamically by JS, but here is the structure -->
+                <button class="option-btn">Como funciona uma consulta com advogado?</button>
+                <button class="option-btn">Áreas de atuação</button>
+                <button class="option-btn">Como entrar com um processo?</button>
+                <button class="option-btn">Quanto tempo dura um processo?</button>
+                <button class="option-btn">Agendar atendimento no WhatsApp</button>
+            </div>
+        </div>
+    </div>
+    <button class="chatbot-fab" id="chatbot-fab" aria-label="Abrir chat">
+        <svg viewBox="0 0 24 24">
+            <path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H6l-2 2V4h16v12z" />
+        </svg>
+    </button>
+</div>

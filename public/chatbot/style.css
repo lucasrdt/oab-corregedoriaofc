@@ -1,0 +1,179 @@
+/* Chatbot Styles for Law Firm */
+:root {
+  --chat-primary: #0f172a; /* Slate 900 - Professional Dark Blue/Black */
+  --chat-secondary: #f8fafc; /* Slate 50 */
+  --chat-accent: #c29f6d; /* Gold/Bronze tone often used in law */
+  --chat-text: #334155; /* Slate 700 */
+  --chat-bg: #ffffff;
+  --chat-radius: 12px;
+  --chat-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+/* Floating Action Button */
+.chatbot-fab {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 60px;
+  height: 60px;
+  background-color: var(--chat-primary);
+  color: white;
+  border-radius: 50%;
+  border: none;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  transition: transform 0.2s ease, background-color 0.2s;
+}
+
+.chatbot-fab:hover {
+  transform: scale(1.05);
+  background-color: #1e293b;
+}
+
+.chatbot-fab svg {
+  width: 30px;
+  height: 30px;
+  fill: currentColor;
+}
+
+/* Chat Window */
+.chatbot-window {
+  position: fixed;
+  bottom: 90px;
+  right: 20px;
+  width: 350px;
+  height: 500px;
+  background-color: var(--chat-bg);
+  border-radius: var(--chat-radius);
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  display: flex; /* Hidden by default via JS class toggle, or override display here */
+  flex-direction: column;
+  overflow: hidden;
+  z-index: 9999;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(20px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.chatbot-window.active {
+  opacity: 1;
+  pointer-events: all;
+  transform: translateY(0);
+}
+
+/* Header */
+.chatbot-header {
+  background-color: var(--chat-primary);
+  color: white;
+  padding: 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.chatbot-title {
+  font-weight: 600;
+  font-size: 1.1rem;
+}
+
+.chatbot-close {
+  background: transparent;
+  border: none;
+  color: white;
+  cursor: pointer;
+  font-size: 1.2rem;
+  padding: 4px;
+}
+
+/* Messages Area */
+.chatbot-messages {
+  flex: 1;
+  padding: 16px;
+  overflow-y: auto;
+  background-color: #f1f5f9;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.message {
+  max-width: 80%;
+  padding: 10px 14px;
+  border-radius: 12px;
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+.message.bot {
+  background-color: white;
+  color: var(--chat-text);
+  align-self: flex-start;
+  border-bottom-left-radius: 4px;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+}
+
+.message.user {
+  background-color: var(--chat-primary);
+  color: white;
+  align-self: flex-end;
+  border-bottom-right-radius: 4px;
+}
+
+/* Options / FAQ Buttons */
+.chatbot-options {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.option-btn {
+  background-color: white;
+  border: 1px solid #e2e8f0;
+  color: var(--chat-primary);
+  padding: 10px;
+  border-radius: 8px;
+  text-align: left;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: all 0.2s;
+}
+
+.option-btn:hover {
+  background-color: #f8fafc;
+  border-color: var(--chat-primary);
+}
+
+/* CTA Button */
+.whatsapp-btn {
+  display: inline-block;
+  background-color: #25D366; /* WhatsApp Green */
+  color: white;
+  text-decoration: none;
+  padding: 10px 16px;
+  border-radius: 8px;
+  font-weight: 600;
+  margin-top: 8px;
+  text-align: center;
+  transition: background-color 0.2s;
+}
+
+.whatsapp-btn:hover {
+  background-color: #128C7E;
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 480px) {
+  .chatbot-window {
+    width: calc(100% - 40px);
+    right: 20px;
+    bottom: 90px;
+    height: 60vh;
+  }
+}
