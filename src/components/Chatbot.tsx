@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from "react";
+﻿import { useState, useRef, useEffect } from "react";
 import { MessageCircle, X, Send } from "lucide-react";
 import { useLocation } from "react-router-dom";
 import { useSite } from "@/contexts/SiteContext";
@@ -25,15 +25,15 @@ const Chatbot = () => {
 
     // Get FAQ from site config
     const faqItems: FAQItem[] = config?.content?.faq || [];
-    const companyName = config?.content?.companyName || "Escritório";
+    const companyName = config?.content?.companyName || "EscritÃ³rio";
 
-    // Initialize welcome message — hooks must always run before any return
+    // Initialize welcome message â€” hooks must always run before any return
     useEffect(() => {
         if (messages.length === 0) {
             setMessages([
                 {
                     id: 1,
-                    text: `Olá! Sou o assistente virtual do ${companyName}. Como posso te ajudar hoje?`,
+                    text: `OlÃ¡! Sou o assistente virtual do ${companyName}. Como posso te ajudar hoje?`,
                     type: "bot",
                 },
             ]);
@@ -51,6 +51,7 @@ const Chatbot = () => {
     }
 
     // WhatsApp link
+
     const whatsappLink = "https://w.app/oab-ma";
 
     const handleOptionClick = (item: FAQItem) => {

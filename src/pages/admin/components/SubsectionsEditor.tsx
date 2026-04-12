@@ -1,4 +1,4 @@
-import { useState } from 'react';
+﻿import { useState } from 'react';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/lib/supabase';
 import { toast } from 'sonner';
@@ -37,7 +37,7 @@ const SubsectionsEditor = () => {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['subsections'] });
-      toast.success('Subseção criada.');
+      toast.success('SubseÃ§Ã£o criada.');
       setIsDialogOpen(false);
       setEditingItem(null);
       setCoverImageUrl('');
@@ -52,7 +52,7 @@ const SubsectionsEditor = () => {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['subsections'] });
-      toast.success('Subseção atualizada.');
+      toast.success('SubseÃ§Ã£o atualizada.');
       setIsDialogOpen(false);
       setEditingItem(null);
       setCoverImageUrl('');
@@ -67,7 +67,7 @@ const SubsectionsEditor = () => {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['subsections'] });
-      toast.success('Subseção removida.');
+      toast.success('SubseÃ§Ã£o removida.');
     },
     onError: () => toast.error('Erro ao salvar. Tente novamente.'),
   });
@@ -85,7 +85,7 @@ const SubsectionsEditor = () => {
   };
 
   const handleDelete = (id: string) => {
-    if (window.confirm('Tem certeza que deseja remover esta subseção?')) {
+    if (window.confirm('Tem certeza que deseja remover esta subseÃ§Ã£o?')) {
       deleteSubsection.mutate(id);
     }
   };
@@ -130,7 +130,7 @@ const SubsectionsEditor = () => {
               {subsections?.length || 0} Unidades
             </Badge>
           </div>
-          <p className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest italic">Gestão de Subseções e Corregedorias Regionais</p>
+          <p className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest italic">GestÃ£o de SubseÃ§Ãµes e Corregedorias Regionais</p>
         </div>
 
         <Dialog open={isDialogOpen} onOpenChange={(open) => {
@@ -152,9 +152,9 @@ const SubsectionsEditor = () => {
                   <div className="h-10 w-10 rounded-xl bg-slate-50 flex items-center justify-center border border-slate-100 italic">
                     #{editingItem ? 'EDT' : 'NEW'}
                   </div>
-                  {editingItem ? 'Atualizar Jurisdição' : 'Nova Unidade Regional'}
+                  {editingItem ? 'Atualizar JurisdiÃ§Ã£o' : 'Nova Unidade Regional'}
                 </DialogTitle>
-                <span className="sr-only">Cadastre ou edite as informações da subseção regional</span>
+                <span className="sr-only">Cadastre ou edite as informaÃ§Ãµes da subseÃ§Ã£o regional</span>
               </DialogHeader>
             </div>
 
@@ -173,7 +173,7 @@ const SubsectionsEditor = () => {
 
               <div className="grid md:grid-cols-2 gap-6">
                 <div className="space-y-2">
-                  <Label htmlFor="city" className="text-[10px] font-black uppercase tracking-widest text-primary/50 ml-1">Município Sede *</Label>
+                  <Label htmlFor="city" className="text-[10px] font-black uppercase tracking-widest text-primary/50 ml-1">MunicÃ­pio Sede *</Label>
                   <Input
                     id="city"
                     name="city"
@@ -197,12 +197,12 @@ const SubsectionsEditor = () => {
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="address" className="text-[10px] font-black uppercase tracking-widest text-primary/50 ml-1">Endereço de Atendimento</Label>
+                <Label htmlFor="address" className="text-[10px] font-black uppercase tracking-widest text-primary/50 ml-1">EndereÃ§o de Atendimento</Label>
                 <Input
                   id="address"
                   name="address"
                   defaultValue={editingItem?.address ?? ''}
-                  placeholder="Rua, Número, Bairro, CEP"
+                  placeholder="Rua, NÃºmero, Bairro, CEP"
                   className="h-12 bg-slate-50 border-slate-200 focus:bg-white rounded-xl font-bold text-primary shadow-inner"
                 />
               </div>
@@ -219,7 +219,7 @@ const SubsectionsEditor = () => {
                   />
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="email" className="text-[10px] font-black uppercase tracking-widest text-primary/50 ml-1">Endereço de E-mail</Label>
+                  <Label htmlFor="email" className="text-[10px] font-black uppercase tracking-widest text-primary/50 ml-1">EndereÃ§o de E-mail</Label>
                   <Input
                     id="email"
                     name="email"
@@ -245,7 +245,7 @@ const SubsectionsEditor = () => {
                   disabled={createSubsection.isPending || updateSubsection.isPending}
                   className="bg-primary hover:bg-primary/90 h-12 px-10 rounded-xl font-black text-[10px] tracking-widest uppercase shadow-xl shadow-primary/20 transition-all"
                 >
-                  {editingItem ? 'Confirmar Alterações' : 'Efetivar Registro'}
+                  {editingItem ? 'Confirmar AlteraÃ§Ãµes' : 'Efetivar Registro'}
                 </Button>
               </div>
             </form>

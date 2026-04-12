@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+﻿import React, { useState } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -41,11 +41,11 @@ import { ImageUpload } from '@/components/ui/image-upload';
 const SITE_ID = import.meta.env.VITE_SITE_ID || '';
 
 const navItems = [
-  { id: 'usuarios', label: 'Gestão de Usuários', icon: Users },
-  { id: 'subsecoes', label: 'Subseções OAB', icon: Building2 },
+  { id: 'usuarios', label: 'GestÃ£o de UsuÃ¡rios', icon: Users },
+  { id: 'subsecoes', label: 'SubseÃ§Ãµes OAB', icon: Building2 },
   { id: 'casos', label: 'Acervo de Casos', icon: FolderOpen },
   { id: 'site', label: 'Editor do Site', icon: Globe },
-  { id: 'perfil', label: 'Configurações', icon: UserCircle },
+  { id: 'perfil', label: 'ConfiguraÃ§Ãµes', icon: UserCircle },
 ];
 
 // --- Types ---
@@ -81,7 +81,7 @@ interface Subsection {
 // --- Form schema ---
 
 const createUserSchema = z.object({
-  email: z.string().email('E-mail inválido'),
+  email: z.string().email('E-mail invÃ¡lido'),
   role: z.enum(['admin', 'dev', 'presidente', 'user'], {
     required_error: 'Selecione um papel',
   }),
@@ -93,7 +93,7 @@ type CreateUserForm = z.infer<typeof createUserSchema>;
 // --- Sub-components ---
 
 const truncate = (str: string | null, len = 8) =>
-  str ? str.substring(0, len) + '...' : '—';
+  str ? str.substring(0, len) + '...' : 'â€”';
 
 const UsuariosSection = () => {
   const queryClient = useQueryClient();
@@ -161,11 +161,11 @@ const UsuariosSection = () => {
 
     if (error || data?.error) {
       const msg = data?.error ?? error?.message ?? 'Erro desconhecido';
-      toast.error('Erro ao criar usuário: ' + msg);
+      toast.error('Erro ao criar usuÃ¡rio: ' + msg);
       return;
     }
 
-    toast.success('Usuário criado com sucesso!');
+    toast.success('UsuÃ¡rio criado com sucesso!');
     setDialogOpen(false);
     reset();
     queryClient.invalidateQueries({ queryKey: ['admin-user-roles'] });
@@ -178,11 +178,11 @@ const UsuariosSection = () => {
       .eq('id', roleId);
 
     if (error) {
-      toast.error('Erro ao desativar usuário: ' + error.message);
+      toast.error('Erro ao desativar usuÃ¡rio: ' + error.message);
       return;
     }
 
-    toast.success('Usuário desativado.');
+    toast.success('UsuÃ¡rio desativado.');
     queryClient.invalidateQueries({ queryKey: ['admin-user-roles'] });
   };
 
@@ -191,15 +191,15 @@ const UsuariosSection = () => {
       <div className="flex items-center justify-between">
         <div className="space-y-1">
           <h2 className="text-2xl font-black text-primary uppercase tracking-tight flex items-center gap-2">
-            <Users className="h-6 w-6 text-secondary" /> Gestão de Acessos
+            <Users className="h-6 w-6 text-secondary" /> GestÃ£o de Acessos
           </h2>
-          <p className="text-muted-foreground font-medium text-sm">Controle as permissões e níveis de acesso dos colaboradores.</p>
+          <p className="text-muted-foreground font-medium text-sm">Controle as permissÃµes e nÃ­veis de acesso dos colaboradores.</p>
         </div>
         <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
           <DialogTrigger asChild>
             <Button className="bg-primary hover:bg-primary/90 text-white font-black text-[10px] tracking-widest uppercase px-6 h-11 shadow-lg shadow-primary/10">
               <Plus className="w-4 h-4 mr-2" />
-              CADASTRAR USUÁRIO
+              CADASTRAR USUÃRIO
             </Button>
           </DialogTrigger>
           <DialogContent className="sm:max-w-md border-none shadow-2xl overflow-hidden p-0">
@@ -207,7 +207,7 @@ const UsuariosSection = () => {
               <DialogTitle className="text-sm font-black uppercase tracking-widest flex items-center gap-2">
                 <Plus className="h-4 w-4 text-secondary" /> Novo Colaborador
               </DialogTitle>
-              <span className="sr-only">Preencha o formulário para cadastrar um novo usuário no sistema</span>
+              <span className="sr-only">Preencha o formulÃ¡rio para cadastrar um novo usuÃ¡rio no sistema</span>
             </DialogHeader>
             <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 mt-2">
               <div className="space-y-1.5">
@@ -238,21 +238,21 @@ const UsuariosSection = () => {
 
               {needsSubsection && (
                 <div className="space-y-1.5">
-                  <Label htmlFor="subsection_id">Subseção</Label>
+                  <Label htmlFor="subsection_id">SubseÃ§Ã£o</Label>
                   <Select onValueChange={(val) => setValue('subsection_id', val)}>
                     <SelectTrigger id="subsection_id">
-                      <SelectValue placeholder="Selecione uma subseção" />
+                      <SelectValue placeholder="Selecione uma subseÃ§Ã£o" />
                     </SelectTrigger>
                     <SelectContent>
                       {subsections && subsections.length > 0 ? (
                         subsections.map((sub) => (
                           <SelectItem key={sub.id} value={sub.id}>
-                            {sub.city}{sub.corregedor ? ` — ${sub.corregedor}` : ''}
+                            {sub.city}{sub.corregedor ? ` â€” ${sub.corregedor}` : ''}
                           </SelectItem>
                         ))
                       ) : (
                         <SelectItem value="_none" disabled>
-                          Nenhuma subseção cadastrada
+                          Nenhuma subseÃ§Ã£o cadastrada
                         </SelectItem>
                       )}
                     </SelectContent>
@@ -266,7 +266,7 @@ const UsuariosSection = () => {
                 </Button>
                 <Button type="submit" disabled={isSubmitting}>
                   {isSubmitting && <Loader2 className="w-4 h-4 mr-2 animate-spin" />}
-                  Criar Usuário
+                  Criar UsuÃ¡rio
                 </Button>
               </div>
             </form>
@@ -283,9 +283,9 @@ const UsuariosSection = () => {
           <Table>
             <TableHeader className="bg-primary/5">
               <TableRow className="hover:bg-transparent border-border/50">
-                <TableHead className="text-primary font-black text-[10px] uppercase tracking-widest py-5 pl-6">ID do Usuário</TableHead>
-                <TableHead className="text-primary font-black text-[10px] uppercase tracking-widest py-5">Nível de Acesso</TableHead>
-                <TableHead className="text-primary font-black text-[10px] uppercase tracking-widest py-5">Subseção Original</TableHead>
+                <TableHead className="text-primary font-black text-[10px] uppercase tracking-widest py-5 pl-6">ID do UsuÃ¡rio</TableHead>
+                <TableHead className="text-primary font-black text-[10px] uppercase tracking-widest py-5">NÃ­vel de Acesso</TableHead>
+                <TableHead className="text-primary font-black text-[10px] uppercase tracking-widest py-5">SubseÃ§Ã£o Original</TableHead>
                 <TableHead className="text-primary font-black text-[10px] uppercase tracking-widest py-5">Status</TableHead>
                 <TableHead className="w-[110px] py-5" />
               </TableRow>
@@ -301,11 +301,11 @@ const UsuariosSection = () => {
                         {u.role}
                       </Badge>
                     </TableCell>
-                    <TableCell className="text-xs font-medium">
-                      {u.subsection_id
-                        ? (subsections?.find(s => s.id === u.subsection_id)?.city ?? truncate(u.subsection_id))
-                        : '—'}
-                    </TableCell>
+                     <TableCell className="text-xs font-medium">
+                       {u.subsection_id
+                         ? (subsections?.find(s => s.id === u.subsection_id)?.city ?? truncate(u.subsection_id))
+                         : '—'}
+                     </TableCell>
                     <TableCell>
                       <Badge className={`${u.active ? 'bg-green-500/10 text-green-600 border-green-500/20' : 'bg-muted text-muted-foreground border-border'} text-[9px] font-black uppercase tracking-widest px-2 py-0.5 border`}>
                         {u.active ? 'ATIVO' : 'INATIVO'}
@@ -328,7 +328,7 @@ const UsuariosSection = () => {
                             size="icon"
                             className="h-8 w-8 text-muted-foreground hover:text-red-500 hover:bg-red-50"
                             onClick={() => handleDeactivate(u.id)}
-                            title="Desativar usuário"
+                            title="Desativar usuÃ¡rio"
                           >
                             <UserX className="w-3.5 h-3.5" />
                           </Button>
@@ -387,9 +387,9 @@ const CasosSection = () => {
             <TableHeader className="bg-primary/5">
               <TableRow className="hover:bg-transparent border-border/50">
                 <TableHead className="text-primary font-black text-[10px] uppercase tracking-widest py-5 pl-6">Nome do Caso</TableHead>
-                <TableHead className="text-primary font-black text-[10px] uppercase tracking-widest py-5">N° Processo</TableHead>
+                <TableHead className="text-primary font-black text-[10px] uppercase tracking-widest py-5">NÂ° Processo</TableHead>
                 <TableHead className="text-primary font-black text-[10px] uppercase tracking-widest py-5">Comarca</TableHead>
-                <TableHead className="text-primary font-black text-[10px] uppercase tracking-widest py-5">Subseção</TableHead>
+                <TableHead className="text-primary font-black text-[10px] uppercase tracking-widest py-5">SubseÃ§Ã£o</TableHead>
                 <TableHead className="text-primary font-black text-[10px] uppercase tracking-widest py-5">Cadastro</TableHead>
                 <TableHead className="w-[120px] py-5" />
               </TableRow>
@@ -398,8 +398,8 @@ const CasosSection = () => {
               {casos.map((caso) => (
                 <TableRow key={caso.id} className="hover:bg-muted/30 transition-colors border-border/30">
                   <TableCell className="font-bold text-sm text-primary pl-6">{caso.nome}</TableCell>
-                  <TableCell className="font-mono text-[10px] font-bold text-muted-foreground">{caso.processo ?? '—'}</TableCell>
-                  <TableCell className="text-xs font-medium">{caso.comarca ?? '—'}</TableCell>
+                  <TableCell className="font-mono text-[10px] font-bold text-muted-foreground">{caso.processo ?? 'â€”'}</TableCell>
+                  <TableCell className="text-xs font-medium">{caso.comarca ?? 'â€”'}</TableCell>
                   <TableCell className="font-mono text-[10px] font-bold text-muted-foreground">{truncate(caso.subsection_id)}</TableCell>
                   <TableCell className="text-xs font-medium">
                     {new Date(caso.created_at).toLocaleDateString('pt-BR')}
@@ -470,11 +470,11 @@ const SubsecoesSection = () => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['admin-subsections'] });
       queryClient.invalidateQueries({ queryKey: ['subsections'] });
-      toast.success('Subseção criada com sucesso.');
+      toast.success('SubseÃ§Ã£o criada com sucesso.');
       setDialogOpen(false);
       setCoverImageUrl('');
     },
-    onError: () => toast.error('Erro ao criar subseção. Tente novamente.'),
+    onError: () => toast.error('Erro ao criar subseÃ§Ã£o. Tente novamente.'),
   });
 
   const handleCreateSubmit = (e: React.FormEvent) => {
@@ -504,24 +504,24 @@ const SubsecoesSection = () => {
       <div className="flex items-center justify-between">
         <div className="space-y-1">
           <h2 className="text-2xl font-black text-primary uppercase tracking-tight flex items-center gap-2">
-            <Building2 className="h-6 w-6 text-secondary" /> Subseções OAB
+            <Building2 className="h-6 w-6 text-secondary" /> SubseÃ§Ãµes OAB
           </h2>
-          <p className="text-muted-foreground font-medium text-sm">Gerencie as subseções e filtre casos por unidade.</p>
+          <p className="text-muted-foreground font-medium text-sm">Gerencie as subseÃ§Ãµes e filtre casos por unidade.</p>
         </div>
 
         <Dialog open={dialogOpen} onOpenChange={(open) => { setDialogOpen(open); if (!open) setCoverImageUrl(''); }}>
           <DialogTrigger asChild>
             <Button className="bg-primary hover:bg-primary/90 text-white font-black text-[10px] tracking-widest uppercase px-6 h-11 shadow-lg shadow-primary/10">
               <Plus className="w-4 h-4 mr-2" />
-              NOVA SUBSEÇÃO
+              NOVA SUBSEÃ‡ÃƒO
             </Button>
           </DialogTrigger>
           <DialogContent className="sm:max-w-lg border-none shadow-2xl overflow-hidden p-0">
             <DialogHeader className="bg-primary p-6 text-white border-b border-primary/10">
               <DialogTitle className="text-sm font-black uppercase tracking-widest flex items-center gap-2">
-                <Plus className="h-4 w-4 text-secondary" /> Nova Subseção
+                <Plus className="h-4 w-4 text-secondary" /> Nova SubseÃ§Ã£o
               </DialogTitle>
-              <span className="sr-only">Preencha os dados da nova subseção regional</span>
+              <span className="sr-only">Preencha os dados da nova subseÃ§Ã£o regional</span>
             </DialogHeader>
             <form onSubmit={handleCreateSubmit} className="p-6 space-y-4 max-h-[70vh] overflow-y-auto">
               <div className="space-y-1.5">
@@ -537,7 +537,7 @@ const SubsecoesSection = () => {
 
               <div className="grid grid-cols-2 gap-3">
                 <div className="space-y-1.5">
-                  <Label htmlFor="new-city">Município *</Label>
+                  <Label htmlFor="new-city">MunicÃ­pio *</Label>
                   <Input id="new-city" name="city" required placeholder="Ex: Imperatriz" />
                 </div>
                 <div className="space-y-1.5">
@@ -547,8 +547,8 @@ const SubsecoesSection = () => {
               </div>
 
               <div className="space-y-1.5">
-                <Label htmlFor="new-address">Endereço</Label>
-                <Input id="new-address" name="address" placeholder="Rua, Número, Bairro, CEP" />
+                <Label htmlFor="new-address">EndereÃ§o</Label>
+                <Input id="new-address" name="address" placeholder="Rua, NÃºmero, Bairro, CEP" />
               </div>
 
               <div className="grid grid-cols-2 gap-3">
@@ -568,7 +568,7 @@ const SubsecoesSection = () => {
                 </Button>
                 <Button type="submit" disabled={createSubsection.isPending}>
                   {createSubsection.isPending && <Loader2 className="w-4 h-4 mr-2 animate-spin" />}
-                  Criar Subseção
+                  Criar SubseÃ§Ã£o
                 </Button>
               </div>
             </form>
@@ -618,8 +618,8 @@ const SubsecoesSection = () => {
       ) : (
         <div className="flex flex-col items-center justify-center py-12 text-center text-muted-foreground border-2 border-dashed rounded-lg">
           <Building2 className="w-10 h-10 mb-3 opacity-40" />
-          <p className="text-sm">Nenhuma subseção cadastrada ainda.</p>
-          <p className="text-xs mt-1">Clique em "Nova Subseção" para começar.</p>
+          <p className="text-sm">Nenhuma subseÃ§Ã£o cadastrada ainda.</p>
+          <p className="text-xs mt-1">Clique em "Nova SubseÃ§Ã£o" para comeÃ§ar.</p>
         </div>
       )}
 
@@ -628,7 +628,7 @@ const SubsecoesSection = () => {
         <div className="space-y-4">
           <div className="flex items-center justify-between">
             <h3 className="text-sm font-medium text-muted-foreground">
-              Casos da subseção: <span className="text-foreground font-semibold">
+              Casos da subseÃ§Ã£o: <span className="text-foreground font-semibold">
                 {subsections?.find(s => s.id === selectedSubsection)?.city}
               </span>
             </h3>
@@ -662,8 +662,8 @@ const SubsecoesSection = () => {
                   {casos.map((caso) => (
                     <TableRow key={caso.id}>
                       <TableCell className="font-medium text-sm">{caso.nome}</TableCell>
-                      <TableCell className="text-xs">{caso.processo ?? '—'}</TableCell>
-                      <TableCell className="text-xs">{caso.comarca ?? '—'}</TableCell>
+                      <TableCell className="text-xs">{caso.processo ?? 'â€”'}</TableCell>
+                      <TableCell className="text-xs">{caso.comarca ?? 'â€”'}</TableCell>
                       <TableCell className="text-xs">
                         {new Date(caso.created_at).toLocaleDateString('pt-BR')}
                       </TableCell>
@@ -686,7 +686,7 @@ const SubsecoesSection = () => {
           ) : (
             <div className="flex flex-col items-center justify-center py-10 text-center text-muted-foreground border-2 border-dashed rounded-md">
               <FileText className="w-10 h-10 mb-3 opacity-40" />
-              <p className="text-sm">Nenhum caso nesta subseção ainda.</p>
+              <p className="text-sm">Nenhum caso nesta subseÃ§Ã£o ainda.</p>
             </div>
           )}
         </div>
@@ -702,7 +702,7 @@ const ConfigSection = () => {
       <h2 className="text-lg font-semibold">Gerenciamento do Site</h2>
       <Card>
         <CardHeader>
-          <CardTitle className="text-sm">Painel de Conteúdo</CardTitle>
+          <CardTitle className="text-sm">Painel de ConteÃºdo</CardTitle>
         </CardHeader>
         <CardContent>
           <Button onClick={() => navigate('/admin/editor')} className="flex items-center gap-2">
