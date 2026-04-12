@@ -3,14 +3,16 @@ import { useQuery } from '@tanstack/react-query';
 import PortalLayout from './PortalLayout';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Loader2, FileText, Plus, Pencil, UserCircle, FolderOpen, MapPin, Hash, Calendar, ChevronRight, Gavel } from 'lucide-react';
+import { Badge } from '@/components/ui/badge';
+import { Loader2, FileText, Plus, Pencil, UserCircle, FolderOpen, MapPin, Hash, Calendar, ChevronRight, Gavel, Building2 } from 'lucide-react';
 import { supabase } from '@/lib/supabase';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '@/contexts/AuthContext';
 import ProfileSection from '@/components/portal/ProfileSection';
 
 const navItems = [
+  { id: 'perfil', label: 'Configurações', icon: UserCircle },
   { id: 'casos', label: 'Gestão da Subseção', icon: FolderOpen },
-  { id: 'perfil', label: 'Meu Perfil', icon: UserCircle },
 ];
 
 interface Caso {
@@ -23,9 +25,30 @@ interface Caso {
   created_at: string;
 }
 
+interface Subsection {
+  id: string;
+  city: string;
+  corregedor: string;
+}
+
 const PresidenteDashboard = () => {
-  const [activeItem, setActiveItem] = useState('casos');
+  const [activeItem, setActiveItem] = useState('perfil');
   const navigate = useNavigate();
+  const { subsectionId } = useAuth();
+
+  const { data: subsection } = useQuery<Subsection | null>({
+    queryKey: ['presidente-subsection', subsectionId],
+    enabled: !!subsectionId,
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from('subsections')
+        .select('id, city, corregedor')
+        .eq('id', subsectionId!)
+        .maybeSingle();
+      if (error) throw error;
+      return data;
+    },
+  });
 
   const { data: casos, isLoading } = useQuery<Caso[]>({
     queryKey: ['presidente-casos'],
@@ -42,17 +65,35 @@ const PresidenteDashboard = () => {
 
   return (
     <PortalLayout
-      title={activeItem === 'perfil' ? "Meu Perfil Institucional" : "Painel da Presidência"}
+      title={activeItem === 'perfil' ? "Configurações" : "Gestão da Subseção"}
       navItems={navItems}
       activeItem={activeItem}
       onNavClick={setActiveItem}
     >
       {activeItem === 'perfil' && (
-        <div className="max-w-4xl mx-auto animate-fade-in">
+        <div className="max-w-4xl mx-auto animate-fade-in space-y-8">
+          {/* Subsection context banner */}
+          {subsection && (
+            <div className="flex items-center gap-4 p-5 rounded-xl bg-primary/5 border border-primary/10">
+              <div className="h-10 w-10 rounded-xl bg-primary/10 flex items-center justify-center flex-shrink-0">
+                <Building2 className="h-5 w-5 text-primary" />
+              </div>
+              <div className="min-w-0">
+                <p className="text-[9px] font-black uppercase tracking-widest text-muted-foreground">Subseção Vinculada</p>
+                <p className="text-sm font-black text-primary uppercase tracking-tight truncate">{subsection.city}</p>
+                {subsection.corregedor && (
+                  <p className="text-xs text-muted-foreground truncate">{subsection.corregedor}</p>
+                )}
+              </div>
+              <Badge className="ml-auto bg-green-500/10 text-green-700 border-green-500/20 text-[9px] font-black uppercase tracking-widest px-2 py-0.5 border flex-shrink-0">
+                ATIVO
+              </Badge>
+            </div>
+          )}
           <ProfileSection />
         </div>
       )}
-      
+
       {activeItem === 'casos' && (
         <div className="space-y-8 animate-fade-in">
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
@@ -60,7 +101,16 @@ const PresidenteDashboard = () => {
               <h2 className="text-2xl font-black text-primary uppercase tracking-tight flex items-center gap-2">
                 <Gavel className="h-6 w-6 text-secondary" /> Governança de Casos
               </h2>
-              <p className="text-muted-foreground font-medium text-sm">Administração estratégica e acompanhamento de processos da subseção.</p>
+              <p className="text-muted-foreground font-medium text-sm flex items-center gap-2">
+                {subsection ? (
+                  <>
+                    <Building2 className="h-3.5 w-3.5 text-primary/50" />
+                    <span>Subseção <strong className="text-primary">{subsection.city}</strong></span>
+                  </>
+                ) : (
+                  'Administração estratégica e acompanhamento de processos da subseção.'
+                )}
+              </p>
             </div>
             <Button
               className="bg-primary hover:bg-primary/90 text-white font-black text-[10px] tracking-widest uppercase px-6 h-11 shadow-lg shadow-primary/10 transition-all active:scale-95"

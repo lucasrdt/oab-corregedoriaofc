@@ -301,7 +301,11 @@ const UsuariosSection = () => {
                         {u.role}
                       </Badge>
                     </TableCell>
-                    <TableCell className="font-mono text-[10px] font-bold text-muted-foreground">{u.subsection_id ? truncate(u.subsection_id) : '—'}</TableCell>
+                    <TableCell className="text-xs font-medium">
+                      {u.subsection_id
+                        ? (subsections?.find(s => s.id === u.subsection_id)?.city ?? truncate(u.subsection_id))
+                        : '—'}
+                    </TableCell>
                     <TableCell>
                       <Badge className={`${u.active ? 'bg-green-500/10 text-green-600 border-green-500/20' : 'bg-muted text-muted-foreground border-border'} text-[9px] font-black uppercase tracking-widest px-2 py-0.5 border`}>
                         {u.active ? 'ATIVO' : 'INATIVO'}
