@@ -1,4 +1,4 @@
-import { useSite } from "@/contexts/SiteContext";
+﻿import { useSite } from "@/contexts/SiteContext";
 import { ChevronRight, FileText, ChevronLeft, Calendar, User, Scale, MapPin, Hash, Users, ExternalLink, Info, Building2 } from "lucide-react";
 import { useScrollAnimation } from "@/hooks/use-scroll-animation";
 import { getCompanySlug } from "@/utils/slugify";
@@ -60,8 +60,8 @@ const DetalheCaso = () => {
         <div className="bg-muted p-6 rounded-full mb-6">
           <Info className="h-10 w-10 text-muted-foreground" />
         </div>
-        <h2 className="text-2xl font-bold text-foreground">Caso não encontrado</h2>
-        <p className="text-muted-foreground mt-2">O processo que você procura não existe ou foi movido.</p>
+        <h2 className="text-2xl font-bold text-foreground">Caso n├úo encontrado</h2>
+        <p className="text-muted-foreground mt-2">O processo que voc├¬ procura n├úo existe ou foi movido.</p>
         <Button asChild className="mt-8 bg-primary hover:bg-primary/90 text-white font-bold">
           <Link to="/">VOLTAR PARA HOME</Link>
         </Button>
@@ -94,7 +94,7 @@ const DetalheCaso = () => {
           {company.linkHabilitacoes && (
             <Button asChild className="bg-secondary hover:bg-secondary/90 text-secondary-foreground font-black px-8 h-12 shadow-md">
               <a href={company.linkHabilitacoes} target="_blank" rel="noopener noreferrer">
-                HABILITAÇÕES E CRÉDITO <ExternalLink className="ml-2 h-4 w-4" />
+                HABILITA├ç├òES E CR├ëDITO <ExternalLink className="ml-2 h-4 w-4" />
               </a>
             </Button>
           )}
@@ -106,12 +106,12 @@ const DetalheCaso = () => {
         {/* Main Process Info */}
         <div className="bg-card border border-border/50 rounded-lg p-8 shadow-sm space-y-8">
           <h3 className="text-lg font-black text-primary flex items-center gap-2 uppercase tracking-tight">
-            <Scale className="h-5 w-5" /> Informações do Processo
+            <Scale className="h-5 w-5" /> Informa├º├Áes do Processo
           </h3>
           
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
             <div className="space-y-1">
-              <p className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest">Número do Processo</p>
+              <p className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest">N├║mero do Processo</p>
               <div className="flex items-center gap-2">
                 <Hash className="h-4 w-4 text-primary" />
                 <p className="text-lg font-black text-foreground">{company.processo}</p>
@@ -119,7 +119,7 @@ const DetalheCaso = () => {
             </div>
 
             <div className="space-y-1">
-              <p className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest">Responsável</p>
+              <p className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest">Respons├ível</p>
               <div className="flex items-center gap-2">
                 <User className="h-4 w-4 text-primary" />
                 <p className="text-lg font-bold text-foreground">{company.especialistaResponsavel}</p>
@@ -178,11 +178,11 @@ const DetalheCaso = () => {
             >
               {[
                 { id: "principais", label: "PRINCIPAIS DOCUMENTOS" },
-                { id: "atividades", label: "RELATÓRIO DE ATIVIDADES" },
+                { id: "atividades", label: "RELAT├ôRIO DE ATIVIDADES" },
                 { id: "atas", label: "ATAS" },
-                { id: "incidentes", label: "RELATÓRIO DE INCIDENTES" },
-                { id: "oficios", label: "RELATÓRIO DE OFÍCIOS" },
-                { id: "creditos", label: "VERIFICAÇÃO DE CRÉDITOS" }
+                { id: "incidentes", label: "RELAT├ôRIO DE INCIDENTES" },
+                { id: "oficios", label: "RELAT├ôRIO DE OF├ìCIOS" },
+                { id: "creditos", label: "VERIFICA├ç├âO DE CR├ëDITOS" }
               ].map((tab) => (
                 <TabsTrigger
                   key={tab.id}
@@ -226,7 +226,7 @@ const DocumentList = ({ documents }: { documents: any[] }) => {
     return (
       <div className="py-12 text-center bg-muted/10 rounded-lg border border-dashed border-border">
         <FileText className="h-10 w-10 text-muted-foreground/30 mx-auto mb-4" />
-        <p className="text-muted-foreground font-medium">Nenhum documento disponível nesta categoria.</p>
+        <p className="text-muted-foreground font-medium">Nenhum documento dispon├¡vel nesta categoria.</p>
       </div>
     );
   }

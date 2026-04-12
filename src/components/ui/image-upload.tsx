@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react';
+﻿import { useState, useRef } from 'react';
 import { useSite } from '@/contexts/SiteContext';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -24,7 +24,7 @@ interface ImageUploadProps {
     label?: string;
     bucket?: string;
     siteId?: string; // Permite passar o siteId diretamente (usado no painel admin)
-    aspectRatio?: number; // Proporção do recorte (ex: 16/9)
+    aspectRatio?: number; // Propor├º├úo do recorte (ex: 16/9)
 }
 
 // Utility para extrair a imagem cortada como um File
@@ -83,7 +83,7 @@ export function ImageUpload({
     label = "Imagem",
     bucket = "site-assets",
     siteId: propSiteId,
-    aspectRatio = 16 / 9, // Retangular por padrão
+    aspectRatio = 16 / 9, // Retangular por padr├úo
 }: ImageUploadProps) {
     const [isUploading, setIsUploading] = useState(false);
     const fileInputRef = useRef<HTMLInputElement>(null);
@@ -101,7 +101,7 @@ export function ImageUpload({
     const activeSiteId = propSiteId || contextSiteId;
 
     if (!activeSiteId) {
-        console.warn('[ImageUpload] activeSiteId is falsy — uploads will go to "temp/" folder. Set VITE_SITE_ID in .env.local.');
+        console.warn('[ImageUpload] activeSiteId is falsy ÔÇö uploads will go to "temp/" folder. Set VITE_SITE_ID in .env.local.');
     }
 
     const onSelectFile = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -110,12 +110,12 @@ export function ImageUpload({
             
             // Basic validation
             if (!file.type.startsWith('image/')) {
-                toast.error("Formato inválido", { description: "Por favor, selecione uma imagem." });
+                toast.error("Formato inv├ílido", { description: "Por favor, selecione uma imagem." });
                 return;
             }
 
             if (file.size > 10 * 1024 * 1024) { // 10MB limit para poder carregar a original
-                toast.error("Arquivo muito grande", { description: "A imagem original deve ter no máximo 10MB." });
+                toast.error("Arquivo muito grande", { description: "A imagem original deve ter no m├íximo 10MB." });
                 return;
             }
 
@@ -133,12 +133,12 @@ export function ImageUpload({
 
     const handleUploadCropped = async () => {
         if (!completedCrop || !imgRef.current || !upImg || !originalFileParams) {
-            toast.error("Erro no recorte", { description: "Faça o recorte da imagem primeiro." });
+            toast.error("Erro no recorte", { description: "Fa├ºa o recorte da imagem primeiro." });
             return;
         }
 
         try {
-            // Calcula a escala real da imagem em relação ao tamanho exibido no Cropper
+            // Calcula a escala real da imagem em rela├º├úo ao tamanho exibido no Cropper
             const scaleX = imgRef.current.naturalWidth / imgRef.current.width;
             const scaleY = imgRef.current.naturalHeight / imgRef.current.height;
 
@@ -152,7 +152,7 @@ export function ImageUpload({
             // Usa activeSiteId para definir o caminho da pasta
             const fileName = `${activeSiteId || 'temp'}/${Math.random().toString(36).substring(2)}.jpg`; // Salva sempre como JPG
             
-            setCropModalOpen(false); // Fecha o modal pra mostrar estado de "Enviando..." no botão
+            setCropModalOpen(false); // Fecha o modal pra mostrar estado de "Enviando..." no bot├úo
 
             const { data, error } = await supabase.storage
                 .from(bucket)
@@ -173,7 +173,7 @@ export function ImageUpload({
 
         } catch (error) {
             console.error('Upload error:', error);
-            toast.error("Erro no upload", { description: "Não foi possível enviar a imagem." });
+            toast.error("Erro no upload", { description: "N├úo foi poss├¡vel enviar a imagem." });
             setCropModalOpen(true); // Reabre se deu erro
         } finally {
             setIsUploading(false);
@@ -248,7 +248,7 @@ export function ImageUpload({
                         )}
                     </Button>
                     <p className="text-xs text-muted-foreground">
-                        JPG, PNG ou WEBP. A imagem será recortada no envio.
+                        JPG, PNG ou WEBP. A imagem ser├í recortada no envio.
                     </p>
                 </div>
             </div>
@@ -269,7 +269,7 @@ export function ImageUpload({
                             <CropIcon className="h-5 w-5 text-secondary" />
                             Ajustar Enquadramento
                         </DialogTitle>
-                        <p className="text-xs text-muted-foreground font-medium">Arraste e redimensione a área delimitada para aplicar um recorte padronizado à foto.</p>
+                        <p className="text-xs text-muted-foreground font-medium">Arraste e redimensione a ├írea delimitada para aplicar um recorte padronizado ├á foto.</p>
                     </DialogHeader>
 
                     <div className="p-6 flex justify-center bg-[#1a1a1a]">

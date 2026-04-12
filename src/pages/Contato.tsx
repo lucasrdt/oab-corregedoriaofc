@@ -6,10 +6,10 @@ import { ChevronRight, Phone, Mail, MapPin, Send, ExternalLink, MessageSquare, S
 const ICON_MAP: Record<string, LucideIcon> = { Shield, Search, Ear, Scale };
 
 const DEFAULT_CHANNELS = [
-  { id: "prerrogativas", title: "Prerrogativas", iconName: "Shield", desc: "Denuncie violações ao exercício profissional.", channels: [{ type: "E-mail", val: "prerrogativas@oabma.org.br" }, { type: "Plantão", val: "(98) 99202-0000" }] },
-  { id: "fiscalizacao",  title: "Fiscalização",  iconName: "Search", desc: "Comunique irregularidades e exercício ilegal.",  channels: [{ type: "E-mail", val: "fiscalizacao@oabma.org.br" }, { type: "WhatsApp", val: "(98) 98116-0000" }] },
-  { id: "ouvidoria",     title: "Ouvidoria",     iconName: "Ear",    desc: "Elogios, sugestões ou reclamações institucionais.", channels: [{ type: "E-mail", val: "ouvidoria@oabma.org.br" }, { type: "Telefone", val: "(98) 2107-5400" }] },
-  { id: "ted",           title: "TED",           iconName: "Scale",  desc: "Representações ético-disciplinares.",             channels: [{ type: "E-mail", val: "ted@oabma.org.br" }, { type: "Secretaria", val: "(98) 2107-5421" }] },
+  { id: "prerrogativas", title: "Prerrogativas", iconName: "Shield", desc: "Denuncie viola├º├Áes ao exerc├¡cio profissional.", channels: [{ type: "E-mail", val: "prerrogativas@oabma.org.br" }, { type: "Plant├úo", val: "(98) 99202-0000" }] },
+  { id: "fiscalizacao",  title: "Fiscaliza├º├úo",  iconName: "Search", desc: "Comunique irregularidades e exerc├¡cio ilegal.",  channels: [{ type: "E-mail", val: "fiscalizacao@oabma.org.br" }, { type: "WhatsApp", val: "(98) 98116-0000" }] },
+  { id: "ouvidoria",     title: "Ouvidoria",     iconName: "Ear",    desc: "Elogios, sugest├Áes ou reclama├º├Áes institucionais.", channels: [{ type: "E-mail", val: "ouvidoria@oabma.org.br" }, { type: "Telefone", val: "(98) 2107-5400" }] },
+  { id: "ted",           title: "TED",           iconName: "Scale",  desc: "Representa├º├Áes ├®tico-disciplinares.",             channels: [{ type: "E-mail", val: "ted@oabma.org.br" }, { type: "Secretaria", val: "(98) 2107-5421" }] },
 ];
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -71,7 +71,7 @@ const Contato = () => {
     if (remainingSlots <= 0) {
       toast({
         title: "Limite atingido",
-        description: `Máximo de ${MAX_FILES} arquivos permitidos.`,
+        description: `M├íximo de ${MAX_FILES} arquivos permitidos.`,
         variant: "destructive"
       });
       return;
@@ -91,8 +91,8 @@ const Contato = () => {
       }
       if (!ALLOWED_FILE_TYPES.includes(file.type)) {
         toast({
-          title: "Formato não suportado",
-          description: `"${file.name}" — Use PDF, PNG, JPG, DOC, DOCX, XLS ou XLSX.`,
+          title: "Formato n├úo suportado",
+          description: `"${file.name}" ÔÇö Use PDF, PNG, JPG, DOC, DOCX, XLS ou XLSX.`,
           variant: "destructive"
         });
         return;
@@ -137,7 +137,7 @@ const Contato = () => {
       console.error('Upload error:', error);
       toast({
         title: "Erro no upload",
-        description: "Não foi possível enviar um ou mais arquivos. Tente novamente.",
+        description: "N├úo foi poss├¡vel enviar um ou mais arquivos. Tente novamente.",
         variant: "destructive"
       });
     } finally {
@@ -164,7 +164,7 @@ const Contato = () => {
     if (!siteId) {
       toast({
         title: "Erro",
-        description: "Não foi possível identificar o site para envio.",
+        description: "N├úo foi poss├¡vel identificar o site para envio.",
         variant: "destructive"
       });
       return;
@@ -226,11 +226,11 @@ const Contato = () => {
           Estamos aqui para ajudar.
         </h1>
         <p className="text-muted-foreground max-w-2xl text-lg font-medium">
-          Caso tenha dúvidas sobre algum processo ou necessite de informações institucionais, selecione um canal abaixo.
+          Caso tenha d├║vidas sobre algum processo ou necessite de informa├º├Áes institucionais, selecione um canal abaixo.
         </p>
       </div>
 
-      {/* Canais de Denúncia */}
+      {/* Canais de Den├║ncia */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 animate-in slide-in-from-bottom-6 duration-700">
         {((content as any).contactChannels || DEFAULT_CHANNELS).map((canal: typeof DEFAULT_CHANNELS[0]) => {
           const IconComponent = ICON_MAP[canal.iconName] || Shield;
@@ -328,7 +328,7 @@ const Contato = () => {
               <Textarea
                 required
                 name="message"
-                placeholder="Descreva sua dúvida ou solicitação..."
+                placeholder="Descreva sua d├║vida ou solicita├º├úo..."
                 rows={6}
                 value={formData.message}
                 onChange={handleChange}
@@ -336,7 +336,7 @@ const Contato = () => {
               />
             </div>
 
-            {/* Seção de Anexos */}
+            {/* Se├º├úo de Anexos */}
             <div className="md:col-span-2 space-y-4">
               <div className="flex items-center justify-between">
                 <label className="text-[10px] font-black uppercase tracking-widest text-muted-foreground ml-1 flex items-center gap-2">
@@ -348,7 +348,7 @@ const Contato = () => {
                 </label>
               </div>
               
-              {/* Área de upload */}
+              {/* ├ürea de upload */}
               <div 
                 className="relative border-2 border-dashed border-primary/15 hover:border-primary/30 rounded-xl p-6 transition-all cursor-pointer bg-muted/20 hover:bg-muted/30 group"
                 onClick={() => fileInputRef.current?.click()}
@@ -378,7 +378,7 @@ const Contato = () => {
                           Clique para selecionar arquivos
                         </p>
                         <p className="text-[10px] text-muted-foreground/60 mt-1">
-                          PDF, PNG, JPG, DOC, DOCX, XLS, XLSX — Máx. 15MB cada — Até {MAX_FILES} arquivos
+                          PDF, PNG, JPG, DOC, DOCX, XLS, XLSX ÔÇö M├íx. 15MB cada ÔÇö At├® {MAX_FILES} arquivos
                         </p>
                       </div>
                     </>
@@ -462,7 +462,7 @@ const Contato = () => {
               <div className="p-2 bg-primary/10 text-primary rounded-lg">
                 <MapPin className="h-5 w-5" />
               </div>
-              <h3 className="text-sm font-black text-primary uppercase tracking-tight">Localização</h3>
+              <h3 className="text-sm font-black text-primary uppercase tracking-tight">Localiza├º├úo</h3>
             </div>
             
             <div className="space-y-4">

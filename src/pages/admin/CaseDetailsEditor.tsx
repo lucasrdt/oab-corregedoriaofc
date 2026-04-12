@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+﻿import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { supabase } from '@/lib/supabase';
 import { Button } from '@/components/ui/button';
@@ -40,7 +40,7 @@ const CaseDetailsEditor = () => {
     const fetchSite = async () => {
         if (!IS_SITE_CONFIGURED) {
             setLoading(false);
-            toast.error('Site ID não configurado. Verifique o arquivo .env');
+            toast.error('Site ID n├úo configurado. Verifique o arquivo .env');
             navigate('/admin/dashboard');
             return;
         }
@@ -105,7 +105,7 @@ const CaseDetailsEditor = () => {
             if (foundCase) {
                 setCaseData(JSON.parse(JSON.stringify(foundCase)));
             } else {
-                toast.error("Caso não encontrado");
+                toast.error("Caso n├úo encontrado");
                 navigate('/admin/editor');
             }
         }
@@ -117,12 +117,12 @@ const CaseDetailsEditor = () => {
         if (!config || !caseData) return;
 
         if (!IS_SITE_CONFIGURED) {
-            toast.error("Site ID não configurado. Não é possível salvar.");
+            toast.error("Site ID n├úo configurado. N├úo ├® poss├¡vel salvar.");
             return;
         }
 
         if (!caseData.name || !caseData.processo) {
-            toast.error("Preencha os campos obrigatórios (Nome e Processo)");
+            toast.error("Preencha os campos obrigat├│rios (Nome e Processo)");
             return;
         }
 
@@ -250,10 +250,10 @@ const CaseDetailsEditor = () => {
                     </Button>
                     <h1 className="text-3xl font-black text-primary uppercase tracking-tight flex items-center gap-3">
                         <Scale className="h-8 w-8 text-secondary" /> 
-                        {caseId === 'new' ? 'Abertura de Novo Caso' : 'Gestão de Processo'}
+                        {caseId === 'new' ? 'Abertura de Novo Caso' : 'Gest├úo de Processo'}
                     </h1>
                     <p className="text-muted-foreground font-medium text-sm">
-                        Processo: <span className="text-primary font-bold italic">{caseData.processo || 'NÃO DEFINIDO'}</span>
+                        Processo: <span className="text-primary font-bold italic">{caseData.processo || 'N├âO DEFINIDO'}</span>
                     </p>
                 </div>
                 <div className="flex items-center gap-3">
@@ -274,14 +274,14 @@ const CaseDetailsEditor = () => {
                         className="bg-primary hover:bg-primary/90 text-white font-black text-[10px] tracking-widest uppercase px-8 h-12 shadow-xl shadow-primary/20 transition-all active:scale-95 group"
                     >
                         <Save className="w-4 h-4 mr-2 group-hover:rotate-12 transition-transform" />
-                        {saving ? 'SINCRONIZANDO...' : 'SALVAR ALTERAÇÕES'}
+                        {saving ? 'SINCRONIZANDO...' : 'SALVAR ALTERA├ç├òES'}
                     </Button>
                 </div>
             </div>
 
             <div className="grid lg:grid-cols-12 gap-8 items-start">
                 <div className="lg:col-span-8 space-y-8">
-                    {/* Card 1: Informações da Empresa */}
+                    {/* Card 1: Informa├º├Áes da Empresa */}
                     <Card className="border-border/50 shadow-sm bg-card overflow-hidden">
                         <CardHeader className="bg-primary/5 border-b border-primary/5">
                             <CardTitle className="text-sm font-black uppercase tracking-widest text-primary flex items-center gap-2">
@@ -292,7 +292,7 @@ const CaseDetailsEditor = () => {
                             <div className="grid md:grid-cols-2 gap-8">
                                 <div className="space-y-6">
                                     <div className="grid gap-2">
-                                        <Label className="text-[10px] font-black uppercase tracking-widest text-primary/60 ml-1">Razão Social / Nome Fantasia <span className="text-red-500">*</span></Label>
+                                        <Label className="text-[10px] font-black uppercase tracking-widest text-primary/60 ml-1">Raz├úo Social / Nome Fantasia <span className="text-red-500">*</span></Label>
                                         <Input
                                             className="h-12 bg-slate-50 border-slate-200 focus:bg-white rounded-xl font-bold text-primary"
                                             value={caseData.name}
@@ -313,13 +313,13 @@ const CaseDetailsEditor = () => {
                                             />
                                         </div>
                                         <div className="grid gap-2">
-                                            <Label className="text-[10px] font-black uppercase tracking-widest text-primary/60 ml-1">Subseção</Label>
+                                            <Label className="text-[10px] font-black uppercase tracking-widest text-primary/60 ml-1">Subse├º├úo</Label>
                                             <Select
                                                 value={caseData.subsection_id || ''}
                                                 onValueChange={val => updateField('subsection_id', val)}
                                             >
                                                 <SelectTrigger className="h-12 bg-slate-50 border-slate-200 rounded-xl font-bold">
-                                                    <SelectValue placeholder="Selecione a subseção" />
+                                                    <SelectValue placeholder="Selecione a subse├º├úo" />
                                                 </SelectTrigger>
                                                 <SelectContent>
                                                     {subsections.map((sub) => (
@@ -337,7 +337,7 @@ const CaseDetailsEditor = () => {
                                         value={caseData.logo || ''}
                                         onChange={url => updateField('logo', url)}
                                     />
-                                    <p className="text-[10px] text-muted-foreground uppercase font-black tracking-widest text-center">Resolução recomendada: 400x400px</p>
+                                    <p className="text-[10px] text-muted-foreground uppercase font-black tracking-widest text-center">Resolu├º├úo recomendada: 400x400px</p>
                                 </div>
                             </div>
                         </CardContent>
@@ -347,12 +347,12 @@ const CaseDetailsEditor = () => {
                     <Card className="border-border/50 shadow-sm bg-card overflow-hidden">
                         <CardHeader className="bg-primary/5 border-b border-primary/5">
                             <CardTitle className="text-sm font-black uppercase tracking-widest text-primary flex items-center gap-2">
-                                <ShieldCheck className="h-4 w-4 text-secondary" /> Especificações Jurídicas
+                                <ShieldCheck className="h-4 w-4 text-secondary" /> Especifica├º├Áes Jur├¡dicas
                             </CardTitle>
                         </CardHeader>
                         <CardContent className="p-8 space-y-8">
                             <div className="space-y-2">
-                                <Label className="text-[10px] font-black uppercase tracking-widest text-primary/60 ml-1">Número Unificado do Processo <span className="text-red-500">*</span></Label>
+                                <Label className="text-[10px] font-black uppercase tracking-widest text-primary/60 ml-1">N├║mero Unificado do Processo <span className="text-red-500">*</span></Label>
                                 <Input
                                     className="h-12 bg-slate-50 border-slate-200 focus:bg-white rounded-xl font-mono text-lg font-black text-primary"
                                     value={caseData.processo}
@@ -384,18 +384,18 @@ const CaseDetailsEditor = () => {
                                         </div>
                                     </div>
                                     <div className="grid gap-2">
-                                        <Label className="text-[10px] font-black uppercase tracking-widest text-primary/60 ml-1">Vara / Juízo</Label>
+                                        <Label className="text-[10px] font-black uppercase tracking-widest text-primary/60 ml-1">Vara / Ju├¡zo</Label>
                                         <Input
                                             className="h-12 bg-slate-50 border-slate-200 focus:bg-white rounded-xl font-bold"
                                             value={caseData.vara}
                                             onChange={e => updateField('vara', e.target.value)}
-                                            placeholder="Ex: 1ª Vara Empresarial"
+                                            placeholder="Ex: 1┬¬ Vara Empresarial"
                                         />
                                     </div>
                                 </div>
                                 <div className="space-y-6">
                                     <div className="grid gap-2">
-                                        <Label className="text-[10px] font-black uppercase tracking-widest text-primary/60 ml-1">Especialista Responsável</Label>
+                                        <Label className="text-[10px] font-black uppercase tracking-widest text-primary/60 ml-1">Especialista Respons├ível</Label>
                                         <div className="relative">
                                             <User className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-primary/40" />
                                             <Input
@@ -494,9 +494,9 @@ const CaseDetailsEditor = () => {
                                     { id: 'demandasTed', label: 'Demandas do TED', icon: FileText },
                                     { id: 'ouvidoria', label: 'Ouvidoria', icon: FileText },
                                     { id: 'prerrogativas', label: 'Prerrogativas', icon: FileText },
-                                    { id: 'fiscalizacao', label: 'Fiscalização', icon: FileText },
+                                    { id: 'fiscalizacao', label: 'Fiscaliza├º├úo', icon: FileText },
                                     { id: 'esa', label: 'ESA', icon: FileText },
-                                    { id: 'comissoes', label: 'Comissões', icon: FileText },
+                                    { id: 'comissoes', label: 'Comiss├Áes', icon: FileText },
                                     { id: 'financeiro', label: 'Financeiro', icon: FileText },
                                     ...(caseData.documentos?.customCategories || []).map((cat: any) => ({
                                         id: `custom_${cat.id}`,
@@ -523,7 +523,7 @@ const CaseDetailsEditor = () => {
                                                         type="button"
                                                         onClick={(e) => {
                                                             e.stopPropagation();
-                                                            if (confirm(`Remover a categoria "${tab.label}"? Os documentos serão perdidos.`)) {
+                                                            if (confirm(`Remover a categoria "${tab.label}"? Os documentos ser├úo perdidos.`)) {
                                                                 setCaseData((prev: any) => {
                                                                     const newDocs = { ...prev.documentos };
                                                                     const newCustom = (newDocs.customCategories || []).filter((c: any) => c.id !== tab.customId);
@@ -555,7 +555,7 @@ const CaseDetailsEditor = () => {
                                 ))}
                             </Accordion>
 
-                            {/* Botão para adicionar nova categoria */}
+                            {/* Bot├úo para adicionar nova categoria */}
                             <div className="mt-6 pt-6 border-t border-slate-100">
                                 <Button
                                     type="button"
@@ -628,11 +628,11 @@ const CaseDetailsEditor = () => {
                             <ul className="space-y-4">
                                 <li className="flex gap-3">
                                     <div className="w-5 h-5 rounded-full bg-secondary/20 flex-shrink-0 flex items-center justify-center text-[10px] font-black text-primary">1</div>
-                                    <p className="text-[11px] text-muted-foreground leading-relaxed">Certifique-se de que o <strong>Número do Processo</strong> esteja no formato correto (CNJ).</p>
+                                    <p className="text-[11px] text-muted-foreground leading-relaxed">Certifique-se de que o <strong>N├║mero do Processo</strong> esteja no formato correto (CNJ).</p>
                                 </li>
                                 <li className="flex gap-3">
                                     <div className="w-5 h-5 rounded-full bg-secondary/20 flex-shrink-0 flex items-center justify-center text-[10px] font-black text-primary">2</div>
-                                    <p className="text-[11px] text-muted-foreground leading-relaxed">O link de <strong>Habilitações</strong> deve ser uma URL válida apontando para o sistema de gestão de créditos.</p>
+                                    <p className="text-[11px] text-muted-foreground leading-relaxed">O link de <strong>Habilita├º├Áes</strong> deve ser uma URL v├ílida apontando para o sistema de gest├úo de cr├®ditos.</p>
                                 </li>
                                 <li className="flex gap-3">
                                     <div className="w-5 h-5 rounded-full bg-secondary/20 flex-shrink-0 flex items-center justify-center text-[10px] font-black text-primary">3</div>

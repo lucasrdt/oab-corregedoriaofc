@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+﻿import { useState, useEffect } from 'react';
 import { useParams, useNavigate, useSearchParams } from 'react-router-dom';
 import { supabase } from '@/lib/supabase';
 import { useAuth } from '@/contexts/AuthContext';
@@ -99,7 +99,7 @@ const CasoEditor = () => {
         .single();
 
       if (error || !data) {
-        toast.error('Caso não encontrado ou acesso negado');
+        toast.error('Caso n├úo encontrado ou acesso negado');
         navigate(backPath);
         return;
       }
@@ -153,17 +153,17 @@ const CasoEditor = () => {
 
   const handleSave = async () => {
     if (!IS_SITE_CONFIGURED) {
-      toast.error('Site ID não configurado. Não é possível salvar.');
+      toast.error('Site ID n├úo configurado. N├úo ├® poss├¡vel salvar.');
       return;
     }
 
     if (!casoData.nome || !casoData.processo) {
-      toast.error('Preencha os campos obrigatórios: Nome e Processo');
+      toast.error('Preencha os campos obrigat├│rios: Nome e Processo');
       return;
     }
 
     if (!effectiveSubsectionId && isNew) {
-      toast.error('Subseção não identificada. Selecione uma subseção antes de criar o caso.');
+      toast.error('Subse├º├úo n├úo identificada. Selecione uma subse├º├úo antes de criar o caso.');
       return;
     }
 
@@ -214,7 +214,7 @@ const CasoEditor = () => {
     try {
       const { error } = await supabase.from('casos').delete().eq('id', casoId);
       if (error) throw error;
-      toast.success('Caso excluído.');
+      toast.success('Caso exclu├¡do.');
       navigate(backPath);
     } catch (err: unknown) {
       const msg = err instanceof Error ? err.message : 'Erro ao excluir caso';
@@ -280,19 +280,19 @@ const CasoEditor = () => {
         {readonly && (
           <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
             <p className="text-sm text-yellow-800">
-              Você está visualizando este caso em modo somente leitura.
+              Voc├¬ est├í visualizando este caso em modo somente leitura.
             </p>
           </div>
         )}
 
-        {/* Card 1: Informações do Caso */}
+        {/* Card 1: Informa├º├Áes do Caso */}
         <Card>
           <CardHeader className="pb-4">
             <CardTitle className="flex items-center gap-2 text-lg">
               <Scale className="h-5 w-5 text-primary" />
-              Informações do Caso
+              Informa├º├Áes do Caso
             </CardTitle>
-            <CardDescription>Dados de identificação e processo</CardDescription>
+            <CardDescription>Dados de identifica├º├úo e processo</CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
             <div className="space-y-2">
@@ -310,7 +310,7 @@ const CasoEditor = () => {
 
             <div className="space-y-2">
               <Label>
-                Número do Processo <span className="text-red-500">*</span>
+                N├║mero do Processo <span className="text-red-500">*</span>
               </Label>
               <Input
                 value={casoData.processo}
@@ -327,7 +327,7 @@ const CasoEditor = () => {
                 <Input
                   value={casoData.comarca}
                   onChange={e => updateField('comarca', e.target.value)}
-                  placeholder="São Luís"
+                  placeholder="S├úo Lu├¡s"
                   disabled={readonly}
                 />
               </div>
@@ -350,16 +350,16 @@ const CasoEditor = () => {
                 <Input
                   value={casoData.vara}
                   onChange={e => updateField('vara', e.target.value)}
-                  placeholder="1ª Vara Empresarial"
+                  placeholder="1┬¬ Vara Empresarial"
                   disabled={readonly}
                 />
               </div>
               <div className="space-y-2">
-                <Label>Especialista Responsável</Label>
+                <Label>Especialista Respons├ível</Label>
                 <Input
                   value={casoData.especialista}
                   onChange={e => updateField('especialista', e.target.value)}
-                  placeholder="Nome do responsável"
+                  placeholder="Nome do respons├ível"
                   disabled={readonly}
                 />
               </div>
@@ -376,7 +376,7 @@ const CasoEditor = () => {
                 />
               </div>
               <div className="space-y-2">
-                <Label>Nº de Credores</Label>
+                <Label>N┬║ de Credores</Label>
                 <Input
                   type="number"
                   value={casoData.credores}
@@ -388,7 +388,7 @@ const CasoEditor = () => {
             </div>
 
             <div className="space-y-2">
-              <Label>Link Habilitações e Crédito / Impugnações</Label>
+              <Label>Link Habilita├º├Áes e Cr├®dito / Impugna├º├Áes</Label>
               <Input
                 value={casoData.link_habilitacoes}
                 onChange={e => updateField('link_habilitacoes', e.target.value)}
@@ -397,7 +397,7 @@ const CasoEditor = () => {
                 disabled={readonly}
               />
               <p className="text-xs text-muted-foreground">
-                URL externa. Deixe vazio para ocultar o botão.
+                URL externa. Deixe vazio para ocultar o bot├úo.
               </p>
             </div>
           </CardContent>
@@ -448,7 +448,7 @@ const CasoEditor = () => {
             <CardDescription>
               {readonly
                 ? 'Documentos do caso'
-                : 'Clique para expandir cada seção e adicionar documentos'}
+                : 'Clique para expandir cada se├º├úo e adicionar documentos'}
             </CardDescription>
           </CardHeader>
           <CardContent>
@@ -457,9 +457,9 @@ const CasoEditor = () => {
                 { id: 'demandasTed', label: 'Demandas do TED' },
                 { id: 'ouvidoria', label: 'Ouvidoria' },
                 { id: 'prerrogativas', label: 'Prerrogativas' },
-                { id: 'fiscalizacao', label: 'Fiscalização' },
+                { id: 'fiscalizacao', label: 'Fiscaliza├º├úo' },
                 { id: 'esa', label: 'ESA' },
-                { id: 'comissoes', label: 'Comissões' },
+                { id: 'comissoes', label: 'Comiss├Áes' },
                 { id: 'financeiro', label: 'Financeiro' },
                 ...(casoData.documentos?.customCategories || []).map((cat: any) => ({
                   id: `custom_${cat.id}`,
@@ -514,7 +514,7 @@ const CasoEditor = () => {
               ))}
             </Accordion>
 
-            {/* Botão para adicionar nova categoria */}
+            {/* Bot├úo para adicionar nova categoria */}
             {!readonly && (
               <div className="mt-4 pt-4 border-t">
                 <Button
