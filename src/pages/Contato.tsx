@@ -467,7 +467,7 @@ const Contato = () => {
             
             <div className="space-y-4">
               <p className="text-muted-foreground font-medium leading-relaxed">
-                {content.addresses[0]?.street}, {content.addresses[0]?.number}<br />
+                {content.addresses[0]?.street}<br />
                 {content.addresses[0]?.complement && <>{content.addresses[0]?.complement}<br /></>}
                 {content.addresses[0]?.neighborhood}<br />
                 {content.addresses[0]?.city} - {content.addresses[0]?.state}<br />
