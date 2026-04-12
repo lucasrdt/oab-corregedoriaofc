@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from "react";
+﻿import { useState, useRef, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { useSite } from "@/contexts/SiteContext";
 import { Menu, X, LogIn, ChevronDown, ChevronRight, Search, Globe, Phone, Mail, Instagram } from "lucide-react";
@@ -32,19 +32,19 @@ const Header = () => {
   }, [location.pathname]);
 
   const navLinks = [
-    { name: "Início", path: "/" },
+    { name: "InÃ­cio", path: "/" },
     { name: "Quem Somos", path: "/equipe" },
-    { name: "Subseções", path: "/subsecoes" },
-    { name: "Denúncias", path: "#denuncias", isParent: true },
+    { name: "SubseÃ§Ãµes", path: "/subsecoes" },
+    { name: "DenÃºncias", path: "#denuncias", isParent: true },
     { name: "Cursos e Eventos", path: "/cursos" },
-    { name: "Notícias", path: "/na-midia" },
-    { name: "Dúvidas Frequentes", path: "/duvidas" },
+    { name: "NotÃ­cias", path: "/na-midia" },
+    { name: "DÃºvidas Frequentes", path: "/duvidas" },
     { name: "Fale Conosco", path: "/contato" },
   ];
 
   const denunciasLinks = [
     { name: "Prerrogativas", path: "/contato#prerrogativas" },
-    { name: "Fiscalização", path: "/contato#fiscalizacao" },
+    { name: "FiscalizaÃ§Ã£o", path: "/contato#fiscalizacao" },
     { name: "Ouvidoria", path: "/contato#ouvidoria" },
     { name: "TED", path: "/contato#ted" },
   ];
@@ -65,7 +65,7 @@ const Header = () => {
           <div className="flex items-center gap-4 text-[11px] font-medium text-muted-foreground/80">
             <Link to="/contato#prerrogativas" className="hover:text-primary transition-colors">PRERROGATIVAS</Link>
             <span className="opacity-20">/</span>
-            <Link to="/contato#fiscalizacao" className="hover:text-primary transition-colors">FISCALIZAÇÃO</Link>
+            <Link to="/contato#fiscalizacao" className="hover:text-primary transition-colors">FISCALIZAÃ‡ÃƒO</Link>
             <span className="opacity-20">/</span>
             <Link to="/contato#ouvidoria" className="hover:text-primary transition-colors">OUVIDORIA</Link>
             <span className="opacity-20">/</span>
@@ -100,7 +100,7 @@ const Header = () => {
                  {companyName}
                </span>
                <span className="text-[9px] md:text-[10px] text-muted-foreground/70 font-medium uppercase tracking-[0.2em]">
-                 {content?.tagline || "Administração Judicial"}
+                 {content?.tagline || "AdministraÃ§Ã£o Judicial"}
                </span>
              </div>
           </Link>
@@ -237,7 +237,7 @@ const Header = () => {
                  </div>
 
                  <div className="space-y-6">
-                    <h3 className="text-xs font-bold uppercase tracking-[0.3em] text-muted-foreground/60">Endereço Unidade I</h3>
+                    <h3 className="text-xs font-bold uppercase tracking-[0.3em] text-muted-foreground/60">EndereÃ§o Unidade I</h3>
                     <div className="flex items-start gap-4">
                        <div className="p-2 rounded-lg bg-secondary/10 flex-shrink-0">
                           <ChevronRight className="h-5 w-5 text-secondary" />
@@ -268,7 +268,7 @@ const Header = () => {
 
             {/* Overlay Footer */}
             <div className="mt-auto pt-16 flex items-center justify-between text-[11px] font-bold text-muted-foreground/40 uppercase tracking-[0.4em]">
-               <span>© {new Date().getFullYear()} {companyName}</span>
+               <span>Â© {new Date().getFullYear()} {companyName}</span>
                <span className="hidden sm:inline">A Casa de Todos e Todas, da advocacia e da sociedade</span>
             </div>
           </div>

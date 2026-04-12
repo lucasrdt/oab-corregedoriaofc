@@ -1,4 +1,4 @@
-import { MessageCircle } from "lucide-react";
+﻿import { MessageCircle } from "lucide-react";
 import { useLocation } from "react-router-dom";
 import { useSite } from "@/contexts/SiteContext";
 

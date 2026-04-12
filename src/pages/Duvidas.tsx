@@ -23,7 +23,7 @@ const Duvidas = () => {
       <div className="flex items-center text-xs font-bold uppercase tracking-widest text-muted-foreground gap-2">
         <Link to="/" className="hover:text-primary transition-colors">Home</Link>
         <ChevronRight className="h-3 w-3" />
-        <span className="text-primary">Dúvidas Frequentes</span>
+        <span className="text-primary">DÃºvidas Frequentes</span>
       </div>
 
       <div className="space-y-2">
@@ -31,7 +31,7 @@ const Duvidas = () => {
           Como podemos ajudar?
         </h1>
         <p className="text-muted-foreground max-w-2xl text-lg font-medium">
-          Encontre respostas rápidas para as principais dúvidas sobre processos, prazos e procedimentos legais.
+          Encontre respostas rÃ¡pidas para as principais dÃºvidas sobre processos, prazos e procedimentos legais.
         </p>
       </div>
 
@@ -71,10 +71,10 @@ const Duvidas = () => {
             </div>
             
             <h3 className="text-lg font-black text-secondary uppercase tracking-tight relative z-10">
-              Ainda com dúvidas?
+              Ainda com dÃºvidas?
             </h3>
             <p className="text-white/70 text-sm font-medium leading-relaxed relative z-10">
-              Nossa equipe técnica e jurídica está à disposição para esclarecimentos adicionais através do WhatsApp.
+              Nossa equipe tÃ©cnica e jurÃ­dica estÃ¡ Ã  disposiÃ§Ã£o para esclarecimentos adicionais atravÃ©s do WhatsApp.
             </p>
             
             <Button asChild className="w-full bg-secondary hover:bg-secondary/90 text-secondary-foreground font-black text-[10px] tracking-widest uppercase h-12 shadow-md relative z-10">
@@ -109,3 +109,4 @@ const Duvidas = () => {
 };
 
 export default Duvidas;
+

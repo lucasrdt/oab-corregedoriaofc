@@ -1,4 +1,4 @@
-import { useSite } from "@/contexts/SiteContext";
+﻿import { useSite } from "@/contexts/SiteContext";
 import { Instagram, Facebook, Linkedin, Phone, Twitter, Youtube, MapPin, Mail, Globe } from "lucide-react";
 import { Link } from "react-router-dom";
 
@@ -19,20 +19,20 @@ const Footer = () => {
 
   return (
     <footer className="bg-navy-deep text-white border-t border-white/5">
-      {/* 1. SEÇÃO DE APOIO / LOGOS */}
+      {/* 1. SEÃ‡ÃƒO DE APOIO / LOGOS */}
       <div className="bg-black/10 border-b border-white/5">
         <div className="container-padding py-6 flex items-center justify-between opacity-50 grayscale hover:grayscale-0 transition-all duration-500">
            <span className="text-[10px] font-bold tracking-[0.3em] uppercase text-white/40">Institucional</span>
            <div className="flex items-center gap-8">
-              {/* Espaço para logos de parceiros/governo se necessário */}
+              {/* EspaÃ§o para logos de parceiros/governo se necessÃ¡rio */}
               <div className="h-6 w-24 bg-white/5 rounded flex items-center justify-center text-[9px] font-bold text-white/20 uppercase tracking-tighter">OAB Nacional</div>
               <div className="h-6 w-24 bg-white/5 rounded flex items-center justify-center text-[9px] font-bold text-white/20 uppercase tracking-tighter">CNJ</div>
-              <div className="h-6 w-24 bg-white/5 rounded flex items-center justify-center text-[9px] font-bold text-white/20 uppercase tracking-tighter">Justiça</div>
+              <div className="h-6 w-24 bg-white/5 rounded flex items-center justify-center text-[9px] font-bold text-white/20 uppercase tracking-tighter">JustiÃ§a</div>
            </div>
         </div>
       </div>
 
-      {/* 2. CONTEÚDO PRINCIPAL */}
+      {/* 2. CONTEÃšDO PRINCIPAL */}
       <div className="container-padding py-16">
         <div className="grid grid-cols-1 md:grid-cols-12 gap-12 lg:gap-16">
 
@@ -53,21 +53,21 @@ const Footer = () => {
                   {companyName}
                 </span>
                 <span className="text-[9px] md:text-[10px] text-white/70 font-bold uppercase tracking-[0.2em] mt-1">
-                  Forte e ao seu lado
+                  AdministraÃ§Ã£o Judicial
                 </span>
               </div>
             </div>
             
             
-            <div className="flex flex-col gap-3">
-               <h5 className="text-[10px] font-bold uppercase tracking-widest text-white/60">Horário de Atendimento</h5>
+            <div class="flex flex-col gap-3">
+               <h5 className="text-[10px] font-bold uppercase tracking-widest text-white/60">HorÃ¡rio de Atendimento</h5>
                <p className="text-xs text-white/40 font-medium">
-                 {content.businessHours?.weekdays || "Segunda a Sexta: 08h às 18h"}
+                 {content.businessHours?.weekdays || "Segunda a Sexta: 08h Ã s 18h"}
                </p>
             </div>
           </div>
 
-          {/* Coluna 2: Navegação */}
+          {/* Coluna 2: NavegaÃ§Ã£o */}
           <div className="md:col-span-2 space-y-6">
             <h4 className="text-xs font-bold uppercase tracking-[0.2em] text-white py-1 border-b border-white/20 w-fit">
               Sistemas
@@ -77,7 +77,7 @@ const Footer = () => {
                 { name: "Administrativo", path: "/portal" },
                 { name: "Andamento de Processos", path: "/subsecoes" },
                 { name: "Subseções", path: "/subsecoes" },
-                { name: "Transparência", path: "/" },
+                { name: "TransparÃªncia", path: "/" },
               ].map(link => (
                 <Link
                   key={link.name}
@@ -98,7 +98,7 @@ const Footer = () => {
             <nav className="flex flex-col gap-3">
               {[
                 { name: "Equipe", path: "/equipe" },
-                { name: "Na Mídia", path: "/na-midia" },
+                { name: "Na MÃ­dia", path: "/na-midia" },
                 { name: "Cursos", path: "/cursos" },
                 { name: "Contato", path: "/contato" },
               ].map(link => (
@@ -113,7 +113,7 @@ const Footer = () => {
             </nav>
           </div>
 
-          {/* Coluna 4: Contato & Localização */}
+          {/* Coluna 4: Contato & LocalizaÃ§Ã£o */}
           <div className="md:col-span-4 space-y-8">
             <div className="space-y-4">
                <h4 className="text-xs font-bold uppercase tracking-[0.2em] text-white">Fale Conosco</h4>
@@ -147,15 +147,15 @@ const Footer = () => {
         </div>
       </div>
 
-      {/* 3. RODAPÉ INFERIOR */}
+      {/* 3. RODAPÃ‰ INFERIOR */}
       <div className="border-t border-white/5 bg-black/30">
         <div className="container-padding py-8 flex flex-col md:flex-row items-center justify-between gap-6">
           <div className="flex flex-col gap-1 items-center md:items-start text-center md:text-left">
             <p className="text-[10px] font-bold text-white/40 uppercase tracking-[0.3em]">
-              {content.footer?.copyright || `© ${new Date().getFullYear()} ${content.companyName}`}
+              {content.footer?.copyright || `Â© ${new Date().getFullYear()} ${content.companyName}`}
             </p>
             <p className="text-[9px] text-white/20 uppercase tracking-[0.1em]">
-              {content.footer?.description || "Todos os direitos reservados • CNPJ 00.000.000/0001-00"}
+              {content.footer?.description || "Todos os direitos reservados â€¢ CNPJ 00.000.000/0001-00"}
             </p>
           </div>
 
@@ -189,3 +189,4 @@ const Footer = () => {
 };
 
 export default Footer;
+
