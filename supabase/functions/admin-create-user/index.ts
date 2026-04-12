@@ -77,6 +77,7 @@ serve(async (req: Request) => {
     });
 
     if (createError || !newUser) {
+      console.error('[admin-create-user] createUser failed:', JSON.stringify(createError));
       return new Response(JSON.stringify({ error: createError?.message || 'Failed to create user' }), {
         status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' }
       });

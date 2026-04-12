@@ -159,9 +159,18 @@ const UsuariosSection = () => {
       },
     });
 
-    if (error || data?.error) {
-      const msg = data?.error ?? error?.message ?? 'Erro desconhecido';
-      toast.error('Erro ao criar usuÃ¡rio: ' + msg);
+    if (error) {
+      let msg = error.message ?? 'Erro desconhecido';
+      try {
+        const body = await (error as any).context?.json?.();
+        if (body?.error) msg = body.error;
+      } catch { /* ignora */ }
+      toast.error('Erro ao criar usuário: ' + msg);
+      return;
+    }
+
+    if (data?.error) {
+      toast.error('Erro ao criar usuário: ' + data.error);
       return;
     }
 
@@ -209,7 +218,7 @@ const UsuariosSection = () => {
               </DialogTitle>
               <span className="sr-only">Preencha o formulÃ¡rio para cadastrar um novo usuÃ¡rio no sistema</span>
             </DialogHeader>
-            <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 mt-2">
+            <form onSubmit={handleSubmit(onSubmit)} className="p-6 space-y-4">
               <div className="space-y-1.5">
                 <Label htmlFor="email">E-mail</Label>
                 <Input id="email" type="email" {...register('email')} placeholder="usuario@exemplo.com" />
