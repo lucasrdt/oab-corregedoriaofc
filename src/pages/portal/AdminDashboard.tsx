@@ -41,11 +41,11 @@ import { ImageUpload } from '@/components/ui/image-upload';
 const SITE_ID = import.meta.env.VITE_SITE_ID || '';
 
 const navItems = [
-  { id: 'usuarios', label: 'GestÃ£o de UsuÃ¡rios', icon: Users },
-  { id: 'subsecoes', label: 'SubseÃ§Ãµes OAB', icon: Building2 },
+  { id: 'usuarios', label: 'Gestão de Usuários', icon: Users },
+  { id: 'subsecoes', label: 'Subseções OAB', icon: Building2 },
   { id: 'casos', label: 'Acervo de Casos', icon: FolderOpen },
   { id: 'site', label: 'Editor do Site', icon: Globe },
-  { id: 'perfil', label: 'ConfiguraÃ§Ãµes', icon: UserCircle },
+  { id: 'perfil', label: 'Configurações', icon: UserCircle },
 ];
 
 // --- Types ---
@@ -81,7 +81,7 @@ interface Subsection {
 // --- Form schema ---
 
 const createUserSchema = z.object({
-  email: z.string().email('E-mail invÃ¡lido'),
+  email: z.string().email('E-mail inválido'),
   role: z.enum(['admin', 'dev', 'presidente', 'user'], {
     required_error: 'Selecione um papel',
   }),
@@ -174,7 +174,7 @@ const UsuariosSection = () => {
       return;
     }
 
-    toast.success('UsuÃ¡rio criado com sucesso!');
+    toast.success('Usuário criado com sucesso!');
     setDialogOpen(false);
     reset();
     queryClient.invalidateQueries({ queryKey: ['admin-user-roles'] });
@@ -187,11 +187,11 @@ const UsuariosSection = () => {
       .eq('id', roleId);
 
     if (error) {
-      toast.error('Erro ao desativar usuÃ¡rio: ' + error.message);
+      toast.error('Erro ao desativar usuário: ' + error.message);
       return;
     }
 
-    toast.success('UsuÃ¡rio desativado.');
+    toast.success('Usuário desativado.');
     queryClient.invalidateQueries({ queryKey: ['admin-user-roles'] });
   };
 
@@ -200,15 +200,15 @@ const UsuariosSection = () => {
       <div className="flex items-center justify-between">
         <div className="space-y-1">
           <h2 className="text-2xl font-black text-primary uppercase tracking-tight flex items-center gap-2">
-            <Users className="h-6 w-6 text-secondary" /> GestÃ£o de Acessos
+            <Users className="h-6 w-6 text-secondary" /> Gestão de Acessos
           </h2>
-          <p className="text-muted-foreground font-medium text-sm">Controle as permissÃµes e nÃ­veis de acesso dos colaboradores.</p>
+          <p className="text-muted-foreground font-medium text-sm">Controle as permissões e níveis de acesso dos colaboradores.</p>
         </div>
         <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
           <DialogTrigger asChild>
             <Button className="bg-primary hover:bg-primary/90 text-white font-black text-[10px] tracking-widest uppercase px-6 h-11 shadow-lg shadow-primary/10">
               <Plus className="w-4 h-4 mr-2" />
-              CADASTRAR USUÃRIO
+              CADASTRAR USUÍRIO
             </Button>
           </DialogTrigger>
           <DialogContent className="sm:max-w-md border-none shadow-2xl overflow-hidden p-0">
@@ -216,7 +216,7 @@ const UsuariosSection = () => {
               <DialogTitle className="text-sm font-black uppercase tracking-widest flex items-center gap-2">
                 <Plus className="h-4 w-4 text-secondary" /> Novo Colaborador
               </DialogTitle>
-              <span className="sr-only">Preencha o formulÃ¡rio para cadastrar um novo usuÃ¡rio no sistema</span>
+              <span className="sr-only">Preencha o formulário para cadastrar um novo usuário no sistema</span>
             </DialogHeader>
             <form onSubmit={handleSubmit(onSubmit)} className="p-6 space-y-4">
               <div className="space-y-1.5">
@@ -247,10 +247,10 @@ const UsuariosSection = () => {
 
               {needsSubsection && (
                 <div className="space-y-1.5">
-                  <Label htmlFor="subsection_id">SubseÃ§Ã£o</Label>
+                  <Label htmlFor="subsection_id">Subseção</Label>
                   <Select onValueChange={(val) => setValue('subsection_id', val)}>
                     <SelectTrigger id="subsection_id">
-                      <SelectValue placeholder="Selecione uma subseÃ§Ã£o" />
+                      <SelectValue placeholder="Selecione uma subseção" />
                     </SelectTrigger>
                     <SelectContent>
                       {subsections && subsections.length > 0 ? (
@@ -261,7 +261,7 @@ const UsuariosSection = () => {
                         ))
                       ) : (
                         <SelectItem value="_none" disabled>
-                          Nenhuma subseÃ§Ã£o cadastrada
+                          Nenhuma subseção cadastrada
                         </SelectItem>
                       )}
                     </SelectContent>
@@ -275,7 +275,7 @@ const UsuariosSection = () => {
                 </Button>
                 <Button type="submit" disabled={isSubmitting}>
                   {isSubmitting && <Loader2 className="w-4 h-4 mr-2 animate-spin" />}
-                  Criar UsuÃ¡rio
+                  Criar Usuário
                 </Button>
               </div>
             </form>
@@ -292,9 +292,9 @@ const UsuariosSection = () => {
           <Table>
             <TableHeader className="bg-primary/5">
               <TableRow className="hover:bg-transparent border-border/50">
-                <TableHead className="text-primary font-black text-[10px] uppercase tracking-widest py-5 pl-6">ID do UsuÃ¡rio</TableHead>
-                <TableHead className="text-primary font-black text-[10px] uppercase tracking-widest py-5">NÃ­vel de Acesso</TableHead>
-                <TableHead className="text-primary font-black text-[10px] uppercase tracking-widest py-5">SubseÃ§Ã£o Original</TableHead>
+                <TableHead className="text-primary font-black text-[10px] uppercase tracking-widest py-5 pl-6">ID do Usuário</TableHead>
+                <TableHead className="text-primary font-black text-[10px] uppercase tracking-widest py-5">Nível de Acesso</TableHead>
+                <TableHead className="text-primary font-black text-[10px] uppercase tracking-widest py-5">Subseção Original</TableHead>
                 <TableHead className="text-primary font-black text-[10px] uppercase tracking-widest py-5">Status</TableHead>
                 <TableHead className="w-[110px] py-5" />
               </TableRow>
@@ -337,7 +337,7 @@ const UsuariosSection = () => {
                             size="icon"
                             className="h-8 w-8 text-muted-foreground hover:text-red-500 hover:bg-red-50"
                             onClick={() => handleDeactivate(u.id)}
-                            title="Desativar usuÃ¡rio"
+                            title="Desativar usuário"
                           >
                             <UserX className="w-3.5 h-3.5" />
                           </Button>
@@ -398,7 +398,7 @@ const CasosSection = () => {
                 <TableHead className="text-primary font-black text-[10px] uppercase tracking-widest py-5 pl-6">Nome do Caso</TableHead>
                 <TableHead className="text-primary font-black text-[10px] uppercase tracking-widest py-5">NÂ° Processo</TableHead>
                 <TableHead className="text-primary font-black text-[10px] uppercase tracking-widest py-5">Comarca</TableHead>
-                <TableHead className="text-primary font-black text-[10px] uppercase tracking-widest py-5">SubseÃ§Ã£o</TableHead>
+                <TableHead className="text-primary font-black text-[10px] uppercase tracking-widest py-5">Subseção</TableHead>
                 <TableHead className="text-primary font-black text-[10px] uppercase tracking-widest py-5">Cadastro</TableHead>
                 <TableHead className="w-[120px] py-5" />
               </TableRow>
@@ -479,11 +479,11 @@ const SubsecoesSection = () => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['admin-subsections'] });
       queryClient.invalidateQueries({ queryKey: ['subsections'] });
-      toast.success('SubseÃ§Ã£o criada com sucesso.');
+      toast.success('Subseção criada com sucesso.');
       setDialogOpen(false);
       setCoverImageUrl('');
     },
-    onError: () => toast.error('Erro ao criar subseÃ§Ã£o. Tente novamente.'),
+    onError: () => toast.error('Erro ao criar subseção. Tente novamente.'),
   });
 
   const handleCreateSubmit = (e: React.FormEvent) => {
@@ -513,24 +513,24 @@ const SubsecoesSection = () => {
       <div className="flex items-center justify-between">
         <div className="space-y-1">
           <h2 className="text-2xl font-black text-primary uppercase tracking-tight flex items-center gap-2">
-            <Building2 className="h-6 w-6 text-secondary" /> SubseÃ§Ãµes OAB
+            <Building2 className="h-6 w-6 text-secondary" /> Subseções OAB
           </h2>
-          <p className="text-muted-foreground font-medium text-sm">Gerencie as subseÃ§Ãµes e filtre casos por unidade.</p>
+          <p className="text-muted-foreground font-medium text-sm">Gerencie as subseções e filtre casos por unidade.</p>
         </div>
 
         <Dialog open={dialogOpen} onOpenChange={(open) => { setDialogOpen(open); if (!open) setCoverImageUrl(''); }}>
           <DialogTrigger asChild>
             <Button className="bg-primary hover:bg-primary/90 text-white font-black text-[10px] tracking-widest uppercase px-6 h-11 shadow-lg shadow-primary/10">
               <Plus className="w-4 h-4 mr-2" />
-              NOVA SUBSEÃ‡ÃƒO
+              NOVA SUBSEÇÍO
             </Button>
           </DialogTrigger>
           <DialogContent className="sm:max-w-lg border-none shadow-2xl overflow-hidden p-0">
             <DialogHeader className="bg-primary p-6 text-white border-b border-primary/10">
               <DialogTitle className="text-sm font-black uppercase tracking-widest flex items-center gap-2">
-                <Plus className="h-4 w-4 text-secondary" /> Nova SubseÃ§Ã£o
+                <Plus className="h-4 w-4 text-secondary" /> Nova Subseção
               </DialogTitle>
-              <span className="sr-only">Preencha os dados da nova subseÃ§Ã£o regional</span>
+              <span className="sr-only">Preencha os dados da nova subseção regional</span>
             </DialogHeader>
             <form onSubmit={handleCreateSubmit} className="p-6 space-y-4 max-h-[70vh] overflow-y-auto">
               <div className="space-y-1.5">
@@ -546,7 +546,7 @@ const SubsecoesSection = () => {
 
               <div className="grid grid-cols-2 gap-3">
                 <div className="space-y-1.5">
-                  <Label htmlFor="new-city">MunicÃ­pio *</Label>
+                  <Label htmlFor="new-city">Município *</Label>
                   <Input id="new-city" name="city" required placeholder="Ex: Imperatriz" />
                 </div>
                 <div className="space-y-1.5">
@@ -556,8 +556,8 @@ const SubsecoesSection = () => {
               </div>
 
               <div className="space-y-1.5">
-                <Label htmlFor="new-address">EndereÃ§o</Label>
-                <Input id="new-address" name="address" placeholder="Rua, NÃºmero, Bairro, CEP" />
+                <Label htmlFor="new-address">Endereço</Label>
+                <Input id="new-address" name="address" placeholder="Rua, Número, Bairro, CEP" />
               </div>
 
               <div className="grid grid-cols-2 gap-3">
@@ -577,7 +577,7 @@ const SubsecoesSection = () => {
                 </Button>
                 <Button type="submit" disabled={createSubsection.isPending}>
                   {createSubsection.isPending && <Loader2 className="w-4 h-4 mr-2 animate-spin" />}
-                  Criar SubseÃ§Ã£o
+                  Criar Subseção
                 </Button>
               </div>
             </form>
@@ -627,8 +627,8 @@ const SubsecoesSection = () => {
       ) : (
         <div className="flex flex-col items-center justify-center py-12 text-center text-muted-foreground border-2 border-dashed rounded-lg">
           <Building2 className="w-10 h-10 mb-3 opacity-40" />
-          <p className="text-sm">Nenhuma subseÃ§Ã£o cadastrada ainda.</p>
-          <p className="text-xs mt-1">Clique em "Nova SubseÃ§Ã£o" para comeÃ§ar.</p>
+          <p className="text-sm">Nenhuma subseção cadastrada ainda.</p>
+          <p className="text-xs mt-1">Clique em "Nova Subseção" para começar.</p>
         </div>
       )}
 
@@ -637,7 +637,7 @@ const SubsecoesSection = () => {
         <div className="space-y-4">
           <div className="flex items-center justify-between">
             <h3 className="text-sm font-medium text-muted-foreground">
-              Casos da subseÃ§Ã£o: <span className="text-foreground font-semibold">
+              Casos da subseção: <span className="text-foreground font-semibold">
                 {subsections?.find(s => s.id === selectedSubsection)?.city}
               </span>
             </h3>
@@ -695,7 +695,7 @@ const SubsecoesSection = () => {
           ) : (
             <div className="flex flex-col items-center justify-center py-10 text-center text-muted-foreground border-2 border-dashed rounded-md">
               <FileText className="w-10 h-10 mb-3 opacity-40" />
-              <p className="text-sm">Nenhum caso nesta subseÃ§Ã£o ainda.</p>
+              <p className="text-sm">Nenhum caso nesta subseção ainda.</p>
             </div>
           )}
         </div>
@@ -711,7 +711,7 @@ const ConfigSection = () => {
       <h2 className="text-lg font-semibold">Gerenciamento do Site</h2>
       <Card>
         <CardHeader>
-          <CardTitle className="text-sm">Painel de ConteÃºdo</CardTitle>
+          <CardTitle className="text-sm">Painel de Conteúdo</CardTitle>
         </CardHeader>
         <CardContent>
           <Button onClick={() => navigate('/admin/editor')} className="flex items-center gap-2">

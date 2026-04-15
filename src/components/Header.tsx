@@ -32,19 +32,19 @@ const Header = () => {
   }, [location.pathname]);
 
   const navLinks = [
-    { name: "InÃ­cio", path: "/" },
+    { name: "Início", path: "/" },
     { name: "Quem Somos", path: "/equipe" },
-    { name: "SubseÃ§Ãµes", path: "/subsecoes" },
-    { name: "DenÃºncias", path: "#denuncias", isParent: true },
+    { name: "Subseções", path: "/subsecoes" },
+    { name: "Denúncias", path: "#denuncias", isParent: true },
     { name: "Cursos e Eventos", path: "/cursos" },
-    { name: "NotÃ­cias", path: "/na-midia" },
-    { name: "DÃºvidas Frequentes", path: "/duvidas" },
+    { name: "Notícias", path: "/na-midia" },
+    { name: "Dúvidas Frequentes", path: "/duvidas" },
     { name: "Fale Conosco", path: "/contato" },
   ];
 
   const denunciasLinks = [
     { name: "Prerrogativas", path: "/contato#prerrogativas" },
-    { name: "FiscalizaÃ§Ã£o", path: "/contato#fiscalizacao" },
+    { name: "Fiscalização", path: "/contato#fiscalizacao" },
     { name: "Ouvidoria", path: "/contato#ouvidoria" },
     { name: "TED", path: "/contato#ted" },
   ];
@@ -65,7 +65,7 @@ const Header = () => {
           <div className="flex items-center gap-4 text-[11px] font-medium text-muted-foreground/80">
             <Link to="/contato#prerrogativas" className="hover:text-primary transition-colors">PRERROGATIVAS</Link>
             <span className="opacity-20">/</span>
-            <Link to="/contato#fiscalizacao" className="hover:text-primary transition-colors">FISCALIZAÃ‡ÃƒO</Link>
+            <Link to="/contato#fiscalizacao" className="hover:text-primary transition-colors">FISCALIZAÇÍO</Link>
             <span className="opacity-20">/</span>
             <Link to="/contato#ouvidoria" className="hover:text-primary transition-colors">OUVIDORIA</Link>
             <span className="opacity-20">/</span>
@@ -100,7 +100,7 @@ const Header = () => {
                  {companyName}
                </span>
                <span className="text-[9px] md:text-[10px] text-muted-foreground/70 font-medium uppercase tracking-[0.2em]">
-                 {content?.tagline || "AdministraÃ§Ã£o Judicial"}
+                 {content?.tagline || "Administração Judicial"}
                </span>
              </div>
           </Link>
@@ -237,7 +237,7 @@ const Header = () => {
                  </div>
 
                  <div className="space-y-6">
-                    <h3 className="text-xs font-bold uppercase tracking-[0.3em] text-muted-foreground/60">EndereÃ§o Unidade I</h3>
+                    <h3 className="text-xs font-bold uppercase tracking-[0.3em] text-muted-foreground/60">Endereço Unidade I</h3>
                     <div className="flex items-start gap-4">
                        <div className="p-2 rounded-lg bg-secondary/10 flex-shrink-0">
                           <ChevronRight className="h-5 w-5 text-secondary" />

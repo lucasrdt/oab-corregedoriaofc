@@ -5,7 +5,7 @@ import { supabase } from '@/lib/supabase';
 const OAB_MA_SITE_ID = import.meta.env.VITE_SITE_ID || '870aef8b-6f85-4b59-8729-56dfaf35b6fa';
 
 // -----------------------------------------------------------------------
-// DEFINIÇÃO DE TIPOS E INTERFACE
+// DEFINIÇÍOO DE TIPOS E INTERFACE
 // -----------------------------------------------------------------------
 
 interface SiteContextType {
@@ -138,7 +138,7 @@ export const SiteProvider = ({ children }: { children: ReactNode }) => {
     }), [config, loading, error, siteId, fetchConfig]);
 
     // -----------------------------------------------------------------------
-    // RENDERIZAÇÃO SEMPRE ESTÁVEL DO PROVIDER
+    // RENDERIZAÇÍOO SEMPRE ESTÁVEL DO PROVIDER
     // -----------------------------------------------------------------------
     const isAdminRoute = typeof window !== 'undefined' && window.location.pathname.startsWith('/admin');
 

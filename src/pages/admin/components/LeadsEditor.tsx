@@ -274,7 +274,7 @@ const LeadsEditor = ({ siteId }: LeadsEditorProps) => {
                                         <div className="flex items-center gap-3">
                                             <Phone className="h-4 w-4 text-primary/40" />
                                             <span className="text-sm font-black text-primary uppercase">
-                                                {selectedLead.phone || 'NÃO INFORMADO'}
+                                                {selectedLead.phone || 'NÍO INFORMADO'}
                                             </span>
                                         </div>
                                     </div>

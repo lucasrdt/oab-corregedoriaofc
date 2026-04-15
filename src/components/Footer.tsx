@@ -19,20 +19,20 @@ const Footer = () => {
 
   return (
     <footer className="bg-navy-deep text-white border-t border-white/5">
-      {/* 1. SEÃ‡ÃƒO DE APOIO / LOGOS */}
+      {/* 1. SEÇÍO DE APOIO / LOGOS */}
       <div className="bg-black/10 border-b border-white/5">
         <div className="container-padding py-6 flex items-center justify-between opacity-50 grayscale hover:grayscale-0 transition-all duration-500">
            <span className="text-[10px] font-bold tracking-[0.3em] uppercase text-white/40">Institucional</span>
            <div className="flex items-center gap-8">
-              {/* EspaÃ§o para logos de parceiros/governo se necessÃ¡rio */}
+              {/* Espaço para logos de parceiros/governo se necessário */}
               <div className="h-6 w-24 bg-white/5 rounded flex items-center justify-center text-[9px] font-bold text-white/20 uppercase tracking-tighter">OAB Nacional</div>
               <div className="h-6 w-24 bg-white/5 rounded flex items-center justify-center text-[9px] font-bold text-white/20 uppercase tracking-tighter">CNJ</div>
-              <div className="h-6 w-24 bg-white/5 rounded flex items-center justify-center text-[9px] font-bold text-white/20 uppercase tracking-tighter">JustiÃ§a</div>
+              <div className="h-6 w-24 bg-white/5 rounded flex items-center justify-center text-[9px] font-bold text-white/20 uppercase tracking-tighter">Justiça</div>
            </div>
         </div>
       </div>
 
-      {/* 2. CONTEÃšDO PRINCIPAL */}
+      {/* 2. CONTEÚDO PRINCIPAL */}
       <div className="container-padding py-16">
         <div className="grid grid-cols-1 md:grid-cols-12 gap-12 lg:gap-16">
 
@@ -53,21 +53,21 @@ const Footer = () => {
                   {companyName}
                 </span>
                 <span className="text-[9px] md:text-[10px] text-white/70 font-bold uppercase tracking-[0.2em] mt-1">
-                  AdministraÃ§Ã£o Judicial
+                  Administração Judicial
                 </span>
               </div>
             </div>
             
             
             <div class="flex flex-col gap-3">
-               <h5 className="text-[10px] font-bold uppercase tracking-widest text-white/60">HorÃ¡rio de Atendimento</h5>
+               <h5 className="text-[10px] font-bold uppercase tracking-widest text-white/60">Horário de Atendimento</h5>
                <p className="text-xs text-white/40 font-medium">
-                 {content.businessHours?.weekdays || "Segunda a Sexta: 08h Ã s 18h"}
+                 {content.businessHours?.weekdays || "Segunda a Sexta: 08h às 18h"}
                </p>
             </div>
           </div>
 
-          {/* Coluna 2: NavegaÃ§Ã£o */}
+          {/* Coluna 2: Navegação */}
           <div className="md:col-span-2 space-y-6">
             <h4 className="text-xs font-bold uppercase tracking-[0.2em] text-white py-1 border-b border-white/20 w-fit">
               Sistemas
@@ -77,7 +77,7 @@ const Footer = () => {
                 { name: "Administrativo", path: "/portal" },
                 { name: "Andamento de Processos", path: "/subsecoes" },
                 { name: "Subseções", path: "/subsecoes" },
-                { name: "TransparÃªncia", path: "/" },
+                { name: "Transparência", path: "/" },
               ].map(link => (
                 <Link
                   key={link.name}
@@ -98,7 +98,7 @@ const Footer = () => {
             <nav className="flex flex-col gap-3">
               {[
                 { name: "Equipe", path: "/equipe" },
-                { name: "Na MÃ­dia", path: "/na-midia" },
+                { name: "Na Mídia", path: "/na-midia" },
                 { name: "Cursos", path: "/cursos" },
                 { name: "Contato", path: "/contato" },
               ].map(link => (
@@ -113,7 +113,7 @@ const Footer = () => {
             </nav>
           </div>
 
-          {/* Coluna 4: Contato & LocalizaÃ§Ã£o */}
+          {/* Coluna 4: Contato & Localização */}
           <div className="md:col-span-4 space-y-8">
             <div className="space-y-4">
                <h4 className="text-xs font-bold uppercase tracking-[0.2em] text-white">Fale Conosco</h4>
@@ -147,7 +147,7 @@ const Footer = () => {
         </div>
       </div>
 
-      {/* 3. RODAPÃ‰ INFERIOR */}
+      {/* 3. RODAPÉ INFERIOR */}
       <div className="border-t border-white/5 bg-black/30">
         <div className="container-padding py-8 flex flex-col md:flex-row items-center justify-between gap-6">
           <div className="flex flex-col gap-1 items-center md:items-start text-center md:text-left">

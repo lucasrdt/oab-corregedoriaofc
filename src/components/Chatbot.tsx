@@ -25,7 +25,7 @@ const Chatbot = () => {
 
     // Get FAQ from site config
     const faqItems: FAQItem[] = config?.content?.faq || [];
-    const companyName = config?.content?.companyName || "EscritÃ³rio";
+    const companyName = config?.content?.companyName || "Escritório";
 
     // Initialize welcome message â€” hooks must always run before any return
     useEffect(() => {
@@ -33,7 +33,7 @@ const Chatbot = () => {
             setMessages([
                 {
                     id: 1,
-                    text: `OlÃ¡! Sou o assistente virtual do ${companyName}. Como posso te ajudar hoje?`,
+                    text: `Olá! Sou o assistente virtual do ${companyName}. Como posso te ajudar hoje?`,
                     type: "bot",
                 },
             ]);

@@ -1,4 +1,4 @@
-/**
+﻿/**
  * TEMPLATE IVALDO - Configuração Central
  * Este arquivo centraliza todas as variáveis editáveis do template
  * para facilitar a replicação e personalização do site
@@ -152,8 +152,8 @@ export const fullIvaldoTemplate = {
 
     // Categorias de notícias/artigos
     newsCategories: [
-      { id: 1, title: "RECUPERAÇÃO JUDICIAL" },
-      { id: 2, title: "ADMINISTRAÇÃO JUDICIAL" },
+      { id: 1, title: "RECUPERAÇÍO JUDICIAL" },
+      { id: 2, title: "ADMINISTRAÇÍO JUDICIAL" },
       { id: 3, title: "ANÁLISE" },
       { id: 4, title: "ASSEMBLEIA" },
       { id: 5, title: "ENTREVISTA" }
@@ -163,7 +163,7 @@ export const fullIvaldoTemplate = {
     articles: [
       {
         id: 1,
-        category: "RECUPERAÇÃO JUDICIAL",
+        category: "RECUPERAÇÍO JUDICIAL",
         date: "24/01/2024",
         title: "Nova decisão favorável em processo de recuperação judicial",
         excerpt: "Entenda como a decisão recente impacta os credores e o futuro da empresa em recuperação...",
@@ -178,7 +178,7 @@ A administração judicial continuará acompanhando de perto o cumprimento do pl
       },
       {
         id: 2,
-        category: "ADMINISTRAÇÃO JUDICIAL",
+        category: "ADMINISTRAÇÍO JUDICIAL",
         date: "18/01/2024",
         title: "Escritório assume administração de novo caso de grande porte",
         excerpt: "Escritório assume a administração judicial de empresa com mais de 2 mil credores...",
@@ -223,7 +223,7 @@ Este resultado representa um marco importante para a empresa e para todos os env
       },
       {
         id: 5,
-        category: "RECUPERAÇÃO JUDICIAL",
+        category: "RECUPERAÇÍO JUDICIAL",
         date: "28/12/2023",
         title: "Balanço 2023: números da administração judicial",
         excerpt: "Retrospectiva mostra crescimento de 15% nos casos administrados pelo escritório...",
@@ -300,8 +300,8 @@ A equipe reafirma seu compromisso com a excelência no atendimento e na gestão 
         id: 1,
         date: new Date(2025, 10, 5), // 5 de novembro de 2025
         companyName: "ANG COMERCIO EXTO",
-        fullCompanyName: "ANG COMERCIO EXPORTAÇÃO E IMPORTAÇÃO LTDA.",
-        convocation: "2ª CONVOCAÇÃO, 2º PROSSEGUIMENTO",
+        fullCompanyName: "ANG COMERCIO EXPORTAÇÍO E IMPORTAÇÍO LTDA.",
+        convocation: "2ª CONVOCAÇÍO, 2º PROSSEGUIMENTO",
         description:
           "Ficam convocados todos os credores e demais interessados para a Assembleia Geral de Credores na plataforma virtual disponibilizada pela Administração Judicial e acessível através do link: https://us06web.zoom.us/j/89564183039.",
         meetingLink: "https://us06web.zoom.us/j/89564183039",
@@ -313,8 +313,8 @@ A equipe reafirma seu compromisso com a excelência no atendimento e na gestão 
         id: 2,
         date: new Date(2025, 10, 12),
         companyName: "BRASIL SUL COMERCIO",
-        fullCompanyName: "BRASIL SUL COMÉRCIO E DISTRIBUIÇÃO LTDA.",
-        convocation: "1ª CONVOCAÇÃO",
+        fullCompanyName: "BRASIL SUL COMÉRCIO E DISTRIBUIÇÍO LTDA.",
+        convocation: "1ª CONVOCAÇÍO",
         description:
           "Ficam convocados todos os credores e demais interessados para a Assembleia Geral de Credores na plataforma virtual disponibilizada pela Administração Judicial e acessível através do link: https://us06web.zoom.us/j/89564183039.",
         meetingLink: "https://us06web.zoom.us/j/89564183039",
@@ -327,7 +327,7 @@ A equipe reafirma seu compromisso com a excelência no atendimento e na gestão 
         date: new Date(2025, 10, 15),
         companyName: "QTNI TRANSPORTES",
         fullCompanyName: "QTNI TRANSPORTES E LOGÍSTICA S.A.",
-        convocation: "3ª CONVOCAÇÃO",
+        convocation: "3ª CONVOCAÇÍO",
         description:
           "Ficam convocados todos os credores e demais interessados para a Assembleia Geral de Credores na plataforma virtual disponibilizada pela Administração Judicial e acessível através do link: https://us06web.zoom.us/j/89564183039.",
         meetingLink: "https://us06web.zoom.us/j/89564183039",
@@ -340,7 +340,7 @@ A equipe reafirma seu compromisso com a excelência no atendimento e na gestão 
         date: new Date(2025, 10, 20),
         companyName: "MERCOPANPA TRANS",
         fullCompanyName: "MERCOPANPA TRANSPORTES RODOVIÁRIOS LTDA.",
-        convocation: "1ª CONVOCAÇÃO, 1º PROSSEGUIMENTO",
+        convocation: "1ª CONVOCAÇÍO, 1º PROSSEGUIMENTO",
         description:
           "Ficam convocados todos os credores e demais interessados para a Assembleia Geral de Credores na plataforma virtual disponibilizada pela Administração Judicial e acessível através do link: https://us06web.zoom.us/j/89564183039.",
         meetingLink: "https://us06web.zoom.us/j/89564183039",
@@ -351,9 +351,9 @@ A equipe reafirma seu compromisso com a excelência no atendimento e na gestão 
       {
         id: 5,
         date: new Date(2025, 10, 23),
-        companyName: "AELBRA EDUCAÇÃO",
-        fullCompanyName: "AELBRA EDUCAÇÃO E TECNOLOGIA LTDA.",
-        convocation: "2ª CONVOCAÇÃO",
+        companyName: "AELBRA EDUCAÇÍO",
+        fullCompanyName: "AELBRA EDUCAÇÍO E TECNOLOGIA LTDA.",
+        convocation: "2ª CONVOCAÇÍO",
         description:
           "Ficam convocados todos os credores e demais interessados para a Assembleia Geral de Credores na plataforma virtual disponibilizada pela Administração Judicial e acessível através do link: https://us06web.zoom.us/j/89564183039.",
         meetingLink: "https://us06web.zoom.us/j/89564183039",
@@ -366,7 +366,7 @@ A equipe reafirma seu compromisso com a excelência no atendimento e na gestão 
         date: new Date(2025, 10, 28),
         companyName: "MAXIMA DISTRIBUIDO",
         fullCompanyName: "MAXIMA DISTRIBUIDORA DE MDF LTDA. E MADEIRO MDF LTDA",
-        convocation: "2ª CONVOCAÇÃO, 2º PROSSEGUIMENTO",
+        convocation: "2ª CONVOCAÇÍO, 2º PROSSEGUIMENTO",
         description:
           "Ficam convocados todos os credores e demais interessados para a Assembleia Geral de Credores na plataforma virtual disponibilizada pela Administração Judicial e acessível através do link: https://us06web.zoom.us/j/89564183039.",
         meetingLink: "https://us06web.zoom.us/j/89564183039",
@@ -379,7 +379,7 @@ A equipe reafirma seu compromisso com a excelência no atendimento e na gestão 
         date: new Date(2025, 10, 31),
         companyName: "TRESBOMM COMÉRCIO",
         fullCompanyName: "TRESBOMM COMÉRCIO E SERVIÇOS LTDA.",
-        convocation: "1ª CONVOCAÇÃO",
+        convocation: "1ª CONVOCAÇÍO",
         description:
           "Ficam convocados todos os credores e demais interessados para a Assembleia Geral de Credores na plataforma virtual disponibilizada pela Administração Judicial e acessível através do link: https://us06web.zoom.us/j/89564183039.",
         meetingLink: "https://us06web.zoom.us/j/89564183039",
