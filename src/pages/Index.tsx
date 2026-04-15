@@ -3,7 +3,6 @@ import QuickAccess from "@/components/QuickAccess";
 import QuemSomos from "@/components/QuemSomos";
 import MostConsultedProcesses from "@/components/MostConsultedProcesses";
 import CalendarSection from "@/components/CalendarSection";
-import InfoCards from "@/components/InfoCards";
 import Statistics from "@/components/Statistics";
 
 /**
@@ -26,7 +25,6 @@ const Index = () => {
         <QuickAccess />
         <MostConsultedProcesses />
         <CalendarSection />
-        <InfoCards />
         <Statistics />
       </div>
     </div>
