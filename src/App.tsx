@@ -74,10 +74,6 @@ const App = () => {
               <Route path="/equipe" element={<Equipe />} />
               <Route path="/na-midia" element={<NaMidia />} />
               <Route path="/artigo/:id" element={<Artigo />} />
-              <Route path="/recuperacao-judicial" element={<CategoryPage />} />
-              <Route path="/falencia" element={<CategoryPage />} />
-              <Route path="/administracao-judicial" element={<CategoryPage />} />
-              <Route path="/litisconsorcio" element={<CategoryPage />} />
               <Route path="/duvidas" element={<Duvidas />} />
               <Route path="/contato" element={<Contato />} />
               <Route path="/subsecoes" element={<Subsecoes />} />

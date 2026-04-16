@@ -100,7 +100,7 @@ const Header = () => {
                  {companyName}
                </span>
                <span className="text-[9px] md:text-[10px] text-muted-foreground/70 font-medium uppercase tracking-[0.2em]">
-                 {content?.tagline || "Administração Judicial"}
+                 {content?.tagline}
                </span>
              </div>
           </Link>
@@ -269,7 +269,7 @@ const Header = () => {
             {/* Overlay Footer */}
             <div className="mt-auto pt-16 flex items-center justify-between text-[11px] font-bold text-muted-foreground/40 uppercase tracking-[0.4em]">
                <span>Â© {new Date().getFullYear()} {companyName}</span>
-               <span className="hidden sm:inline">A Casa de Todos e Todas, da advocacia e da sociedade</span>
+               {content?.slogan && <span className="hidden sm:inline">{content.slogan}</span>}
             </div>
           </div>
         </div>

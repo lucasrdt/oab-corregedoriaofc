@@ -24,10 +24,11 @@ const Footer = () => {
         <div className="container-padding py-6 flex items-center justify-between opacity-50 grayscale hover:grayscale-0 transition-all duration-500">
            <span className="text-[10px] font-bold tracking-[0.3em] uppercase text-white/40">Institucional</span>
            <div className="flex items-center gap-8">
-              {/* Espaço para logos de parceiros/governo se necessário */}
-              <div className="h-6 w-24 bg-white/5 rounded flex items-center justify-center text-[9px] font-bold text-white/20 uppercase tracking-tighter">OAB Nacional</div>
-              <div className="h-6 w-24 bg-white/5 rounded flex items-center justify-center text-[9px] font-bold text-white/20 uppercase tracking-tighter">CNJ</div>
-              <div className="h-6 w-24 bg-white/5 rounded flex items-center justify-center text-[9px] font-bold text-white/20 uppercase tracking-tighter">Justiça</div>
+              {(content.footer?.partners?.length ? content.footer.partners : ["OAB Nacional", "CNJ", "Justiça"]).map((partner) => (
+                <div key={partner} className="h-6 w-24 bg-white/5 rounded flex items-center justify-center text-[9px] font-bold text-white/20 uppercase tracking-tighter">
+                  {partner}
+                </div>
+              ))}
            </div>
         </div>
       </div>
@@ -52,9 +53,11 @@ const Footer = () => {
                 <span className="text-[16px] md:text-[18px] font-bold text-white leading-tight uppercase tracking-tight">
                   {companyName}
                 </span>
-                <span className="text-[9px] md:text-[10px] text-white/70 font-bold uppercase tracking-[0.2em] mt-1">
-                  Administração Judicial
-                </span>
+                {content?.tagline && (
+                  <span className="text-[9px] md:text-[10px] text-white/70 font-bold uppercase tracking-[0.2em] mt-1">
+                    {content.tagline}
+                  </span>
+                )}
               </div>
             </div>
             
@@ -151,11 +154,17 @@ const Footer = () => {
       <div className="border-t border-white/5 bg-black/30">
         <div className="container-padding py-8 flex flex-col md:flex-row items-center justify-between gap-6">
           <div className="flex flex-col gap-1 items-center md:items-start text-center md:text-left">
+            {content?.slogan && (
+              <p className="text-sm font-black text-white/80 uppercase tracking-[0.15em] mb-1">
+                {content.slogan}
+              </p>
+            )}
             <p className="text-[10px] font-bold text-white/40 uppercase tracking-[0.3em]">
               {content.footer?.copyright || `© ${new Date().getFullYear()} ${content.companyName}`}
             </p>
             <p className="text-[9px] text-white/20 uppercase tracking-[0.1em]">
-              {content.footer?.description || "Todos os direitos reservados • CNPJ 00.000.000/0001-00"}
+              {content.footer?.description || "Todos os direitos reservados"}
+              {content.footer?.cnpj && ` • CNPJ ${content.footer.cnpj}`}
             </p>
           </div>
 

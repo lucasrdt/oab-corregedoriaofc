@@ -923,7 +923,9 @@ A equipe reafirma seu compromisso com a excelência no atendimento e na gestão 
     ],
     footer: {
       copyright: "© 2024 Ivaldo Praddo. Todos os direitos reservados.",
-      description: "Administração Judicial com excelência e compromisso."
+      description: "Administração Judicial com excelência e compromisso.",
+      cnpj: "",
+      partners: ["OAB Nacional", "CNJ", "Justiça"]
     }
   },
 
@@ -1147,7 +1149,9 @@ export const skeletonTemplate = {
     mostConsulted: [],
     footer: {
       copyright: "",
-      description: ""
+      description: "",
+      cnpj: "",
+      partners: []
     }
   },
   practiceAreas: [],

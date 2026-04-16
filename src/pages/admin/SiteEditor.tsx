@@ -569,11 +569,29 @@ const SiteEditor = () => {
                                     />
                                 </div>
                                 <div className="space-y-4">
+                                    <Label className="text-[10px] font-black uppercase tracking-widest text-primary/60 ml-1">CNPJ</Label>
+                                    <Input
+                                        className="h-12 bg-slate-50 border-slate-200 focus:bg-white rounded-xl font-bold text-primary"
+                                        placeholder="Ex: 00.000.000/0001-00"
+                                        value={config.content.footer?.cnpj || ""}
+                                        onChange={(e) => updateConfig('content.footer.cnpj', e.target.value)}
+                                    />
+                                </div>
+                                <div className="space-y-4 md:col-span-2">
                                     <Label className="text-[10px] font-black uppercase tracking-widest text-primary/60 ml-1">Descrição Autoral</Label>
                                     <Textarea
                                         className="bg-slate-50 border-slate-200 focus:bg-white rounded-xl font-medium text-primary text-sm min-h-[100px]"
                                         value={config.content.footer?.description || ""}
                                         onChange={(e) => updateConfig('content.footer.description', e.target.value)}
+                                    />
+                                </div>
+                                <div className="space-y-4 md:col-span-2">
+                                    <Label className="text-[10px] font-black uppercase tracking-widest text-primary/60 ml-1">Parceiros Institucionais (um por linha)</Label>
+                                    <Textarea
+                                        className="bg-slate-50 border-slate-200 focus:bg-white rounded-xl font-medium text-primary text-sm min-h-[80px]"
+                                        placeholder={"OAB Nacional\nCNJ\nJustiça"}
+                                        value={(config.content.footer?.partners || []).join('\n')}
+                                        onChange={(e) => updateConfig('content.footer.partners', e.target.value.split('\n').map(s => s.trim()).filter(Boolean))}
                                     />
                                 </div>
                             </div>
