@@ -1,4 +1,4 @@
-﻿import { useSite } from "@/contexts/SiteContext";
+import { useSite } from "@/contexts/SiteContext";
 import { Instagram, Facebook, Linkedin, Phone, Twitter, Youtube, MapPin, Mail, Globe } from "lucide-react";
 import { Link } from "react-router-dom";
 
@@ -19,7 +19,7 @@ const Footer = () => {
 
   return (
     <footer className="bg-navy-deep text-white border-t border-white/5">
-      {/* 1. SEÇÍO DE APOIO / LOGOS */}
+      {/* 1. SEÇÃO DE APOIO / LOGOS */}
       <div className="bg-black/10 border-b border-white/5">
         <div className="container-padding py-6 flex items-center justify-between opacity-50 grayscale hover:grayscale-0 transition-all duration-500">
            <span className="text-[10px] font-bold tracking-[0.3em] uppercase text-white/40">Institucional</span>

@@ -1,4 +1,4 @@
-﻿import React, { useState } from 'react';
+import React, { useState } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -522,7 +522,7 @@ const SubsecoesSection = () => {
           <DialogTrigger asChild>
             <Button className="bg-primary hover:bg-primary/90 text-white font-black text-[10px] tracking-widest uppercase px-6 h-11 shadow-lg shadow-primary/10">
               <Plus className="w-4 h-4 mr-2" />
-              NOVA SUBSEÇÍO
+              NOVA SUBSEÇÃO
             </Button>
           </DialogTrigger>
           <DialogContent className="sm:max-w-lg border-none shadow-2xl overflow-hidden p-0">

@@ -1,4 +1,4 @@
-﻿import { useSite } from "@/contexts/SiteContext";
+import { useSite } from "@/contexts/SiteContext";
 import { ChevronRight, FileText, ChevronLeft, Calendar, User, Scale, MapPin, Hash, Users, ExternalLink, Info, Building2 } from "lucide-react";
 import { useScrollAnimation } from "@/hooks/use-scroll-animation";
 import { getCompanySlug } from "@/utils/slugify";

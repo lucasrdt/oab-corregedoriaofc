@@ -1,4 +1,4 @@
-﻿import { useState, useRef } from 'react';
+import { useState, useRef } from 'react';
 import { useSite } from '@/contexts/SiteContext';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';

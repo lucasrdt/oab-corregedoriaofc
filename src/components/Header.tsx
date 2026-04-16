@@ -1,4 +1,4 @@
-﻿import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { useSite } from "@/contexts/SiteContext";
 import { Menu, X, LogIn, ChevronDown, ChevronRight, Search, Globe, Phone, Mail, Instagram } from "lucide-react";
@@ -65,7 +65,7 @@ const Header = () => {
           <div className="flex items-center gap-4 text-[11px] font-medium text-muted-foreground/80">
             <Link to="/contato#prerrogativas" className="hover:text-primary transition-colors">PRERROGATIVAS</Link>
             <span className="opacity-20">/</span>
-            <Link to="/contato#fiscalizacao" className="hover:text-primary transition-colors">FISCALIZAÇÍO</Link>
+            <Link to="/contato#fiscalizacao" className="hover:text-primary transition-colors">FISCALIZAÇÃO</Link>
             <span className="opacity-20">/</span>
             <Link to="/contato#ouvidoria" className="hover:text-primary transition-colors">OUVIDORIA</Link>
             <span className="opacity-20">/</span>

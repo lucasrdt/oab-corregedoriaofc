@@ -766,8 +766,8 @@ const SiteEditor = () => {
                                 onClick={() => {
                                     if (confirm('Isso irá restaurar as categorias de notícias, tipos de casos e dúvidas frequentes para o padrão. Deseja continuar?')) {
                                         const defaultNewsCategories = [
-                                            { id: 1, title: "RECUPERAÇÍO JUDICIAL" },
-                                            { id: 2, title: "ADMINISTRAÇÍO JUDICIAL" },
+                                            { id: 1, title: "RECUPERAÇÃO JUDICIAL" },
+                                            { id: 2, title: "ADMINISTRAÇÃO JUDICIAL" },
                                             { id: 3, title: "ANÁLISE" },
                                             { id: 4, title: "ASSEMBLEIA" },
                                             { id: 5, title: "ENTREVISTA" }
