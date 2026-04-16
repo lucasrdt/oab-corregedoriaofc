@@ -152,7 +152,7 @@ const Footer = () => {
         <div className="container-padding py-8 flex flex-col md:flex-row items-center justify-between gap-6">
           <div className="flex flex-col gap-1 items-center md:items-start text-center md:text-left">
             <p className="text-[10px] font-bold text-white/40 uppercase tracking-[0.3em]">
-              {content.footer?.copyright || `Â© ${new Date().getFullYear()} ${content.companyName}`}
+              {content.footer?.copyright || `© ${new Date().getFullYear()} ${content.companyName}`}
             </p>
             <p className="text-[9px] text-white/20 uppercase tracking-[0.1em]">
               {content.footer?.description || "Todos os direitos reservados • CNPJ 00.000.000/0001-00"}
