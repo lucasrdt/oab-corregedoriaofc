@@ -155,7 +155,7 @@ const Footer = () => {
               {content.footer?.copyright || `Â© ${new Date().getFullYear()} ${content.companyName}`}
             </p>
             <p className="text-[9px] text-white/20 uppercase tracking-[0.1em]">
-              {content.footer?.description || "Todos os direitos reservados â€¢ CNPJ 00.000.000/0001-00"}
+              {content.footer?.description || "Todos os direitos reservados • CNPJ 00.000.000/0001-00"}
             </p>
           </div>
 

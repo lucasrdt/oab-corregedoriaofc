@@ -27,7 +27,7 @@ const Chatbot = () => {
     const faqItems: FAQItem[] = config?.content?.faq || [];
     const companyName = config?.content?.companyName || "Escritório";
 
-    // Initialize welcome message â€” hooks must always run before any return
+    // Initialize welcome message — hooks must always run before any return
     useEffect(() => {
         if (messages.length === 0) {
             setMessages([

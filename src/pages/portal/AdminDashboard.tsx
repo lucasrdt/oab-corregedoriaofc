@@ -93,7 +93,7 @@ type CreateUserForm = z.infer<typeof createUserSchema>;
 // --- Sub-components ---
 
 const truncate = (str: string | null, len = 8) =>
-  str ? str.substring(0, len) + '...' : 'â€”';
+  str ? str.substring(0, len) + '...' : '—';
 
 const UsuariosSection = () => {
   const queryClient = useQueryClient();
@@ -256,7 +256,7 @@ const UsuariosSection = () => {
                       {subsections && subsections.length > 0 ? (
                         subsections.map((sub) => (
                           <SelectItem key={sub.id} value={sub.id}>
-                            {sub.city}{sub.corregedor ? ` â€” ${sub.corregedor}` : ''}
+                            {sub.city}{sub.corregedor ? ` — ${sub.corregedor}` : ''}
                           </SelectItem>
                         ))
                       ) : (
@@ -407,8 +407,8 @@ const CasosSection = () => {
               {casos.map((caso) => (
                 <TableRow key={caso.id} className="hover:bg-muted/30 transition-colors border-border/30">
                   <TableCell className="font-bold text-sm text-primary pl-6">{caso.nome}</TableCell>
-                  <TableCell className="font-mono text-[10px] font-bold text-muted-foreground">{caso.processo ?? 'â€”'}</TableCell>
-                  <TableCell className="text-xs font-medium">{caso.comarca ?? 'â€”'}</TableCell>
+                  <TableCell className="font-mono text-[10px] font-bold text-muted-foreground">{caso.processo ?? '—'}</TableCell>
+                  <TableCell className="text-xs font-medium">{caso.comarca ?? '—'}</TableCell>
                   <TableCell className="font-mono text-[10px] font-bold text-muted-foreground">{truncate(caso.subsection_id)}</TableCell>
                   <TableCell className="text-xs font-medium">
                     {new Date(caso.created_at).toLocaleDateString('pt-BR')}
@@ -671,8 +671,8 @@ const SubsecoesSection = () => {
                   {casos.map((caso) => (
                     <TableRow key={caso.id}>
                       <TableCell className="font-medium text-sm">{caso.nome}</TableCell>
-                      <TableCell className="text-xs">{caso.processo ?? 'â€”'}</TableCell>
-                      <TableCell className="text-xs">{caso.comarca ?? 'â€”'}</TableCell>
+                      <TableCell className="text-xs">{caso.processo ?? '—'}</TableCell>
+                      <TableCell className="text-xs">{caso.comarca ?? '—'}</TableCell>
                       <TableCell className="text-xs">
                         {new Date(caso.created_at).toLocaleDateString('pt-BR')}
                       </TableCell>

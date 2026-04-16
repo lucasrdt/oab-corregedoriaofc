@@ -232,7 +232,7 @@ const CalendarSection = () => {
                     onClick={() => window.open(selectedAssembly.meetingLink, '_blank')}
                     className="flex-1 bg-primary hover:bg-primary/90 text-white font-bold h-12 shadow-md"
                   >
-                    ACESSAR REUNIÍO <ExternalLink className="ml-2 h-4 w-4" />
+                    ACESSAR REUNIÃO <ExternalLink className="ml-2 h-4 w-4" />
                   </Button>
                   <Button
                     onClick={() => setSelectedAssembly(null)}
