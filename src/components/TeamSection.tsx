@@ -5,7 +5,6 @@ import { useScrollAnimation } from "@/hooks/use-scroll-animation";
 import {
   Dialog,
   DialogContent,
-  DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
 
@@ -147,7 +146,6 @@ const TeamSection = () => {
                 </div>
               )}
             </div>
-
           </div>
         </DialogContent>
       </Dialog>

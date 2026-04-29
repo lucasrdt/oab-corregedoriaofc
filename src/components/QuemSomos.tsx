@@ -38,15 +38,15 @@ const QuemSomos = () => {
           </div>
 
           {/* Image — 40 % */}
-          <div className="lg:col-span-2 relative">
-            <div className="aspect-[4/3] rounded-xl overflow-hidden shadow-lg">
+          <div className="lg:col-span-2">
+            <div className="aspect-[4/3] rounded-xl overflow-hidden shadow-lg relative">
               <img
                 src={content?.images?.aboutBackground || "/placeholder.svg"}
                 alt="Sede institucional"
                 className="w-full h-full object-cover"
               />
               {/* subtle overlay for polish */}
-              <div className="absolute inset-0 bg-gradient-to-t from-primary/20 via-transparent to-transparent rounded-xl" />
+              <div className="absolute inset-0 bg-gradient-to-t from-primary/20 via-transparent to-transparent" />
             </div>
           </div>
         </div>
