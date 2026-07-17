@@ -40,6 +40,7 @@ const Header = () => {
     { name: "Notícias", path: "/na-midia" },
     { name: "Dúvidas Frequentes", path: "/duvidas" },
     { name: "Fale Conosco", path: "/contato" },
+    { name: "Honorários Advocatícios", path: "/honorarios" },
   ];
 
   const denunciasLinks = [
@@ -206,17 +207,33 @@ const Header = () => {
                        </div>
                      );
                    }
-                   return (
-                     <Link
-                       key={link.path}
-                       to={link.path}
-                       className="group flex items-baseline gap-3 md:gap-4 text-lg md:text-xl lg:text-2xl font-bold text-primary/40 hover:text-primary transition-all duration-300 transform hover:translate-x-2"
-                       style={{ animationDelay: `${idx * 50}ms` }}
-                     >
-                       <span className="text-[10px] md:text-xs font-bold opacity-30 group-hover:opacity-100 transition-opacity">0{idx+1}</span>
-                       <span className="uppercase tracking-tight">{link.name}</span>
-                     </Link>
-                   );
+                    if (link.path === "/honorarios") {
+                      return (
+                        <a
+                          key={link.path}
+                          href={link.path}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          onClick={() => setIsMenuOpen(false)}
+                          className="group flex items-baseline gap-3 md:gap-4 text-lg md:text-xl lg:text-2xl font-bold text-primary/40 hover:text-primary transition-all duration-300 transform hover:translate-x-2"
+                          style={{ animationDelay: `${idx * 50}ms` }}
+                        >
+                          <span className="text-[10px] md:text-xs font-bold opacity-30 group-hover:opacity-100 transition-opacity">0{idx+1}</span>
+                          <span className="uppercase tracking-tight">{link.name}</span>
+                        </a>
+                      );
+                    }
+                    return (
+                      <Link
+                        key={link.path}
+                        to={link.path}
+                        className="group flex items-baseline gap-3 md:gap-4 text-lg md:text-xl lg:text-2xl font-bold text-primary/40 hover:text-primary transition-all duration-300 transform hover:translate-x-2"
+                        style={{ animationDelay: `${idx * 50}ms` }}
+                      >
+                        <span className="text-[10px] md:text-xs font-bold opacity-30 group-hover:opacity-100 transition-opacity">0{idx+1}</span>
+                        <span className="uppercase tracking-tight">{link.name}</span>
+                      </Link>
+                    );
                  })}
               </nav>
 
