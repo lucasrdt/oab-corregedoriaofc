@@ -67,7 +67,6 @@ export const AdvogadoAuthProvider: React.FC<{ children: React.ReactNode }> = ({ 
 
   const signOut = async () => {
     try {
-      localStorage.removeItem('sb-yutlthbgcwktknqxdswb-auth-token');
       await supabase.auth.signOut();
     } catch (err) {
       console.warn('AdvogadoAuthContext: error during sign out', err);
