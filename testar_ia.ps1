@@ -17,12 +17,22 @@ $LOGIN_BODY = @{
     password = $TEST_PASSWORD_PLAIN
 } | ConvertTo-Json
 
-$LOGIN_RESULT = Invoke-RestMethod -Uri "$SUPABASE_URL/auth/v1/token?grant_type=password" `
-    -Method POST `
-    -Headers @{ "apikey" = $ANON_KEY; "Content-Type" = "application/json" } `
-    -Body $LOGIN_BODY
+try {
+    $LOGIN_RESULT = Invoke-RestMethod -Uri "$SUPABASE_URL/auth/v1/token?grant_type=password" `
+        -Method POST `
+        -Headers @{ "apikey" = $ANON_KEY; "Content-Type" = "application/json" } `
+        -Body $LOGIN_BODY
+} catch {
+    Write-Host "LOGIN FALHOU. Verifique email/senha e se o usuario existe no projeto $SUPABASE_URL" -ForegroundColor Red
+    if ($_.ErrorDetails) { Write-Host $_.ErrorDetails.Message -ForegroundColor Yellow }
+    exit 1
+}
 
 $TOKEN = $LOGIN_RESULT.access_token
+if ([string]::IsNullOrEmpty($TOKEN)) {
+    Write-Host "LOGIN RETORNOU SEM access_token. Resposta: $($LOGIN_RESULT | ConvertTo-Json -Depth 5)" -ForegroundColor Red
+    exit 1
+}
 Write-Host "Token obtido: $($TOKEN.Substring(0,20))..." -ForegroundColor DarkGray
 
 $URL = "$SUPABASE_URL/functions/v1/claude-honorarios"
