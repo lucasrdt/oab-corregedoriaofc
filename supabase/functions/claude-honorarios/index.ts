@@ -1071,7 +1071,7 @@ serve(async (req: Request) => {
     const authHeader = req.headers.get('Authorization');
     if (!authHeader) {
       return new Response(JSON.stringify({ error: 'Missing authorization header' }), {
-        status: 401, headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+        status: 401, headers: { ...corsHeaders, 'Content-Type': 'application/json; charset=utf-8' }
       });
     }
 
@@ -1080,7 +1080,7 @@ serve(async (req: Request) => {
 
     if (userError || !caller) {
       return new Response(JSON.stringify({ error: 'Invalid token' }), {
-        status: 401, headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+        status: 401, headers: { ...corsHeaders, 'Content-Type': 'application/json; charset=utf-8' }
       });
     }
 
@@ -1089,7 +1089,7 @@ serve(async (req: Request) => {
 
     if (!mensagem || typeof mensagem !== 'string') {
       return new Response(JSON.stringify({ error: 'Missing or invalid field: mensagem' }), {
-        status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+        status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json; charset=utf-8' }
       });
     }
 
@@ -1098,7 +1098,7 @@ serve(async (req: Request) => {
     const anthropicKey = Deno.env.get('ANTHROPIC_API_KEY');
     if (!anthropicKey) {
       return new Response(JSON.stringify({ error: 'Anthropic API key is not configured' }), {
-        status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+        status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json; charset=utf-8' }
       });
     }
 
@@ -1121,7 +1121,7 @@ serve(async (req: Request) => {
       const errorText = await response.text();
       console.error('[claude-honorarios] Anthropic API failed:', errorText);
       return new Response(JSON.stringify({ error: `Anthropic API error: ${response.statusText}`, details: errorText }), {
-        status: response.status, headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+        status: response.status, headers: { ...corsHeaders, 'Content-Type': 'application/json; charset=utf-8' }
       });
     }
 
@@ -1129,13 +1129,13 @@ serve(async (req: Request) => {
     const responseText = responseData.content?.[0]?.text || '';
 
     return new Response(JSON.stringify({ resposta: responseText }), {
-      status: 200, headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+      status: 200, headers: { ...corsHeaders, 'Content-Type': 'application/json; charset=utf-8' }
     });
 
   } catch (err: any) {
     console.error('[claude-honorarios] Exception occurred:', err.message);
     return new Response(JSON.stringify({ error: err.message }), {
-      status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+      status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json; charset=utf-8' }
     });
   }
 });

@@ -27,3 +27,6 @@ dist-ssr
 .mcp.json
 .planning/
 
+# Supabase CLI local cache
+supabase/.temp/
+
