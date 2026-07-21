@@ -1,7 +1,7 @@
 // src/data/tabelaHonorarios.ts
 // Tabela de Honorários Mínimos OAB-MA 2026
 // Fonte: Documento oficial OAB-MA — NOVA_TABELA_HONORARIOS_OAB-MA_COM_EMENDAS
-// Total: 967 itens | 30 áreas do direito
+// Total: 970 itens | 31 áreas do direito
 // AVISO: Valores de referência. Sempre confirme no documento oficial antes de formalizar contratos.
 
 export type TipoCalculo = 'fixo' | 'percentual' | 'faixas';
@@ -58,7 +58,7 @@ export const tabelaHonorarios: ItemTabela[] = [
     "descricao": "Hora técnica",
     "tipo": "fixo",
     "percentual_minimo": null,
-    "valor_minimo": 500.0,
+    "valor_minimo": 550.0,
     "requer_valor_causa": false,
     "observacao": null
   },
@@ -198,7 +198,7 @@ export const tabelaHonorarios: ItemTabela[] = [
     "descricao": "Diária profissional - independente- mente das despesas de transporte, alimentação e estadia (mínimo)",
     "tipo": "fixo",
     "percentual_minimo": null,
-    "valor_minimo": 1152.47,
+    "valor_minimo": 1210.0,
     "requer_valor_causa": false,
     "observacao": null
   },
@@ -278,7 +278,7 @@ export const tabelaHonorarios: ItemTabela[] = [
     "descricao": "Interposição",
     "tipo": "percentual",
     "percentual_minimo": 5.0,
-    "valor_minimo": null,
+    "valor_minimo": 7380.0,
     "requer_valor_causa": true,
     "observacao": null
   },
@@ -288,7 +288,7 @@ export const tabelaHonorarios: ItemTabela[] = [
     "descricao": "Contrarrazões",
     "tipo": "percentual",
     "percentual_minimo": 5.0,
-    "valor_minimo": null,
+    "valor_minimo": 5313.0,
     "requer_valor_causa": true,
     "observacao": null
   },
@@ -298,7 +298,7 @@ export const tabelaHonorarios: ItemTabela[] = [
     "descricao": "Apelação",
     "tipo": "fixo",
     "percentual_minimo": null,
-    "valor_minimo": 5175.64,
+    "valor_minimo": 8118.0,
     "requer_valor_causa": false,
     "observacao": null
   },
@@ -368,7 +368,7 @@ export const tabelaHonorarios: ItemTabela[] = [
     "descricao": "Sustentação Oral em Tribunal local (presencial ou virtual)",
     "tipo": "fixo",
     "percentual_minimo": null,
-    "valor_minimo": 3876.49,
+    "valor_minimo": 5313.0,
     "requer_valor_causa": false,
     "observacao": null
   },
@@ -378,7 +378,7 @@ export const tabelaHonorarios: ItemTabela[] = [
     "descricao": "Sustentação Oral em Tribunal de ou- tro Estado (presencial ou virtual)",
     "tipo": "fixo",
     "percentual_minimo": null,
-    "valor_minimo": 7690.12,
+    "valor_minimo": 8118.0,
     "requer_valor_causa": false,
     "observacao": null
   },
@@ -418,7 +418,7 @@ export const tabelaHonorarios: ItemTabela[] = [
     "descricao": "Embargos infringentes",
     "tipo": "fixo",
     "percentual_minimo": null,
-    "valor_minimo": 3845.06,
+    "valor_minimo": 5313.0,
     "requer_valor_causa": false,
     "observacao": null
   },
@@ -478,7 +478,7 @@ export const tabelaHonorarios: ItemTabela[] = [
     "descricao": "Recurso Especial e Extraordinário",
     "tipo": "fixo",
     "percentual_minimo": null,
-    "valor_minimo": 10686.54,
+    "valor_minimo": 22143.0,
     "requer_valor_causa": false,
     "observacao": null
   },
@@ -488,7 +488,7 @@ export const tabelaHonorarios: ItemTabela[] = [
     "descricao": "Revisão Criminal",
     "tipo": "fixo",
     "percentual_minimo": null,
-    "valor_minimo": 7690.12,
+    "valor_minimo": 13431.0,
     "requer_valor_causa": false,
     "observacao": null
   },
@@ -558,7 +558,7 @@ export const tabelaHonorarios: ItemTabela[] = [
     "descricao": "Mandado de Segurança",
     "tipo": "fixo",
     "percentual_minimo": null,
-    "valor_minimo": 7690.12,
+    "valor_minimo": 12034.0,
     "requer_valor_causa": false,
     "observacao": null
   },
@@ -598,7 +598,7 @@ export const tabelaHonorarios: ItemTabela[] = [
     "descricao": "Defesa administrativa/Recurso pe- rante órgãos extrajudiciais",
     "tipo": "percentual",
     "percentual_minimo": 10.0,
-    "valor_minimo": null,
+    "valor_minimo": 4213.0,
     "requer_valor_causa": true,
     "observacao": null
   },
@@ -1788,7 +1788,7 @@ export const tabelaHonorarios: ItemTabela[] = [
     "descricao": "Usucapião",
     "tipo": "percentual",
     "percentual_minimo": 10.0,
-    "valor_minimo": null,
+    "valor_minimo": 10934.0,
     "requer_valor_causa": true,
     "observacao": null
   },
@@ -1808,7 +1808,7 @@ export const tabelaHonorarios: ItemTabela[] = [
     "descricao": "Reivindicatória",
     "tipo": "percentual",
     "percentual_minimo": 10.0,
-    "valor_minimo": null,
+    "valor_minimo": 10230.0,
     "requer_valor_causa": true,
     "observacao": null
   },
@@ -2248,7 +2248,7 @@ export const tabelaHonorarios: ItemTabela[] = [
     "descricao": "Procedimento que tramita em Tri- bunal de Justiça Desportiva (Tribunal Pleno)",
     "tipo": "fixo",
     "percentual_minimo": null,
-    "valor_minimo": 1812.52,
+    "valor_minimo": 3036.0,
     "requer_valor_causa": false,
     "observacao": null
   },
@@ -2268,7 +2268,7 @@ export const tabelaHonorarios: ItemTabela[] = [
     "descricao": "Procedimento que tramita em Supe- rior Tribunal de Justiça Desportiva (Tribunal Pleno)",
     "tipo": "fixo",
     "percentual_minimo": null,
-    "valor_minimo": 2556.39,
+    "valor_minimo": 4213.0,
     "requer_valor_causa": false,
     "observacao": null
   },
@@ -2813,12 +2813,12 @@ export const tabelaHonorarios: ItemTabela[] = [
     "observacao": null
   },
   {
-    "id": "13.3.3",
+    "id": "13.3.8",
     "area": "Direito Digital",
     "descricao": "Contrato de escrow (código-fonte)",
     "tipo": "percentual",
     "percentual_minimo": 5.0,
-    "valor_minimo": null,
+    "valor_minimo": 3216.44,
     "requer_valor_causa": true,
     "observacao": null
   },
@@ -3448,7 +3448,7 @@ export const tabelaHonorarios: ItemTabela[] = [
     "descricao": "Como patrono de uma das partes",
     "tipo": "fixo",
     "percentual_minimo": null,
-    "valor_minimo": 4598.36,
+    "valor_minimo": 5566.0,
     "requer_valor_causa": false,
     "observacao": null
   },
@@ -4768,7 +4768,7 @@ export const tabelaHonorarios: ItemTabela[] = [
     "descricao": "Reserva de bens requerida em caráter antecedente",
     "tipo": "percentual",
     "percentual_minimo": 10.0,
-    "valor_minimo": null,
+    "valor_minimo": 4290.0,
     "requer_valor_causa": true,
     "observacao": null
   },
@@ -5208,7 +5208,7 @@ export const tabelaHonorarios: ItemTabela[] = [
     "descricao": "Cidadania originária",
     "tipo": "fixo",
     "percentual_minimo": null,
-    "valor_minimo": 10267.46,
+    "valor_minimo": 14036.0,
     "requer_valor_causa": false,
     "observacao": null
   },
@@ -5258,7 +5258,7 @@ export const tabelaHonorarios: ItemTabela[] = [
     "descricao": "Defesa na expulsão, banimento e ex- tradição de estrangeiro no Brasil",
     "tipo": "fixo",
     "percentual_minimo": null,
-    "valor_minimo": 17748.04,
+    "valor_minimo": 28072.0,
     "requer_valor_causa": false,
     "observacao": null
   },
@@ -5288,7 +5288,7 @@ export const tabelaHonorarios: ItemTabela[] = [
     "descricao": "Fins de trabalho com vínculo empre- gatício no Brasil",
     "tipo": "fixo",
     "percentual_minimo": null,
-    "valor_minimo": 4892.76,
+    "valor_minimo": 14036.0,
     "requer_valor_causa": false,
     "observacao": null
   },
@@ -5628,7 +5628,7 @@ export const tabelaHonorarios: ItemTabela[] = [
     "descricao": "Rito da Lei 11.340/06 – (Lei Maria da Penha)",
     "tipo": "fixo",
     "percentual_minimo": null,
-    "valor_minimo": 10477.0,
+    "valor_minimo": 11000.0,
     "requer_valor_causa": false,
     "observacao": null
   },
@@ -5878,7 +5878,7 @@ export const tabelaHonorarios: ItemTabela[] = [
     "descricao": "Habeas Corpus perante Juízo Singular",
     "tipo": "fixo",
     "percentual_minimo": null,
-    "valor_minimo": 5238.5,
+    "valor_minimo": 5709.0,
     "requer_valor_causa": false,
     "observacao": null
   },
@@ -5958,7 +5958,7 @@ export const tabelaHonorarios: ItemTabela[] = [
     "descricao": "Progressão de regime",
     "tipo": "fixo",
     "percentual_minimo": null,
-    "valor_minimo": 3143.1,
+    "valor_minimo": 3300.0,
     "requer_valor_causa": false,
     "observacao": null
   },
@@ -5968,7 +5968,7 @@ export const tabelaHonorarios: ItemTabela[] = [
     "descricao": "Livramento condicional",
     "tipo": "fixo",
     "percentual_minimo": null,
-    "valor_minimo": 3143.1,
+    "valor_minimo": 3300.0,
     "requer_valor_causa": false,
     "observacao": null
   },
@@ -6198,7 +6198,7 @@ export const tabelaHonorarios: ItemTabela[] = [
     "descricao": "Ato Judicial",
     "tipo": "fixo",
     "percentual_minimo": null,
-    "valor_minimo": 4700.0,
+    "valor_minimo": 5621.0,
     "requer_valor_causa": false,
     "observacao": null
   },
@@ -6248,7 +6248,7 @@ export const tabelaHonorarios: ItemTabela[] = [
     "descricao": "Defesa em procedimentos especiais",
     "tipo": "fixo",
     "percentual_minimo": null,
-    "valor_minimo": 20000.0,
+    "valor_minimo": 28072.0,
     "requer_valor_causa": false,
     "observacao": null
   },
@@ -6338,7 +6338,7 @@ export const tabelaHonorarios: ItemTabela[] = [
     "descricao": "Recurso em sentido estrito(Razões e Contrarrazões)",
     "tipo": "fixo",
     "percentual_minimo": null,
-    "valor_minimo": 5270.0,
+    "valor_minimo": 5621.0,
     "requer_valor_causa": false,
     "observacao": null
   },
@@ -7378,7 +7378,7 @@ export const tabelaHonorarios: ItemTabela[] = [
     "descricao": "Agravo de instrumento",
     "tipo": "percentual",
     "percentual_minimo": 10.0,
-    "valor_minimo": null,
+    "valor_minimo": 3856.0,
     "requer_valor_causa": true,
     "observacao": null
   },
@@ -7388,7 +7388,7 @@ export const tabelaHonorarios: ItemTabela[] = [
     "descricao": "Contraminuta de agravo de instru- mento",
     "tipo": "percentual",
     "percentual_minimo": 10.0,
-    "valor_minimo": null,
+    "valor_minimo": 3856.0,
     "requer_valor_causa": true,
     "observacao": null
   },
@@ -7398,7 +7398,7 @@ export const tabelaHonorarios: ItemTabela[] = [
     "descricao": "Agravo de petição",
     "tipo": "percentual",
     "percentual_minimo": 10.0,
-    "valor_minimo": null,
+    "valor_minimo": 3856.0,
     "requer_valor_causa": true,
     "observacao": null
   },
@@ -7408,17 +7408,17 @@ export const tabelaHonorarios: ItemTabela[] = [
     "descricao": "Contraminuta de agravo de petição",
     "tipo": "percentual",
     "percentual_minimo": 10.0,
-    "valor_minimo": null,
+    "valor_minimo": 3856.0,
     "requer_valor_causa": true,
     "observacao": null
   },
   {
-    "id": "24.3.4",
+    "id": "24.3.5",
     "area": "Direito do Trabalho",
     "descricao": "Recursos ordinários",
     "tipo": "percentual",
     "percentual_minimo": 10.0,
-    "valor_minimo": null,
+    "valor_minimo": 3740.29,
     "requer_valor_causa": true,
     "observacao": null
   },
@@ -7428,7 +7428,7 @@ export const tabelaHonorarios: ItemTabela[] = [
     "descricao": "Recurso de revista",
     "tipo": "percentual",
     "percentual_minimo": 10.0,
-    "valor_minimo": null,
+    "valor_minimo": 6500.0,
     "requer_valor_causa": true,
     "observacao": null
   },
@@ -7558,7 +7558,7 @@ export const tabelaHonorarios: ItemTabela[] = [
     "descricao": "Embargos de devedor",
     "tipo": "percentual",
     "percentual_minimo": 10.0,
-    "valor_minimo": null,
+    "valor_minimo": 2790.0,
     "requer_valor_causa": true,
     "observacao": null
   },
@@ -7588,7 +7588,7 @@ export const tabelaHonorarios: ItemTabela[] = [
     "descricao": "Execução",
     "tipo": "percentual",
     "percentual_minimo": 10.0,
-    "valor_minimo": null,
+    "valor_minimo": 2790.0,
     "requer_valor_causa": true,
     "observacao": null
   },
@@ -8058,7 +8058,7 @@ export const tabelaHonorarios: ItemTabela[] = [
     "descricao": "Honorários finais sobre o benefício",
     "tipo": "percentual",
     "percentual_minimo": 10.0,
-    "valor_minimo": null,
+    "valor_minimo": 4086.03,
     "requer_valor_causa": true,
     "observacao": null
   },
@@ -8078,7 +8078,7 @@ export const tabelaHonorarios: ItemTabela[] = [
     "descricao": "Honorários finais sobre o benefício",
     "tipo": "percentual",
     "percentual_minimo": 10.0,
-    "valor_minimo": null,
+    "valor_minimo": 4086.03,
     "requer_valor_causa": true,
     "observacao": null
   },
@@ -8098,7 +8098,7 @@ export const tabelaHonorarios: ItemTabela[] = [
     "descricao": "Honorários finais sobre o benefício",
     "tipo": "percentual",
     "percentual_minimo": 10.0,
-    "valor_minimo": null,
+    "valor_minimo": 5313.0,
     "requer_valor_causa": true,
     "observacao": null
   },
@@ -8108,7 +8108,7 @@ export const tabelaHonorarios: ItemTabela[] = [
     "descricao": "Sobre o valor dos bens",
     "tipo": "percentual",
     "percentual_minimo": 5.0,
-    "valor_minimo": null,
+    "valor_minimo": 8426.0,
     "requer_valor_causa": true,
     "observacao": null
   },
@@ -8128,7 +8128,7 @@ export const tabelaHonorarios: ItemTabela[] = [
     "descricao": "Honorários finais sobre o benefício",
     "tipo": "percentual",
     "percentual_minimo": 10.0,
-    "valor_minimo": null,
+    "valor_minimo": 4086.03,
     "requer_valor_causa": true,
     "observacao": null
   },
@@ -8158,7 +8158,7 @@ export const tabelaHonorarios: ItemTabela[] = [
     "descricao": "Ltda./LUCRO PRESUMIDO",
     "tipo": "fixo",
     "percentual_minimo": null,
-    "valor_minimo": 5448.04,
+    "valor_minimo": 7480.0,
     "requer_valor_causa": false,
     "observacao": null
   },
@@ -8463,22 +8463,22 @@ export const tabelaHonorarios: ItemTabela[] = [
     "observacao": null
   },
   {
-    "id": "26.1.4",
+    "id": "26.1.31",
     "area": "Direito Previdenciário",
     "descricao": "Recurso Administrativo (acrescentar percentual de 10% sobre o valor originariamente pactuado)",
     "tipo": "percentual",
     "percentual_minimo": 10.0,
-    "valor_minimo": null,
+    "valor_minimo": 5500.0,
     "requer_valor_causa": true,
     "observacao": "Acrescentar percentual de 10% na fase recursal."
   },
   {
-    "id": "26.1.4",
+    "id": "26.1.32",
     "area": "Direito Previdenciário",
     "descricao": "Na hipótese do advogado atuar a partir da interposição do recurso, até 25% do equivalente a 12 meses do proveito econômico",
     "tipo": "percentual",
     "percentual_minimo": 25.0,
-    "valor_minimo": null,
+    "valor_minimo": 5500.0,
     "requer_valor_causa": true,
     "observacao": "Acrescentar percentual de 10% na fase recursal."
   },
@@ -9048,7 +9048,7 @@ export const tabelaHonorarios: ItemTabela[] = [
     "descricao": "Defesa prévia por cada auto de infração",
     "tipo": "fixo",
     "percentual_minimo": null,
-    "valor_minimo": 500.0,
+    "valor_minimo": 1100.0,
     "requer_valor_causa": false,
     "observacao": null
   },
@@ -9268,7 +9268,7 @@ export const tabelaHonorarios: ItemTabela[] = [
     "descricao": "Ação anulatória de ato administra- tivo",
     "tipo": "percentual",
     "percentual_minimo": 20.0,
-    "valor_minimo": null,
+    "valor_minimo": 5621.0,
     "requer_valor_causa": true,
     "observacao": null
   },
@@ -9353,7 +9353,7 @@ export const tabelaHonorarios: ItemTabela[] = [
     "observacao": null
   },
   {
-    "id": "29.6",
+    "id": "29.7",
     "area": "Compliance",
     "descricao": "Plano de Governança Anticorrupção",
     "tipo": "fixo",
@@ -9363,7 +9363,7 @@ export const tabelaHonorarios: ItemTabela[] = [
     "observacao": null
   },
   {
-    "id": "29.6",
+    "id": "29.8",
     "area": "Compliance",
     "descricao": "Compliance Trabalhista",
     "tipo": "fixo",
@@ -9373,7 +9373,7 @@ export const tabelaHonorarios: ItemTabela[] = [
     "observacao": null
   },
   {
-    "id": "29.6",
+    "id": "29.9",
     "area": "Compliance",
     "descricao": "Consultoria para Lei Geral de Proteção de Dados (LGPD)",
     "tipo": "fixo",
@@ -9710,6 +9710,36 @@ export const tabelaHonorarios: ItemTabela[] = [
     "percentual_minimo": 10.0,
     "valor_minimo": null,
     "requer_valor_causa": true,
+    "observacao": null
+  },
+  {
+    "id": "14.12",
+    "area": "Direito Eleitoral",
+    "descricao": "Ação Declaratória de Nulidade de Filiação Partidária c/c Tutela de Urgência",
+    "tipo": "fixo",
+    "percentual_minimo": null,
+    "valor_minimo": 10278.0,
+    "requer_valor_causa": false,
+    "observacao": null
+  },
+  {
+    "id": "14.13",
+    "area": "Direito Eleitoral",
+    "descricao": "Ação Anulatória de Decisão Partidária c/c Declaratória de Nulidade de Candidatura por Inelegibilidade, com Obrigação de Fazer e Tutela de Urgência",
+    "tipo": "fixo",
+    "percentual_minimo": null,
+    "valor_minimo": 15000.0,
+    "requer_valor_causa": false,
+    "observacao": null
+  },
+  {
+    "id": "24.3.6-A",
+    "area": "Direito do Trabalho",
+    "descricao": "Contrarrazões de Recurso de Revista",
+    "tipo": "fixo",
+    "percentual_minimo": null,
+    "valor_minimo": 6500.0,
+    "requer_valor_causa": false,
     "observacao": null
   }
 ];

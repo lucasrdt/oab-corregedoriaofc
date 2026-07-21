@@ -18,6 +18,8 @@ import Cursos from "./pages/Cursos";
 import Cursor from "./pages/Cursor";
 import NotFound from "./pages/NotFound";
 
+import HonorariosIndex from "./pages/honorarios/Index";
+
 import AdminLogin from "./pages/admin/AdminLogin";
 import SiteEditor from "./pages/admin/SiteEditor";
 import CaseDetailsEditor from "./pages/admin/CaseDetailsEditor";
@@ -81,6 +83,7 @@ const App = () => {
               <Route path="/subsecoes" element={<Subsecoes />} />
               <Route path="/cursos" element={<Cursos />} />
               <Route path="/cursor" element={<Cursor />} />
+              <Route path="/honorarios" element={<HonorariosIndex />} />
               <Route path="/:slug" element={<DetalheCaso />} />
             </Route>
 
