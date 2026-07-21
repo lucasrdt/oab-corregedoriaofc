@@ -18,6 +18,8 @@ import Cursos from "./pages/Cursos";
 import Cursor from "./pages/Cursor";
 import NotFound from "./pages/NotFound";
 
+import HonorariosIndex from "./pages/honorarios/Index";
+
 import AdminLogin from "./pages/admin/AdminLogin";
 import SiteEditor from "./pages/admin/SiteEditor";
 import CaseDetailsEditor from "./pages/admin/CaseDetailsEditor";
@@ -35,7 +37,6 @@ import { AdvogadoAuthProvider } from "./contexts/AdvogadoAuthContext";
 import AdvogadoProtectedRoute from "./components/AdvogadoProtectedRoute";
 import AdvogadoLogin from "./pages/honorarios/Login";
 import AdvogadoCadastro from "./pages/honorarios/Cadastro";
-import AdvogadoDashboard from "./pages/honorarios/Dashboard";
 
 const queryClient = new QueryClient();
 
@@ -80,7 +81,6 @@ const App = () => {
             <Route element={<AdvogadoAuthProvider><Outlet /></AdvogadoAuthProvider>}>
               <Route path="/honorarios/login" element={<AdvogadoLogin />} />
               <Route path="/honorarios/cadastro" element={<AdvogadoCadastro />} />
-              <Route path="/honorarios" element={<AdvogadoDashboard />} />
             </Route>
 
             {/* Public Routes — com MainLayout (Header + Footer) */}
@@ -94,6 +94,14 @@ const App = () => {
               <Route path="/subsecoes" element={<Subsecoes />} />
               <Route path="/cursos" element={<Cursos />} />
               <Route path="/cursor" element={<Cursor />} />
+              <Route
+                path="/honorarios"
+                element={
+                  <AdvogadoAuthProvider>
+                    <HonorariosIndex />
+                  </AdvogadoAuthProvider>
+                }
+              />
               <Route path="/:slug" element={<DetalheCaso />} />
             </Route>
 
