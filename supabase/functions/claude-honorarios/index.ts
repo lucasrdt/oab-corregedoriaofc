@@ -330,7 +330,7 @@ Seu papel é responder dúvidas de advogados inscritos na OAB-MA sobre honorári
 [13.3.5] Contrato de cessão de uso de tecnologia e/ou software | 3.0% | mínimo R$ 2.409,71
 [13.3.6] Contrato de cessão de tecnologia e/ ou software | 3.0% | mínimo R$ 2.409,71
 [13.3.7] Contrato de cooperação tecnológica | 3.0% | mínimo R$ 2.409,71
-[13.3.3] Contrato de escrow (código-fonte) | 5.0% | mínimo R$ 3.216,44
+[13.3.8] Contrato de escrow (código-fonte) | 5.0% | mínimo R$ 3.216,44
 [13.4.1] Contrato de marketing digital | 3.0% | mínimo R$ 1.602,98
 [13.4.2] Contrato de gestão de tráfego | 3.0% | mínimo R$ 1.602,98
 [13.4.3] Contrato de social média/gestão de mídias sociais | 3.0% | mínimo R$ 1.602,98
@@ -813,7 +813,7 @@ Seu papel é responder dúvidas de advogados inscritos na OAB-MA sobre honorári
 [24.3.2] Contraminuta de agravo de instrumento | 10.0% | mínimo R$ 3.856,00
 [24.3.3] Agravo de petição | 10.0% | mínimo R$ 3.856,00
 [24.3.4] Contraminuta de agravo de petição | 10.0% | mínimo R$ 3.856,00
-[24.3.4] Recursos ordinários | 10.0% | mínimo R$ 3.740,29
+[24.3.5] Recursos ordinários | 10.0% | mínimo R$ 3.740,29
 [24.3.6] Recurso de revista | 10.0% | mínimo R$ 6.500,00
 [24.3.7] Contrarrazões de recursos ordinários | 10.0% | mínimo R$ 3.735,05
 [24.3.8] Recurso Extraordinário | 10.0% | mínimo R$ 7.648,21
@@ -924,8 +924,8 @@ Seu papel é responder dúvidas de advogados inscritos na OAB-MA sobre honorári
 [26.1.28] Concessão de Benefícios Assistenciais (30% do valor do benefício financeiro obtido + equivalente a 30 referente a 12 meses de parcelas vincendas | 30.0% | mínimo R$ 12.751,20
 [26.1.29] Expedição de certidão de tempo de serviço/contribuição | R$ 5.500,00
 [26.1.30] Justificativa de tempo de serviço | R$ 5.500,00
-[26.1.4] Recurso Administrativo (acrescentar percentual de 10% sobre o valor originariamente pactuado) | 10.0% | mínimo R$ 5.500,00
-[26.1.4] Na hipótese do advogado atuar a partir da interposição do recurso, até 25% do equivalente a 12 meses do proveito econômico | 25.0% | mínimo R$ 5.500,00
+[26.1.31] Recurso Administrativo (acrescentar percentual de 10% sobre o valor originariamente pactuado) | 10.0% | mínimo R$ 5.500,00
+[26.1.32] Na hipótese do advogado atuar a partir da interposição do recurso, até 25% do equivalente a 12 meses do proveito econômico | 25.0% | mínimo R$ 5.500,00
 [26.2.1] Audiência de Conciliação. | R$ 2.000,00
 [26.2.2] Audiência de Instrução e Julgamento. | R$ 3.000,00
 [26.2.3] Aposentadoria pessoa com Deficiência por Idade - 30% proveito economico - 30% sobre as vencidas + 30% de 12 vicendas | R$ 12.751,20
@@ -1019,9 +1019,9 @@ Seu papel é responder dúvidas de advogados inscritos na OAB-MA sobre honorári
 [29.4] Mapa de riscos | R$ 6.000,00
 [29.5] Canal de Denúncias | R$ 3.000,00
 [29.6] Due Diligence | R$ 2.000,00
-[29.6] Plano de Governança Anticorrupção | R$ 7.000,00
-[29.6] Compliance Trabalhista | R$ 4.000,00
-[29.6] Consultoria para Lei Geral de Proteção de Dados (LGPD) | R$ 8.000,00
+[29.7] Plano de Governança Anticorrupção | R$ 7.000,00
+[29.8] Compliance Trabalhista | R$ 4.000,00
+[29.9] Consultoria para Lei Geral de Proteção de Dados (LGPD) | R$ 8.000,00
 
 ## ADVOCACIA EM GESTÃO JURÍDICA
 [30.1] Contratação na função de gestor geral | 5.0% | mínimo R$ 6.000,00
