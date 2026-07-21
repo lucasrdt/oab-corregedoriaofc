@@ -77,7 +77,7 @@ const ChatWidget = ({
   const [loading, setLoading] = useState(false);
   const bottomRef = useRef<HTMLDivElement>(null);
   const { toast } = useToast();
-  const { session, advogado } = useAdvogadoAuth();
+  const { session, advogado, loading: authLoading } = useAdvogadoAuth();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -87,6 +87,7 @@ const ChatWidget = ({
   const enviarMensagem = async (textoForcado?: string) => {
     const mensagem = (textoForcado ?? input).trim();
     if (!mensagem || loading) return;
+    if (authLoading) return; // sessão do advogado ainda carregando
 
     if (!session || !advogado) {
       toast({
