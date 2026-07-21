@@ -1,8 +1,10 @@
 import { useEffect, useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { RotateCcw, Scale, Send, Sparkles, User, X } from "lucide-react";
 import { FunctionsHttpError } from "@supabase/supabase-js";
 import { supabase } from "@/lib/supabase";
 import { AVISO_TABELA } from "@/data/tabelaHonorarios";
+import { useAdvogadoAuth } from "@/contexts/AdvogadoAuthContext";
 import { useToast } from "@/hooks/use-toast";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
@@ -75,6 +77,8 @@ const ChatWidget = ({
   const [loading, setLoading] = useState(false);
   const bottomRef = useRef<HTMLDivElement>(null);
   const { toast } = useToast();
+  const { session, advogado } = useAdvogadoAuth();
+  const navigate = useNavigate();
 
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -83,6 +87,15 @@ const ChatWidget = ({
   const enviarMensagem = async (textoForcado?: string) => {
     const mensagem = (textoForcado ?? input).trim();
     if (!mensagem || loading) return;
+
+    if (!session || !advogado) {
+      toast({
+        title: "Login necessário",
+        description: "Faça login como advogado para usar o assistente de IA.",
+      });
+      navigate("/honorarios/login");
+      return;
+    }
 
     // Contrato da Edge Function: o backend acrescenta { role: 'user', content: mensagem }
     // ao histórico — por isso o turno atual não entra em `historico`.

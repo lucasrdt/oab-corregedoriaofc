@@ -37,7 +37,6 @@ import { AdvogadoAuthProvider } from "./contexts/AdvogadoAuthContext";
 import AdvogadoProtectedRoute from "./components/AdvogadoProtectedRoute";
 import AdvogadoLogin from "./pages/honorarios/Login";
 import AdvogadoCadastro from "./pages/honorarios/Cadastro";
-import AdvogadoDashboard from "./pages/honorarios/Dashboard";
 
 const queryClient = new QueryClient();
 
@@ -82,7 +81,6 @@ const App = () => {
             <Route element={<AdvogadoAuthProvider><Outlet /></AdvogadoAuthProvider>}>
               <Route path="/honorarios/login" element={<AdvogadoLogin />} />
               <Route path="/honorarios/cadastro" element={<AdvogadoCadastro />} />
-              <Route path="/honorarios" element={<AdvogadoDashboard />} />
             </Route>
 
             {/* Public Routes — com MainLayout (Header + Footer) */}
@@ -96,7 +94,14 @@ const App = () => {
               <Route path="/subsecoes" element={<Subsecoes />} />
               <Route path="/cursos" element={<Cursos />} />
               <Route path="/cursor" element={<Cursor />} />
-              <Route path="/honorarios" element={<HonorariosIndex />} />
+              <Route
+                path="/honorarios"
+                element={
+                  <AdvogadoAuthProvider>
+                    <HonorariosIndex />
+                  </AdvogadoAuthProvider>
+                }
+              />
               <Route path="/:slug" element={<DetalheCaso />} />
             </Route>
 
