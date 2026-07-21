@@ -33,6 +33,12 @@ import PresidenteDashboard from "./pages/portal/PresidenteDashboard";
 import UserDashboard from "./pages/portal/UserDashboard";
 import CasoEditor from "./pages/portal/CasoEditor";
 
+import { AdvogadoAuthProvider } from "./contexts/AdvogadoAuthContext";
+import AdvogadoProtectedRoute from "./components/AdvogadoProtectedRoute";
+import AdvogadoLogin from "./pages/honorarios/Login";
+import AdvogadoCadastro from "./pages/honorarios/Cadastro";
+import AdvogadoDashboard from "./pages/honorarios/Dashboard";
+
 const queryClient = new QueryClient();
 
 const App = () => {
@@ -70,6 +76,13 @@ const App = () => {
                 <Route path="/portal/user" element={<UserDashboard />} />
                 <Route path="/portal/user/casos/:casoId" element={<CasoEditor />} />
               </Route>
+            </Route>
+
+            {/* Lawyer Honorarios Routes */}
+            <Route element={<AdvogadoAuthProvider><Outlet /></AdvogadoAuthProvider>}>
+              <Route path="/honorarios/login" element={<AdvogadoLogin />} />
+              <Route path="/honorarios/cadastro" element={<AdvogadoCadastro />} />
+              <Route path="/honorarios" element={<AdvogadoDashboard />} />
             </Route>
 
             {/* Public Routes — com MainLayout (Header + Footer) */}
