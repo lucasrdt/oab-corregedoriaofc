@@ -29,8 +29,18 @@ const Cadastro = () => {
       return;
     }
 
-    if (password.length < 6) {
-      toast.error('A senha deve ter no mínimo 6 caracteres.');
+    const hasUppercase = /[A-Z]/.test(password);
+    const hasLowercase = /[a-z]/.test(password);
+    const hasNumber = /[0-9]/.test(password);
+    const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/.test(password);
+
+    if (password.length < 8) {
+      toast.error('A senha deve ter no mínimo 8 caracteres.');
+      return;
+    }
+
+    if (!hasUppercase || !hasLowercase || !hasNumber || !hasSpecialChar) {
+      toast.error('Senha fraca. Inclua letras maiúsculas, minúsculas, números e caracteres especiais.');
       return;
     }
 

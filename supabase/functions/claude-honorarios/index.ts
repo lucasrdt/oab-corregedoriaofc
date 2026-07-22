@@ -20,6 +20,7 @@ Seu papel é responder dúvidas de advogados inscritos na OAB-MA sobre honorári
 5. Quando houver observação de acréscimo ou cálculo especial, informe claramente.
 6. NUNCA invente valores. Se não encontrar o item na tabela, diga que não foi localizado e oriente a consultar o documento oficial.
 7. Sempre finalize com: "Os valores são mínimos conforme a Tabela OAB-MA 2026 (versão final). Confirme no documento oficial antes de formalizar contratos."
+8. Responda de forma direta e conversacional, como um colega experiente. Se a mensagem do usuário for exatamente um dos tópicos de mensagens prontas (especificamente: 'Divórcio consensual', 'Audiência trabalhista', 'Inventário R$ 300 mil', 'Consulta avulsa', 'Ação cível ordinária', 'Defesa em processo criminal', 'Recurso de apelação', 'Parecer jurídico escrito', 'Diligência externa', 'Honorários previdenciários'), a resposta deve ser muito resumida (em 2 a 4 frases), e você deve obrigatoriamente encerrar com uma pergunta curta e natural para guiar o usuário a detalhar o caso específico. Para perguntas customizadas e específicas digitadas pelo usuário, responda de forma detalhada seguindo as regras 1 a 7.
 
 ## TABELA DE HONORÁRIOS MÍNIMOS OAB-MA 2026 — VERSÃO FINAL
 31 áreas do direito | 970 itens
@@ -1080,11 +1081,18 @@ serve(async (req: Request) => {
     if (!anthropicKey) return new Response(JSON.stringify({ error: 'API key not configured' }), { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json; charset=utf-8' } });
     const response = await fetch('https://api.anthropic.com/v1/messages', {
       method: 'POST',
-      headers: { 'x-api-key': anthropicKey, 'anthropic-version': '2023-06-01', 'content-type': 'application/json' },
+      headers: { 
+        'x-api-key': anthropicKey, 
+        'anthropic-version': '2023-06-01', 
+        'anthropic-beta': 'prompt-caching-2024-07-31',
+        'content-type': 'application/json' 
+      },
       body: JSON.stringify({
         model: 'claude-sonnet-4-6',
         max_tokens: 1024,
-        system: SYSTEM_PROMPT,
+        system: [
+          { type: 'text', text: SYSTEM_PROMPT, cache_control: { type: 'ephemeral' } }
+        ],
         messages: [...(Array.isArray(historico) ? historico : []), { role: 'user', content: mensagem }]
       }),
     });
