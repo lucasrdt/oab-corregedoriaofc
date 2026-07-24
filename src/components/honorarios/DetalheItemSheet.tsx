@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import CalculadoraForm from "@/components/honorarios/CalculadoraForm";
 import ResultadoCalculo from "@/components/honorarios/ResultadoCalculo";
 import { formatarMoeda } from "@/components/honorarios/format";
-import { STATUS_TAG_STYLES, getStatusTag } from "@/components/honorarios/itemTags";
+import { STATUS_TAG_STYLES_DARK, getStatusTag } from "@/components/honorarios/itemTags";
 import { cn } from "@/lib/utils";
 
 type Resultado = { resultado: number; explicacao: string };
@@ -45,22 +45,23 @@ const DetalheItemSheet = ({
       <SheetPrimitive.Portal>
         <SheetPrimitive.Overlay className="fixed inset-0 z-50 bg-background/60 backdrop-blur-sm data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0" />
         <SheetPrimitive.Content className="fixed inset-y-0 right-0 z-50 flex h-full w-full flex-col border-l border-border/60 bg-background shadow-2xl outline-none transition ease-in-out data-[state=closed]:animate-out data-[state=open]:animate-in data-[state=closed]:duration-300 data-[state=open]:duration-500 data-[state=closed]:slide-out-to-right data-[state=open]:slide-in-from-right sm:max-w-[550px]">
-          <div className="flex items-start justify-between gap-3 border-b border-border/50 px-6 py-5">
-            <div className="min-w-0">
+          <div className="relative flex items-start justify-between gap-3 overflow-hidden border-b border-white/10 bg-gradient-to-br from-[#1A2238] via-[#141a2c] to-[#10141f] px-6 py-5">
+            <div className="pointer-events-none absolute -right-8 -top-14 h-40 w-40 rounded-full bg-[#BC231A] opacity-20 blur-2xl" />
+            <div className="relative min-w-0">
               <div className="flex items-center gap-2">
-                <p className="font-mono text-xs uppercase tracking-wider text-muted-foreground">
+                <p className="font-mono text-xs uppercase tracking-wider text-white/60">
                   {item?.id} · {item?.area}
                 </p>
                 {item && getStatusTag(item.id) && (
                   <Badge
                     variant="outline"
-                    className={cn("shrink-0", STATUS_TAG_STYLES[getStatusTag(item.id)!])}
+                    className={cn("shrink-0", STATUS_TAG_STYLES_DARK[getStatusTag(item.id)!])}
                   >
                     {getStatusTag(item.id)}
                   </Badge>
                 )}
               </div>
-              <SheetPrimitive.Title className="mt-1 font-heading text-lg font-bold leading-snug text-primary">
+              <SheetPrimitive.Title className="mt-1 font-heading text-lg font-bold leading-snug text-white">
                 {item?.descricao}
               </SheetPrimitive.Title>
               <SheetPrimitive.Description className="sr-only">
@@ -69,7 +70,7 @@ const DetalheItemSheet = ({
             </div>
             <SheetPrimitive.Close
               aria-label="Fechar"
-              className="shrink-0 rounded-full p-1.5 text-muted-foreground opacity-80 transition-opacity hover:bg-muted hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring"
+              className="relative shrink-0 rounded-full p-1.5 text-white/80 opacity-80 transition-opacity hover:bg-white/10 hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-white/40"
             >
               <X className="h-4 w-4" />
             </SheetPrimitive.Close>

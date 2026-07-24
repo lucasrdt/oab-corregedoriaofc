@@ -171,20 +171,31 @@ const ChatWidget = ({
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <div className="group fixed bottom-40 right-4 z-50 sm:right-6">
-        <div className="pointer-events-none absolute -top-11 right-0 whitespace-nowrap rounded-lg border border-border/40 bg-card px-3 py-1.5 font-body text-xs text-foreground opacity-0 shadow-md transition-opacity duration-200 group-hover:opacity-100">
+      {/* O vão livre entre o FAB de suporte (bottom-6 = 24px, topo em 80px) e o do WhatsApp
+          (bottom-40 = 160px) mede 80px. Nosso botão tem 56px (h-14) de altura, sobrando 24px
+          de folga — bottom-[5.75rem] (92px) centraliza esse botão no vão, com 12px de vão
+          igual acima e abaixo. bottom-24 (96px) deixava 16px em cima e só 8px embaixo,
+          visualmente desigual. O tooltip vai pro lado esquerdo (não mais acima do botão) —
+          assim nunca invade a faixa vertical do FAB vizinho, não importa o quão apertado
+          fique o espaço entre os três botões. */}
+      <div className="group fixed bottom-[5.75rem] right-4 z-50 sm:right-6">
+        <div className="pointer-events-none absolute right-full top-1/2 mr-3 -translate-y-1/2 whitespace-nowrap rounded-lg border border-border/40 bg-card px-3 py-1.5 font-body text-xs text-foreground opacity-0 shadow-md transition-opacity duration-200 group-hover:opacity-100">
           Assistente de honorários
         </div>
         <DialogTrigger asChild>
           <button
             aria-label="Abrir assistente de honorários"
-            className="flex h-14 w-14 items-center justify-center rounded-full bg-primary text-primary-foreground shadow-lg transition-all duration-300 hover:scale-110 hover:bg-primary/90"
+            className="relative flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-[#232d4a] via-[#1A2238] to-[#0A0E1A] text-white shadow-[0_10px_28px_-8px_rgba(10,14,26,0.65)] ring-1 ring-white/10 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_14px_32px_-8px_rgba(188,35,26,0.5)] hover:ring-[#BC231A]/50"
           >
+            <span
+              aria-hidden
+              className="pointer-events-none absolute inset-x-2.5 top-1.5 h-3.5 rounded-full bg-white/15 blur-[5px]"
+            />
             <Scale className="h-6 w-6" />
           </button>
         </DialogTrigger>
         {!open && (
-          <span className="pointer-events-none absolute -top-0.5 right-0 flex h-3.5 w-3.5">
+          <span className="pointer-events-none absolute -top-1 -right-1 flex h-3.5 w-3.5">
             <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#BC231A] opacity-75" />
             <span className="relative inline-flex h-3.5 w-3.5 rounded-full bg-[#BC231A] ring-2 ring-white" />
           </span>

@@ -9,7 +9,6 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Input } from "@/components/ui/input";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Alert, AlertDescription } from "@/components/ui/alert";
@@ -55,14 +54,12 @@ const CalculadoraModal = ({ open, onOpenChange, onSelecionarItem }: CalculadoraM
         hideCloseButton
         className="flex h-[680px] w-[calc(100vw-2rem)] max-w-2xl max-h-[90vh] flex-col gap-0 overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-br from-[#1A2238] via-[#141a2c] to-[#10141f] p-0 font-body shadow-2xl"
       >
-        <DialogHeader className="relative flex-row items-center justify-between gap-3 space-y-0 overflow-hidden border-b border-white/10 bg-[#BC231A]/10 px-5 py-5 text-left backdrop-blur-sm">
+        <DialogHeader className="relative flex-row items-center justify-between gap-3 space-y-0 overflow-hidden border-b border-white/10 bg-gradient-to-br from-[#3a1512]/70 via-[#BC231A]/10 to-transparent px-5 py-5 text-left backdrop-blur-sm">
           <div className="pointer-events-none absolute -right-6 -top-10 h-32 w-32 rounded-full bg-[#BC231A] opacity-20 blur-2xl" />
           <div className="relative flex min-w-0 flex-1 items-center gap-3">
-            <Avatar className="h-9 w-9 shrink-0 bg-white/10 ring-1 ring-white/15">
-              <AvatarFallback className="bg-transparent text-white">
-                <Calculator className="h-4 w-4" />
-              </AvatarFallback>
-            </Avatar>
+            <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-white/10 ring-1 ring-white/15">
+              <Calculator className="h-4 w-4 text-white" />
+            </div>
             <div className="min-w-0">
               <DialogTitle className="text-sm font-semibold leading-snug text-white">
                 Calculadora de Honorários
@@ -91,14 +88,14 @@ const CalculadoraModal = ({ open, onOpenChange, onSelecionarItem }: CalculadoraM
           </Alert>
 
           <div className="relative">
-            <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+            <Search className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
             <Input
               autoFocus
               value={termo}
               onChange={(e) => setTermo(e.target.value)}
               placeholder="Buscar atividade — ex: 'cível', 'inventário'..."
               aria-label="Buscar atividade calculável"
-              className="h-11 rounded-xl pl-9 text-sm"
+              className="h-12 rounded-full border-2 border-foreground/10 pl-11 text-sm shadow-sm transition-colors focus-visible:border-primary/50 focus-visible:ring-0"
             />
           </div>
 
@@ -119,7 +116,7 @@ const CalculadoraModal = ({ open, onOpenChange, onSelecionarItem }: CalculadoraM
                 <li key={item.id}>
                   <button
                     onClick={() => selecionar(item)}
-                    className="grid w-full grid-cols-1 items-center gap-1.5 rounded-lg px-4 py-4 text-left transition-colors hover:bg-muted/60 sm:grid-cols-[minmax(0,1fr)_auto] sm:gap-6"
+                    className="grid w-full grid-cols-1 items-center gap-2 rounded-lg px-4 py-5 text-left transition-colors hover:bg-muted/60 sm:grid-cols-[minmax(0,1fr)_auto] sm:gap-6"
                   >
                     <div className="min-w-0">
                       <p className="font-mono text-[11px] text-muted-foreground">{item.id}</p>
@@ -127,11 +124,11 @@ const CalculadoraModal = ({ open, onOpenChange, onSelecionarItem }: CalculadoraM
                       <p className="truncate text-xs text-muted-foreground">{item.area}</p>
                     </div>
                     <div className="shrink-0 text-left sm:text-right">
-                      <p className="text-sm font-bold tabular-nums text-primary">
+                      <p className="text-lg font-bold tabular-nums text-primary">
                         {item.percentual_minimo}%
                       </p>
                       {item.valor_minimo != null ? (
-                        <p className="text-base font-bold tabular-nums text-primary">
+                        <p className="text-sm font-semibold tabular-nums text-muted-foreground">
                           {formatarMoeda(item.valor_minimo)}
                         </p>
                       ) : (

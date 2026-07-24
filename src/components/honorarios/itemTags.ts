@@ -11,6 +11,17 @@ export const STATUS_TAG_STYLES: Record<StatusTag, string> = {
   ATUALIZADO: GHOST_BADGE,
 };
 
+// Mesmo espírito "fantasma" do GHOST_BADGE, mas para os cabeçalhos navy (DetalheItemSheet) —
+// slate-100/500 fica ilegível sobre fundo escuro, então usa branco translúcido em vez disso.
+const GHOST_BADGE_DARK = "border-white/15 bg-white/10 text-white/70 text-[10px] px-1.5 py-0.5";
+
+export const STATUS_TAG_STYLES_DARK: Record<StatusTag, string> = {
+  EMENDA: GHOST_BADGE_DARK,
+  "+10%": GHOST_BADGE_DARK,
+  NOVO: GHOST_BADGE_DARK,
+  ATUALIZADO: GHOST_BADGE_DARK,
+};
+
 /**
  * Mapeamento item.id → status oficial (EMENDA, NOVO, ATUALIZADO, +10%) da Tabela OAB-MA 2026.
  * Preenchido a partir do "Quadro Comparativo De → Para" do documento oficial
