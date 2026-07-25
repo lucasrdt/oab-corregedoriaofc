@@ -77,10 +77,10 @@ const Login = () => {
             </div>
           </div>
           <CardTitle className="text-xl font-bold uppercase tracking-wider text-[#0C2540]">
-            Portal do Advogado
+            Assistente de Honorários
           </CardTitle>
           <CardDescription className="text-slate-500 text-xs">
-            Acesse a área exclusiva para cálculo e consulta de honorários
+            Acesse para interagir com o assistente inteligente de honorários
           </CardDescription>
         </CardHeader>
         <form onSubmit={handleLogin}>
@@ -100,9 +100,36 @@ const Login = () => {
               />
             </div>
             <div className="space-y-1.5">
-              <Label htmlFor="password" className="text-slate-700 text-xs font-bold uppercase tracking-wider">
-                Senha
-              </Label>
+              <div className="flex justify-between items-center">
+                <Label htmlFor="password" className="text-slate-700 text-xs font-bold uppercase tracking-wider">
+                  Senha
+                </Label>
+                <button
+                  type="button"
+                  onClick={async () => {
+                    if (!email) {
+                      toast.error('Por favor, informe seu e-mail no campo acima para recuperar a senha.');
+                      return;
+                    }
+                    try {
+                      setLoading(true);
+                      const { error } = await supabase.auth.resetPasswordForEmail(email, {
+                        redirectTo: `${window.location.origin}/honorarios/resetar-senha`,
+                      });
+                      if (error) throw error;
+                      toast.success('E-mail de recuperação enviado! Verifique sua caixa de entrada.');
+                    } catch (err: any) {
+                      toast.error(err.message || 'Erro ao enviar e-mail de recuperação.');
+                    } finally {
+                      setLoading(false);
+                    }
+                  }}
+                  className="text-xs text-[#0C2540] hover:underline font-semibold"
+                  disabled={loading}
+                >
+                  Esqueceu sua senha?
+                </button>
+              </div>
               <Input
                 id="password"
                 type="password"
@@ -120,7 +147,7 @@ const Login = () => {
               className="w-full bg-[#0C2540] hover:bg-[#001E5F] text-white font-bold uppercase tracking-wider text-xs h-11 transition-colors"
               disabled={loading}
             >
-              {loading ? <Loader2 className="mr-2 h-4 w-4 animate-spin text-white" /> : 'Acessar Portal'}
+              {loading ? <Loader2 className="mr-2 h-4 w-4 animate-spin text-white" /> : 'Acessar Assistente'}
             </Button>
             <div className="text-center text-xs text-slate-500">
               Não tem acesso?{' '}
