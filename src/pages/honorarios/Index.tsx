@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from "react";
-import { Calculator, ScrollText, Search } from "lucide-react";
+import { Calculator, FileSignature, ScrollText, Search } from "lucide-react";
 import {
   areasDisponiveis,
   buscarPorArea,
@@ -15,6 +15,7 @@ import BuscaGlobal from "@/components/honorarios/BuscaGlobal";
 import DetalheItemSheet from "@/components/honorarios/DetalheItemSheet";
 import PdfPreviewSheet from "@/components/honorarios/PdfPreviewSheet";
 import CalculadoraModal from "@/components/honorarios/CalculadoraModal";
+import BibliotecaMinutasSheet from "@/components/honorarios/BibliotecaMinutasSheet";
 import Kbd from "@/components/honorarios/Kbd";
 import ChatWidget from "@/components/honorarios/ChatWidget";
 import RecentesStrip from "@/components/honorarios/RecentesStrip";
@@ -53,6 +54,7 @@ const HonorariosIndex = () => {
   const [perguntaHero, setPerguntaHero] = useState("");
   const [calculadoraAberta, setCalculadoraAberta] = useState(false);
   const [pdfAberto, setPdfAberto] = useState(false);
+  const [minutasAberta, setMinutasAberta] = useState(false);
 
   const [itemCalculo, setItemCalculo] = useState<ItemTabela | null>(null);
   const [calculoAberto, setCalculoAberto] = useState(false);
@@ -223,6 +225,14 @@ const HonorariosIndex = () => {
                 <ScrollText className="h-3.5 w-3.5 text-[#BC231A]" />
                 Tabela Oficial (PDF)
               </button>
+              <button
+                type="button"
+                onClick={() => setMinutasAberta(true)}
+                className="inline-flex items-center gap-1.5 transition-colors hover:text-white"
+              >
+                <FileSignature className="h-3.5 w-3.5 text-[#BC231A]" />
+                Biblioteca de Minutas (IA)
+              </button>
             </div>
           </div>
 
@@ -306,6 +316,8 @@ const HonorariosIndex = () => {
       />
 
       <PdfPreviewSheet open={pdfAberto} onOpenChange={setPdfAberto} />
+
+      <BibliotecaMinutasSheet open={minutasAberta} onOpenChange={setMinutasAberta} />
 
       <DetalheItemSheet
         item={itemCalculo}
