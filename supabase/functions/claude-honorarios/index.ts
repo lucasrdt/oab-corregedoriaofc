@@ -20,6 +20,7 @@ Seu papel é responder dúvidas de advogados inscritos na OAB-MA sobre honorári
 5. Quando houver observação de acréscimo ou cálculo especial, informe claramente.
 6. NUNCA invente valores. Se não encontrar o item na tabela, diga que não foi localizado e oriente a consultar o documento oficial.
 7. Sempre finalize com: "Os valores são mínimos conforme a Tabela OAB-MA 2026 (versão final). Confirme no documento oficial antes de formalizar contratos."
+8. Responda de forma direta e conversacional, como um colega experiente explicando rapidamente — não como uma tabela ou documento formal. Para perguntas diretas e específicas (um item, um valor, "quanto cobrar por X"), a resposta deve caber em 2-4 frases corridas: cite o item, informe o valor, e pare — sem títulos ("##"), sem múltiplas seções, sem tabela markdown. Se a mensagem do usuário for exatamente um dos tópicos de mensagens prontas ('Divórcio consensual', 'Audiência trabalhista', 'Inventário R$ 300 mil', 'Consulta avulsa', 'Ação cível ordinária', 'Defesa em processo criminal', 'Recurso de apelação', 'Parecer jurídico escrito', 'Diligência externa', 'Honorários previdenciários'), que são propositalmente vagos, encerre com uma pergunta curta pedindo mais detalhes do caso. Só use resposta mais longa (com listas ou múltiplos itens) quando o advogado pedir explicitamente comparação entre vários itens, todas as opções de uma área, ou mais detalhamento.
 
 ## TABELA DE HONORÁRIOS MÍNIMOS OAB-MA 2026 — VERSÃO FINAL
 31 áreas do direito | 970 itens
@@ -1078,22 +1079,83 @@ serve(async (req: Request) => {
     if (!mensagem || typeof mensagem !== 'string') return new Response(JSON.stringify({ error: 'Missing mensagem' }), { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json; charset=utf-8' } });
     const anthropicKey = Deno.env.get('ANTHROPIC_API_KEY');
     if (!anthropicKey) return new Response(JSON.stringify({ error: 'API key not configured' }), { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json; charset=utf-8' } });
-    const response = await fetch('https://api.anthropic.com/v1/messages', {
+
+    const anthropicResponse = await fetch('https://api.anthropic.com/v1/messages', {
       method: 'POST',
-      headers: { 'x-api-key': anthropicKey, 'anthropic-version': '2023-06-01', 'content-type': 'application/json' },
+      headers: {
+        'x-api-key': anthropicKey,
+        'anthropic-version': '2023-06-01',
+        'content-type': 'application/json',
+      },
       body: JSON.stringify({
         model: 'claude-sonnet-4-6',
         max_tokens: 1024,
-        system: SYSTEM_PROMPT,
+        stream: true,
+        // TTL de 1h em vez do padrao de 5min - o prefixo do prompt e identico entre
+        // usuarios diferentes (cache efetivamente compartilhado), e o ritmo real de uso
+        // (tempo entre uma pergunta e outra) facilmente excede 5 minutos.
+        system: [
+          { type: 'text', text: SYSTEM_PROMPT, cache_control: { type: 'ephemeral', ttl: '1h' } }
+        ],
         messages: [...(Array.isArray(historico) ? historico : []), { role: 'user', content: mensagem }]
       }),
     });
-    if (!response.ok) {
-      const err = await response.text();
-      return new Response(JSON.stringify({ error: err }), { status: response.status, headers: { ...corsHeaders, 'Content-Type': 'application/json; charset=utf-8' } });
+
+    if (!anthropicResponse.ok) {
+      const err = await anthropicResponse.text();
+      return new Response(JSON.stringify({ error: err }), { status: anthropicResponse.status, headers: { ...corsHeaders, 'Content-Type': 'application/json; charset=utf-8' } });
     }
-    const data = await response.json();
-    return new Response(JSON.stringify({ resposta: data.content?.[0]?.text || '' }), { status: 200, headers: { ...corsHeaders, 'Content-Type': 'application/json; charset=utf-8' } });
+
+    // Repassa o stream SSE da Anthropic pro cliente como texto puro incremental (so o
+    // delta de texto de cada evento, sem envelope JSON) - o cliente so precisa concatenar
+    // os chunks conforme chegam, sem entender o formato de evento da Anthropic.
+    const anthropicBody = anthropicResponse.body;
+    if (!anthropicBody) {
+      return new Response(JSON.stringify({ error: 'Resposta sem corpo da Anthropic' }), { status: 502, headers: { ...corsHeaders, 'Content-Type': 'application/json; charset=utf-8' } });
+    }
+
+    const outStream = new ReadableStream({
+      async start(controller) {
+        const reader = anthropicBody.getReader();
+        const decoder = new TextDecoder();
+        const encoder = new TextEncoder();
+        let buffer = '';
+        try {
+          while (true) {
+            const { done, value } = await reader.read();
+            if (done) break;
+            buffer += decoder.decode(value, { stream: true });
+            const lines = buffer.split('\n');
+            buffer = lines.pop() ?? '';
+            for (const line of lines) {
+              if (!line.startsWith('data: ')) continue;
+              const dataStr = line.slice(6).trim();
+              if (!dataStr) continue;
+              let event: any;
+              try {
+                event = JSON.parse(dataStr);
+              } catch {
+                continue; // linha parcial/nao-JSON, ignora
+              }
+              if (event.type === 'content_block_delta' && event.delta?.type === 'text_delta') {
+                controller.enqueue(encoder.encode(event.delta.text));
+              } else if (event.type === 'error') {
+                console.error('[claude-honorarios] Erro no stream da Anthropic:', JSON.stringify(event));
+              }
+            }
+          }
+        } catch (err) {
+          console.error('[claude-honorarios] Exception no stream:', err);
+        } finally {
+          controller.close();
+        }
+      },
+    });
+
+    return new Response(outStream, {
+      status: 200,
+      headers: { ...corsHeaders, 'Content-Type': 'text/plain; charset=utf-8' },
+    });
   } catch (err: any) {
     return new Response(JSON.stringify({ error: err.message }), { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json; charset=utf-8' } });
   }

@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { RotateCcw, Scale, Send, Sparkles, User, X } from "lucide-react";
-import { FunctionsHttpError } from "@supabase/supabase-js";
+import ReactMarkdown from "react-markdown";
 import { supabase } from "@/lib/supabase";
 import { AVISO_TABELA } from "@/data/tabelaHonorarios";
 import { useAdvogadoAuth } from "@/contexts/AdvogadoAuthContext";
@@ -11,7 +11,6 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { Skeleton } from "@/components/ui/skeleton";
 import {
   Dialog,
   DialogContent,
@@ -84,6 +83,20 @@ const ChatWidget = ({
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages, loading]);
 
+  useEffect(() => {
+    // Ao restaurar a página via bfcache do navegador (ex: fechar a aba com uma pergunta
+    // pendente e reabrir/voltar), o React reidrata um snapshot congelado que pode ter
+    // `loading: true` de uma requisição que nunca vai resolver — sem isso, o spinner
+    // fica travado indefinidamente.
+    const handlePageShow = (event: PageTransitionEvent) => {
+      if (event.persisted) {
+        setLoading(false);
+      }
+    };
+    window.addEventListener("pageshow", handlePageShow);
+    return () => window.removeEventListener("pageshow", handlePageShow);
+  }, []);
+
   const enviarMensagem = async (textoForcado?: string) => {
     const mensagem = (textoForcado ?? input).trim();
     if (!mensagem || loading) return;
@@ -106,43 +119,60 @@ const ChatWidget = ({
     setInput("");
     setLoading(true);
 
+    const assistantId = crypto.randomUUID();
+
     try {
-      const { data, error } = await supabase.functions.invoke("claude-honorarios", {
-        body: { mensagem, historico },
-      });
-
-      if (error) {
-        let mensagemErro = error.message;
-        if (error instanceof FunctionsHttpError) {
-          const body = await error.context.json().catch(() => null);
-          if (body?.error) mensagemErro = body.error;
+      // Chamada direta (não supabase.functions.invoke) porque a function agora responde
+      // em streaming (texto puro incremental) em vez de um JSON único.
+      const response = await fetch(
+        `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/claude-honorarios`,
+        {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${session.access_token}`,
+            apikey: import.meta.env.VITE_SUPABASE_ANON_KEY,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ mensagem, historico }),
         }
-        throw new Error(mensagemErro);
-      }
-      if (data?.error) {
-        throw new Error(data.error);
+      );
+
+      if (!response.ok || !response.body) {
+        const errorBody = await response.json().catch(() => null);
+        throw new Error(errorBody?.error || "Não foi possível consultar a Corregedoria.");
       }
 
-      setMessages((prev) => [
-        ...prev,
-        { id: crypto.randomUUID(), role: "assistant", content: data?.resposta ?? "" },
-      ]);
+      setMessages((prev) => [...prev, { id: assistantId, role: "assistant", content: "" }]);
+
+      const reader = response.body.getReader();
+      const decoder = new TextDecoder();
+      let acumulado = "";
+
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
+        acumulado += decoder.decode(value, { stream: true });
+        setMessages((prev) =>
+          prev.map((m) => (m.id === assistantId ? { ...m, content: acumulado } : m))
+        );
+      }
     } catch (err) {
-      const mensagem = err instanceof Error ? err.message : "Tente novamente em instantes.";
+      const mensagemErro = err instanceof Error ? err.message : "Tente novamente em instantes.";
       toast({
         title: "Não foi possível consultar a Corregedoria",
-        description: mensagem,
+        description: mensagemErro,
         variant: "destructive",
       });
-      setMessages((prev) => [
-        ...prev,
-        {
-          id: crypto.randomUUID(),
-          role: "assistant",
-          content:
-            "Não foi possível concluir a consulta agora. Tente novamente em instantes ou procure os canais oficiais da Corregedoria.",
-        },
-      ]);
+      setMessages((prev) => {
+        const fallback =
+          "Não foi possível concluir a consulta agora. Tente novamente em instantes ou procure os canais oficiais da Corregedoria.";
+        // Se já criamos a bolha do assistente (erro veio no meio do stream), preenche ela
+        // em vez de duplicar; senão, adiciona uma nova.
+        if (prev.some((m) => m.id === assistantId)) {
+          return prev.map((m) => (m.id === assistantId ? { ...m, content: m.content || fallback } : m));
+        }
+        return [...prev, { id: crypto.randomUUID(), role: "assistant", content: fallback }];
+      });
     } finally {
       setLoading(false);
     }
@@ -290,30 +320,38 @@ const ChatWidget = ({
                         : "rounded-tr-md bg-[#BC231A] text-white",
                     )}
                   >
-                    {message.content}
+                    {message.role === "assistant" ? (
+                      message.content ? (
+                        <div className="prose prose-sm max-w-none break-words prose-p:my-1.5 prose-headings:mt-2 prose-headings:mb-1 prose-headings:text-sm prose-headings:font-bold prose-ul:my-1.5 prose-ol:my-1.5 prose-li:my-0.5 prose-strong:font-bold prose-strong:text-foreground dark:prose-invert">
+                          <ReactMarkdown>{message.content}</ReactMarkdown>
+                        </div>
+                      ) : (
+                        loading && (
+                          <div className="flex items-center gap-2 py-1">
+                            <span className="h-1.5 w-1.5 animate-bounce rounded-full bg-[#BC231A] [animation-delay:-0.3s]" />
+                            <span className="h-1.5 w-1.5 animate-bounce rounded-full bg-[#BC231A] [animation-delay:-0.15s]" />
+                            <span className="h-1.5 w-1.5 animate-bounce rounded-full bg-[#BC231A]" />
+                          </div>
+                        )
+                      )
+                    ) : (
+                      message.content
+                    )}
                   </div>
                 </div>
               ))}
 
-              {loading && (
+              {loading && messages[messages.length - 1]?.role !== "assistant" && (
                 <div className="honorarios-chat-fade-in flex items-start gap-2">
                   <Avatar className="h-7 w-7 shrink-0">
                     <AvatarFallback className="bg-primary text-primary-foreground">
                       <Scale className="h-3.5 w-3.5" />
                     </AvatarFallback>
                   </Avatar>
-                  <div className="max-w-[80%] space-y-2 rounded-2xl rounded-tl-sm bg-muted px-4 py-3">
-                    <div className="flex items-center gap-2">
-                      <div className="flex gap-1">
-                        <span className="h-1.5 w-1.5 animate-bounce rounded-full bg-[#BC231A] [animation-delay:-0.3s]" />
-                        <span className="h-1.5 w-1.5 animate-bounce rounded-full bg-[#BC231A] [animation-delay:-0.15s]" />
-                        <span className="h-1.5 w-1.5 animate-bounce rounded-full bg-[#BC231A]" />
-                      </div>
-                      <p className="text-xs text-muted-foreground">Consultando normas da Corregedoria...</p>
-                    </div>
-                    <Skeleton className="h-3 w-40" />
-                    <Skeleton className="h-3 w-32" />
-                    <Skeleton className="h-3 w-24" />
+                  <div className="flex items-center gap-2 rounded-2xl rounded-tl-sm bg-muted px-4 py-3">
+                    <span className="h-1.5 w-1.5 animate-bounce rounded-full bg-[#BC231A] [animation-delay:-0.3s]" />
+                    <span className="h-1.5 w-1.5 animate-bounce rounded-full bg-[#BC231A] [animation-delay:-0.15s]" />
+                    <span className="h-1.5 w-1.5 animate-bounce rounded-full bg-[#BC231A]" />
                   </div>
                 </div>
               )}
