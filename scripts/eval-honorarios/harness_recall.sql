@@ -16,7 +16,7 @@ with resultados as (
     bool_or(d.item_id_esperado_secundario is not null and r.id = d.item_id_esperado_secundario) as encontrado_secundario
   from public.honorarios_eval_dataset d
   join public.honorarios_itens b on b.id = d.item_id_base
-  left join lateral public.buscar_honorarios_itens(d.pergunta, 15) r on true
+  left join lateral public.buscar_honorarios_itens(d.pergunta, 25) r on true
   where d.item_id_esperado is not null
   group by d.id, d.tipo_pergunta, d.item_id_base, b.area
 )

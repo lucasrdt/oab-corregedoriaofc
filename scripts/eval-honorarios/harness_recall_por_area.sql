@@ -13,7 +13,7 @@ with resultados as (
     bool_or(r.id = d.item_id_esperado) as encontrado_principal
   from public.honorarios_eval_dataset d
   join public.honorarios_itens b on b.id = d.item_id_base
-  left join lateral public.buscar_honorarios_itens(d.pergunta, 15) r on true
+  left join lateral public.buscar_honorarios_itens(d.pergunta, 25) r on true
   where d.item_id_esperado is not null and d.tipo_pergunta in ('contexto', 'sinonimos')
   group by d.id, d.tipo_pergunta, b.area
 )
