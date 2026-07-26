@@ -12,7 +12,7 @@
 --    evita zero-resultados em perguntas mais longas/compostas onde nem todo termo aparece
 --    junto no mesmo item.
 
-create or replace function public.buscar_honorarios_itens(termo_busca text, limite int default 15)
+create or replace function public.buscar_honorarios_itens(termo_busca text, limite int default 25)
 returns table (
   id text,
   area text,

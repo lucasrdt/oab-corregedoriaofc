@@ -85,7 +85,7 @@ async function buscarItensRelevantes(
   const idsReferenciados = extrairIdsReferenciados(mensagem);
 
   const [buscaResult, idsResult] = await Promise.all([
-    supabaseAdmin.rpc('buscar_honorarios_itens', { termo_busca: mensagem, limite: 15 }),
+    supabaseAdmin.rpc('buscar_honorarios_itens', { termo_busca: mensagem, limite: 25 }),
     idsReferenciados.length > 0
       ? supabaseAdmin.from('honorarios_itens').select('*').in('id', idsReferenciados)
       : Promise.resolve({ data: [], error: null }),

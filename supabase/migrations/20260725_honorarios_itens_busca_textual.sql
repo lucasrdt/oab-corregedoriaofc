@@ -31,6 +31,14 @@ alter table public.honorarios_itens add column if not exists categoria text;
 -- usuario): sem isso, "CONSULTA/REUNIÃO" vira um unico lexema colado ("consulta/reuni") e a
 -- palavra "consulta" nunca fica pesquisavel sozinha - afeta ~94 dos 970 itens que usam esse
 -- tipo de barra sem espaco (ex: "Defesa/Recurso", "administrativo/judicial").
+--
+-- TENTATIVA REVERTIDA: dar peso 'A' pra area/categoria (medindo via o harness de recall da
+-- Fase 3) piorou o recall geral (linguagem natural caiu de 92.7% pra 84.1%, contexto de 64.6%
+-- pra 54.4%) - categoria e identica entre varios itens-irmaos (ex: todos os "Divorcio
+-- Consensual"), entao pesa-la mais alto que descricao faz os irmaos empatarem entre si e afoga
+-- o sinal de descricao, que e o que realmente distingue a maioria dos itens. Mantido sem peso
+-- diferenciado; o problema especifico de Direito Agrario (nome de procedimento generico
+-- compartilhado com outra area) fica como limitacao conhecida pra investigar separadamente.
 alter table public.honorarios_itens drop column if exists busca;
 alter table public.honorarios_itens
   add column busca tsvector
