@@ -170,6 +170,15 @@ async function buscarItensRelevantes(
 
   // Caminho rapido primeiro (sempre): busca so por palavra-chave na mensagem original, sem
   // nenhuma chamada de IA/embedding extra antes de comecar.
+  //
+  // Tentativa revertida: usar "o modo AND-preciso da busca encontrou algo?" como sinal de
+  // pergunta dificil parecia bom em teoria, mas na pratica o websearch_to_tsquery do Postgres
+  // NAO trata palavras de pergunta em portugues ("quanto", "cobrar", "qual") como stopword -
+  // ele exige que o item contenha essas palavras tambem, o que quase nenhum item tem. Resultado:
+  // o sinal disparava pra quase toda pergunta real (inclusive as faceis, tipo "quanto cobrar por
+  // inventario?"), nao so as dificeis - teria feito o pipeline caro rodar sempre, undo do ganho
+  // de latencia da Fase 1. Ficou registrado pra uma correcao futura mais robusta (tirar essas
+  // palavras de pergunta antes de montar a tsquery), mas exige mais teste antes de reativar.
   const buscaRapida = await supabaseAdmin.rpc('buscar_honorarios_itens', { termo_busca: mensagem, limite: 25 });
   if (buscaRapida.error) console.error('[claude-honorarios] Erro na busca rapida:', buscaRapida.error);
 
