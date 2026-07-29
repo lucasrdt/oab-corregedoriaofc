@@ -10714,3 +10714,75 @@ export const tabelaHonorarios: ItemTabela[] = [
     "observacao": null
   }
 ];
+
+// ── Engine de cálculo determinística ────────────────────────────────────────
+// O cálculo NUNCA é feito pela IA — sempre por esta função
+export function calcularHonorario(
+  item: ItemTabela,
+  valorCausa?: number,
+  situacaoIdx?: number
+): { resultado: number; explicacao: string } {
+
+  // Item com situações (ex: 1.1 Consulta/Reunião)
+  if (item.situacoes && item.situacoes.length > 0) {
+    const situacao = item.situacoes[situacaoIdx ?? 0];
+    return {
+      resultado: situacao.valor_minimo,
+      explicacao:
+        `${situacao.situacao} — valor mínimo de R$ ${situacao.valor_minimo.toLocaleString('pt-BR', { minimumFractionDigits: 2 })} conforme item ${item.id} da Tabela OAB-MA 2026.${item.observacao ? ' ' + item.observacao : ''}`,
+    };
+  }
+
+  // Valor fixo
+  if (item.tipo === 'fixo' || !item.requer_valor_causa) {
+    return {
+      resultado: item.valor_minimo ?? 0,
+      explicacao: `Valor fixo mínimo de R$ ${(item.valor_minimo ?? 0).toLocaleString('pt-BR', { minimumFractionDigits: 2 })} conforme item ${item.id} da Tabela OAB-MA 2026.${item.observacao ? ' ' + item.observacao : ''}`,
+    };
+  }
+
+  // Percentual sobre valor da causa
+  if (item.tipo === 'percentual' && item.percentual_minimo && valorCausa) {
+    const calculado = valorCausa * (item.percentual_minimo / 100);
+    const resultado = item.valor_minimo
+      ? Math.max(calculado, item.valor_minimo)
+      : calculado;
+    const usouMinimo = item.valor_minimo != null && resultado === item.valor_minimo;
+
+    return {
+      resultado,
+      explicacao: usouMinimo
+        ? `Aplicado valor mínimo de R$ ${item.valor_minimo!.toLocaleString('pt-BR', { minimumFractionDigits: 2 })} — ${item.percentual_minimo}% sobre R$ ${valorCausa.toLocaleString('pt-BR', { minimumFractionDigits: 2 })} resultaria abaixo do mínimo. Item ${item.id} da Tabela OAB-MA 2026.${item.observacao ? ' ' + item.observacao : ''}`
+        : `${item.percentual_minimo}% sobre o valor da causa de R$ ${valorCausa.toLocaleString('pt-BR', { minimumFractionDigits: 2 })} = R$ ${resultado.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}. Item ${item.id} da Tabela OAB-MA 2026.${item.observacao ? ' ' + item.observacao : ''}`,
+    };
+  }
+
+  return {
+    resultado: item.valor_minimo ?? 0,
+    explicacao: `Valor mínimo conforme item ${item.id} da Tabela OAB-MA 2026.`,
+  };
+}
+
+// ── Utilitários ──────────────────────────────────────────────────────────────
+export function buscarPorArea(area: string): ItemTabela[] {
+  return tabelaHonorarios.filter(
+    (item) => item.area.toLowerCase() === area.toLowerCase()
+  );
+}
+
+export function buscarPorId(id: string): ItemTabela | undefined {
+  return tabelaHonorarios.find((item) => item.id === id);
+}
+
+export function buscarPorDescricao(termo: string): ItemTabela[] {
+  const lower = termo.toLowerCase();
+  return tabelaHonorarios.filter(
+    (item) =>
+      item.descricao.toLowerCase().includes(lower) ||
+      item.area.toLowerCase().includes(lower)
+  );
+}
+
+export const areasDisponiveis = [
+  ...new Set(tabelaHonorarios.map((i) => i.area)),
+].sort();
