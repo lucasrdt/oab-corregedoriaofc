@@ -355,6 +355,30 @@ export const modelosMinutas: ModeloMinuta[] = [
   },
 ];
 
+// ---------------------------------------------------------------------------
+// Módulo 12 — Checklist Final para Uso dos Modelos
+// Fonte: "Anexos Práticos do Módulo 2" — Corregedoria Geral OAB-MA (Ivaldo Prado),
+// item 12, texto integral. Confirmação obrigatória antes de colher assinatura.
+// ---------------------------------------------------------------------------
+
+export const checklistSegurancaJuridica: string[] = [
+  'O cliente foi corretamente identificado?',
+  'O objeto da atuação está claro?',
+  'A procuração contém poderes especiais quando necessários?',
+  'Há contrato de honorários separado da procuração?',
+  'O contrato delimita o que está incluído e o que não está incluído?',
+  'Honorários fixos, percentuais e sucumbenciais estão bem explicados?',
+  'Há autorização expressa para desconto, retenção ou compensação de honorários?',
+  'A cláusula de sigilo protege advogado e cliente?',
+  'O cliente foi informado de que não há promessa de resultado?',
+  'Há previsão de despesas, custas e serviços de terceiros?',
+  'Há cláusula sobre acordo e transação?',
+  'Há regra para revogação, renúncia e rescisão?',
+  'O contrato está compatível com a tabela de honorários da OAB aplicável?',
+  'As testemunhas assinaram quando necessário para reforçar a executividade?',
+  'O cliente recebeu cópia integral do documento?',
+];
+
 export function buscarModeloPorId(id: string): ModeloMinuta | undefined {
   return modelosMinutas.find((m) => m.id === id);
 }

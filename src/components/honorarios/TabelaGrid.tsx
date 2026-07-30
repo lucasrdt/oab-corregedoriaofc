@@ -12,6 +12,24 @@ import Kbd from "./Kbd";
 
 const ITENS_POR_PAGINA = 20;
 
+// Isolado aqui (via <style> inline) em vez de tailwind.config.ts / index.css — compartilhados
+// com o resto do site, e o módulo /honorarios não pode alterar. Dispara via key={nomeArea} no
+// corpo da tabela, remontando o bloco (e portanto a animação) a cada troca de área.
+const honorariosTabelaFadeKeyframes = `
+  @keyframes honorarios-tabela-fade-in {
+    from { opacity: 0; transform: translateY(6px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .honorarios-tabela-fade-in {
+    animation: honorarios-tabela-fade-in 0.3s ease-out;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .honorarios-tabela-fade-in {
+      animation: none;
+    }
+  }
+`;
+
 interface TabelaGridProps {
   itens: ItemTabela[];
   onCalcular: (item: ItemTabela) => void;
@@ -59,8 +77,12 @@ const TabelaGrid = ({ itens, onCalcular, filtro, onFiltroChange, inputRef }: Tab
 
   return (
     <div className="font-body">
+      <style>{honorariosTabelaFadeKeyframes}</style>
       <div className="overflow-hidden rounded-2xl border border-border/50 bg-card shadow-sm">
-        <div className="flex items-center justify-between border-b border-border/40 bg-muted/40 px-5 py-4">
+        <div
+          key={`${nomeArea}-header`}
+          className="honorarios-tabela-fade-in flex items-center justify-between border-b border-border/40 bg-muted/40 px-5 py-4"
+        >
           <div>
             <h3 className="font-heading text-base font-bold text-primary">{nomeArea}</h3>
             <p className="text-xs text-muted-foreground">
@@ -103,6 +125,7 @@ const TabelaGrid = ({ itens, onCalcular, filtro, onFiltroChange, inputRef }: Tab
           </div>
         </div>
 
+        <div key={`${nomeArea}-body`} className="honorarios-tabela-fade-in">
         {itensFiltrados.length === 0 ? (
           <div className="flex min-h-[220px] items-center justify-center px-5 py-10">
             <p className="max-w-xs text-center text-sm text-muted-foreground">
@@ -185,6 +208,7 @@ const TabelaGrid = ({ itens, onCalcular, filtro, onFiltroChange, inputRef }: Tab
             </TableBody>
           </Table>
         )}
+        </div>
       </div>
 
       {itensFiltrados.length > ITENS_POR_PAGINA && (

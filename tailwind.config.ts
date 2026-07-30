@@ -17,6 +17,7 @@ export default {
         sans: ['Roboto', 'sans-serif'],
         heading: ['Roboto', 'sans-serif'],
         body: ['Roboto', 'sans-serif'],
+        'serif-display': ['"Instrument Serif"', 'serif'],
       },
       colors: {
         border: "hsl(var(--border))",

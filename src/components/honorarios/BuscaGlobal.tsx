@@ -1,9 +1,14 @@
 import { useEffect, useMemo, useState } from "react";
-import { Search } from "lucide-react";
 import { tabelaHonorarios, type ItemTabela } from "@/data/tabelaHonorarios";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
-import { ScrollArea } from "@/components/ui/scroll-area";
+import {
+  Command,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+  CommandList,
+} from "@/components/ui/command";
 
 const MAX_RESULTADOS = 12;
 
@@ -25,6 +30,9 @@ const buscarPorCodigoDescricaoOuArea = (termo: string): ItemTabela[] => {
   );
 };
 
+// shouldFilter={false} porque a filtragem já é feita "na mão" (buscarPorCodigoDescricaoOuArea,
+// com corte em MAX_RESULTADOS) — o matcher fuzzy padrão do cmdk rodaria em cima dos 970 itens
+// a cada tecla à toa, já que só renderizamos os resultados que nós mesmos selecionamos.
 const BuscaGlobal = ({ open, onOpenChange, onSelecionarItem }: BuscaGlobalProps) => {
   const [termo, setTermo] = useState("");
 
@@ -41,50 +49,48 @@ const BuscaGlobal = ({ open, onOpenChange, onSelecionarItem }: BuscaGlobalProps)
   );
 
   return (
+    // Dialog + Command montados na mão (em vez do CommandDialog de ui/command.tsx) porque
+    // precisamos de shouldFilter={false} no Command — a filtragem já é feita acima — e
+    // CommandDialog não expõe essa prop; é um wrapper compartilhado com o resto do site
+    // que o módulo /honorarios não pode alterar.
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent
-        hideCloseButton
-        className="flex max-h-[70vh] w-[calc(100vw-2rem)] max-w-xl flex-col gap-0 overflow-hidden rounded-2xl p-0 font-body"
-      >
-        <div className="flex items-center gap-2 border-b px-4 py-3">
-          <Search className="h-4 w-4 shrink-0 text-muted-foreground" />
-          <Input
-            autoFocus
+      <DialogContent className="overflow-hidden rounded-2xl p-0 shadow-2xl">
+        <Command shouldFilter={false} className="[&_[cmdk-group-heading]]:px-2 [&_[cmdk-group-heading]]:font-medium [&_[cmdk-group-heading]]:text-muted-foreground [&_[cmdk-group]:not([hidden])_~[cmdk-group]]:pt-0 [&_[cmdk-group]]:px-2 [&_[cmdk-input-wrapper]_svg]:h-5 [&_[cmdk-input-wrapper]_svg]:w-5 [&_[cmdk-input]]:h-12 [&_[cmdk-item]]:px-2 [&_[cmdk-item]]:py-3">
+          <CommandInput
             value={termo}
-            onChange={(e) => setTermo(e.target.value)}
+            onValueChange={setTermo}
             placeholder="Buscar por código, serviço ou área..."
-            className="border-none px-0 shadow-none focus-visible:ring-0"
           />
-          <kbd className="hidden shrink-0 rounded border border-border bg-muted px-1.5 py-0.5 text-[10px] font-medium text-muted-foreground sm:inline-block">
-            Esc
-          </kbd>
-        </div>
+          <CommandList className="max-h-[60vh]">
+            {termo.trim().length < 2 ? (
+              <p className="px-4 py-8 text-center text-sm text-muted-foreground">
+                Digite ao menos 2 letras para buscar.
+              </p>
+            ) : (
+              <CommandEmpty>Nenhum item encontrado.</CommandEmpty>
+            )}
 
-        <ScrollArea className="max-h-[50vh]">
-          {termo.trim().length < 2 ? (
-            <p className="px-4 py-8 text-center text-sm text-muted-foreground">
-              Digite ao menos 2 letras para buscar.
-            </p>
-          ) : resultados.length === 0 ? (
-            <p className="px-4 py-8 text-center text-sm text-muted-foreground">Nenhum item encontrado.</p>
-          ) : (
-            <ul className="divide-y divide-border/60">
-              {resultados.map((item) => (
-                <li key={item.id}>
-                  <button
-                    onClick={() => onSelecionarItem(item)}
-                    className="flex w-full flex-col items-start gap-0.5 px-4 py-3 text-left transition-colors hover:bg-muted/60"
+            {resultados.length > 0 && (
+              <CommandGroup
+                heading={`${resultados.length} resultado${resultados.length > 1 ? "s" : ""}`}
+              >
+                {resultados.map((item) => (
+                  <CommandItem
+                    key={item.id}
+                    value={item.id}
+                    onSelect={() => onSelecionarItem(item)}
+                    className="flex flex-col items-start gap-0.5 rounded-lg border-l-2 border-l-transparent data-[selected=true]:border-l-[#BC231A] data-[selected=true]:bg-[#BC231A]/10"
                   >
                     <span className="text-sm font-medium text-foreground">{item.descricao}</span>
                     <span className="text-xs tabular-nums text-muted-foreground">
                       {item.area} · item {item.id}
                     </span>
-                  </button>
-                </li>
-              ))}
-            </ul>
-          )}
-        </ScrollArea>
+                  </CommandItem>
+                ))}
+              </CommandGroup>
+            )}
+          </CommandList>
+        </Command>
       </DialogContent>
     </Dialog>
   );
