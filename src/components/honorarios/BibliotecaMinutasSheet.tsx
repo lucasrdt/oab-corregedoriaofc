@@ -13,28 +13,34 @@ import {
   Info,
   Loader2,
   Repeat,
+  ShieldCheck,
   Sparkles,
   X,
 } from "lucide-react";
+import * as mammoth from "mammoth";
+import html2pdf from "html2pdf.js";
 import { supabase } from "@/lib/supabase";
 import { useAdvogadoAuth } from "@/contexts/AdvogadoAuthContext";
 import { useToast } from "@/hooks/use-toast";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { modelosMinutas, type ModeloMinuta, type CampoMinuta } from "@/data/minutasModelos";
-import { gerarDocxBlob, baixarBlob } from "@/lib/minutas/docx";
+import {
+  modelosMinutas,
+  checklistSegurancaJuridica,
+  type ModeloMinuta,
+  type CampoMinuta,
+} from "@/data/minutasModelos";
+import { gerarDocxBlob, baixarBlob, DISCLAIMER_MINUTA, MIME_DOCX } from "@/lib/minutas/docx";
 
-const DISCLAIMER_MINUTA = "Este modelo é de referência e deve ser revisado pelo advogado antes do uso.";
-
-// Biblioteca (galeria) mostra só os modelos de atuação processual/contratual — os dois
-// modelos de categoria "Financeiro" (recibo, prestação de contas) ficam fora deste
-// gerador de minutas por enquanto.
-const modelosBiblioteca = modelosMinutas.filter((m) => m.categoria !== "Financeiro");
+// Galeria mostra os 11 modelos oficiais, incluindo os dois de categoria "Financeiro"
+// (recibo de honorários e termo de prestação de contas).
+const modelosBiblioteca = modelosMinutas;
 
 const ICONE_CATEGORIA: Record<ModeloMinuta["categoria"], typeof FileSignature> = {
   Procuração: FileSignature,
@@ -155,8 +161,12 @@ const BibliotecaMinutasSheet = ({ open, onOpenChange }: BibliotecaMinutasSheetPr
   const [campos, setCampos] = useState<ValoresCampos>({});
   const [naoIdentificados, setNaoIdentificados] = useState<Set<string>>(new Set());
   const [camposComErro, setCamposComErro] = useState<Set<string>>(new Set());
-  const [gerandoDocx, setGerandoDocx] = useState(false);
   const [copiado, setCopiado] = useState(false);
+  const [gerandoPreview, setGerandoPreview] = useState(false);
+  const [gerandoPdf, setGerandoPdf] = useState(false);
+  const [docxBlob, setDocxBlob] = useState<Blob | null>(null);
+  const [previewHtml, setPreviewHtml] = useState("");
+  const [checklistMarcado, setChecklistMarcado] = useState<Set<number>>(new Set());
 
   useEffect(() => {
     if (open) return;
@@ -169,6 +179,9 @@ const BibliotecaMinutasSheet = ({ open, onOpenChange }: BibliotecaMinutasSheetPr
       setCampos({});
       setNaoIdentificados(new Set());
       setCamposComErro(new Set());
+      setDocxBlob(null);
+      setPreviewHtml("");
+      setChecklistMarcado(new Set());
     }, 300);
     return () => clearTimeout(t);
   }, [open]);
@@ -264,7 +277,7 @@ const BibliotecaMinutasSheet = ({ open, onOpenChange }: BibliotecaMinutasSheetPr
     });
   };
 
-  const irParaPreview = () => {
+  const irParaPreview = async () => {
     if (!modelo) return;
     const faltando = modelo.campos.filter((c) => c.obrigatorio && !String(campos[c.id] ?? "").trim());
     if (faltando.length > 0) {
@@ -277,7 +290,27 @@ const BibliotecaMinutasSheet = ({ open, onOpenChange }: BibliotecaMinutasSheetPr
       return;
     }
     setCamposComErro(new Set());
-    setEtapa("preview");
+
+    // Gera o .docx preenchido e converte pra HTML aqui, uma única vez — o mesmo blob é
+    // reaproveitado pelo botão "Baixar .docx", sem reprocessar nada.
+    // `campos` é só o estado dos campos do modelo (nome, CPF, valores etc.) — o estado do
+    // checklist (`checklistMarcado`) é um Set<number> completamente separado e nunca é
+    // lido aqui, então não há como o checklist chegar ao docxtemplater.
+    setGerandoPreview(true);
+    try {
+      const blob = await gerarDocxBlob(modelo.arquivoTemplate, campos);
+      const arrayBuffer = await blob.arrayBuffer();
+      const { value: html } = await mammoth.convertToHtml({ arrayBuffer });
+      setDocxBlob(blob);
+      setPreviewHtml(html);
+      setChecklistMarcado(new Set());
+      setEtapa("preview");
+    } catch (err) {
+      const mensagem = err instanceof Error ? err.message : "Tente novamente em instantes.";
+      toast({ title: "Não foi possível gerar a prévia", description: mensagem, variant: "destructive" });
+    } finally {
+      setGerandoPreview(false);
+    }
   };
 
   const voltar = () => {
@@ -312,23 +345,78 @@ const BibliotecaMinutasSheet = ({ open, onOpenChange }: BibliotecaMinutasSheetPr
     }
   };
 
-  const baixarDocx = async () => {
+  const alternarChecklistItem = (indice: number) => {
+    setChecklistMarcado((prev) => {
+      const novo = new Set(prev);
+      if (novo.has(indice)) novo.delete(indice);
+      else novo.add(indice);
+      return novo;
+    });
+  };
+
+  const checklistCompleto = checklistMarcado.size === checklistSegurancaJuridica.length;
+
+  const baixarDocx = () => {
+    if (!modelo || !docxBlob) return;
+    baixarBlob(docxBlob, `${modelo.id}.docx`, MIME_DOCX);
+  };
+
+  const baixarPdf = async () => {
     if (!modelo) return;
-    setGerandoDocx(true);
+    // Fonte é sempre o DOM de #documento-conteudo-final, não a variável `previewHtml` —
+    // assim, mesmo que a árvore ao redor mude no futuro, é fisicamente impossível o
+    // checklist (que vive fora dessa div) entrar no PDF.
+    const origemDocumento = document.getElementById("documento-conteudo-final");
+    if (!origemDocumento) return;
+
+    // Anexa o aviso legal como filho REAL, temporário, da própria div já renderizada na
+    // tela — e captura essa div ao vivo. html2canvas produz página em branco quando o
+    // alvo é um clone desanexado do DOM posicionado fora da tela (ex.: left:-9999px);
+    // capturando o elemento visível de verdade, o problema desaparece.
+    const avisoTemporario = document.createElement("p");
+    avisoTemporario.setAttribute("data-pdf-only", "true");
+    avisoTemporario.style.marginTop = "24px";
+    avisoTemporario.style.paddingTop = "12px";
+    avisoTemporario.style.borderTop = "1px solid #ccc";
+    avisoTemporario.style.fontSize = "11px";
+    avisoTemporario.style.fontStyle = "italic";
+    avisoTemporario.style.color = "#555";
+    avisoTemporario.textContent = DISCLAIMER_MINUTA;
+    origemDocumento.appendChild(avisoTemporario);
+
+    setGerandoPdf(true);
     try {
-      const blob = await gerarDocxBlob(modelo.arquivoTemplate, campos);
-      baixarBlob(blob, `${modelo.id}.docx`);
+      const nomeArquivo = `${modelo.nome.replace(/[\\/:*?"<>|]+/g, "-")}.pdf`;
+      await html2pdf()
+        .set({
+          margin: 20,
+          filename: nomeArquivo,
+          html2canvas: { scale: 2, useCORS: true },
+          jsPDF: { unit: "mm", format: "a4", orientation: "portrait" },
+          // `pagebreak` existe de verdade em runtime (node_modules/html2pdf.js/dist/
+          // html2pdf.js, plugin/pagebreaks.js) mas o .d.ts empacotado pela lib não
+          // declara essa opção — daí o `as unknown as` só nesta chamada. Sem isso, o
+          // html2pdf fatia a imagem renderizada por altura de página sem saber onde os
+          // parágrafos terminam, cortando no meio da linha quando o corte cai em cima de
+          // um <p>. "avoid-all" empurra qualquer elemento que ficaria cortado (e couber
+          // inteiro numa página) pro início da página seguinte.
+          pagebreak: { mode: ["avoid-all"] },
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        } as any)
+        .from(origemDocumento)
+        .save();
     } catch (err) {
       const mensagem = err instanceof Error ? err.message : "Tente novamente em instantes.";
-      toast({ title: "Não foi possível gerar o .docx", description: mensagem, variant: "destructive" });
+      toast({ title: "Não foi possível gerar o PDF", description: mensagem, variant: "destructive" });
     } finally {
-      setGerandoDocx(false);
+      origemDocumento.removeChild(avisoTemporario);
+      setGerandoPdf(false);
     }
   };
 
   const tituloHeader = etapa === "galeria" ? "Biblioteca de Minutas" : modelo?.nome;
   const descricaoHeader =
-    etapa === "galeria" ? "9 modelos estruturados · preenchimento com IA" : modelo?.categoria;
+    etapa === "galeria" ? "11 modelos estruturados · preenchimento com IA" : modelo?.categoria;
 
   return (
     <SheetPrimitive.Root open={open} onOpenChange={onOpenChange}>
@@ -418,7 +506,7 @@ const BibliotecaMinutasSheet = ({ open, onOpenChange }: BibliotecaMinutasSheetPr
                       onChange={(e) => setDescricaoCaso(e.target.value)}
                       placeholder="Ex: Cliente Maria Silva, CPF 000.000.000-00, solteira, contadora... ação de divórcio consensual, pagamento à vista via PIX, foro em São Luís/MA."
                       rows={8}
-                      className="mt-1.5"
+                      className="mt-1.5 border-white/40 bg-white/30 backdrop-blur-md"
                     />
                     <p className="mt-1.5 text-xs text-muted-foreground">
                       A IA extrai o que conseguir identificar no texto. Nome e OAB do advogado logado já
@@ -482,9 +570,11 @@ const BibliotecaMinutasSheet = ({ open, onOpenChange }: BibliotecaMinutasSheetPr
               <div className="shrink-0 border-t border-border/50 px-6 py-4">
                 <Button
                   onClick={irParaPreview}
+                  disabled={gerandoPreview}
                   className="w-full gap-2 bg-primary text-primary-foreground hover:bg-primary/90"
                 >
-                  Pré-visualizar minuta
+                  {gerandoPreview ? <Loader2 className="h-4 w-4 animate-spin" /> : null}
+                  {gerandoPreview ? "Gerando prévia..." : "Pré-visualizar minuta"}
                 </Button>
               </div>
             </>
@@ -499,44 +589,97 @@ const BibliotecaMinutasSheet = ({ open, onOpenChange }: BibliotecaMinutasSheetPr
                       {modelo.nome}
                     </p>
                   </div>
-                  <div className="space-y-3 px-5 py-5 font-body">
-                    {modelo.campos.map((campo) => {
-                      const valor = campos[campo.id];
-                      if (valor === undefined || valor === null || String(valor).trim() === "") return null;
-                      return (
-                        <div key={campo.id}>
-                          <p className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">
-                            {campo.label}
-                          </p>
-                          <p className="text-sm leading-relaxed text-foreground">{String(valor)}</p>
-                        </div>
-                      );
-                    })}
+                  {/* Prévia real do .docx preenchido: o blob gerado em irParaPreview() passa
+                      pelo mammoth.convertToHtml() e o HTML resultante é renderizado aqui com
+                      classes `prose`, simulando a formatação de um documento oficial.
+                      id="documento-conteudo-final" é o limite exato do que sai no PDF —
+                      baixarPdf() lê só esta div (via getElementById), nunca o checklist
+                      abaixo, mesmo que a estrutura ao redor mude no futuro. */}
+                  <div
+                    id="documento-conteudo-final"
+                    className="prose prose-sm max-w-none px-5 py-5 font-body prose-headings:font-heading prose-headings:text-foreground prose-p:text-foreground prose-strong:text-foreground"
+                    dangerouslySetInnerHTML={{ __html: previewHtml }}
+                  />
+                </div>
+
+                {/* Módulo 12 — Checklist Final (Anexos Práticos do Módulo 2, Corregedoria
+                    OAB-MA): confirmação obrigatória de segurança jurídica antes do download.
+                    Vive fora de #documento-conteudo-final e nunca é lido por gerarDocxBlob
+                    (que só recebe `campos`, o estado dos campos do modelo) nem por baixarPdf
+                    (que só captura a div acima) — é malha fina só da interface, nunca do
+                    arquivo entregue ao cliente. */}
+                <div className="mx-auto mt-4 max-w-lg rounded-xl border border-l-4 border-border/60 border-l-[#1D4E89] bg-[#1D4E89]/[0.04] p-4">
+                  <div className="mb-3 flex items-center gap-2">
+                    <ShieldCheck className="h-4 w-4 shrink-0 text-[#1D4E89]" />
+                    <p className="font-heading text-xs font-bold uppercase tracking-wider text-foreground">
+                      Checklist de Segurança Jurídica — antes de colher assinatura
+                    </p>
                   </div>
-                  <div className="flex items-start gap-2 border-t border-border/50 bg-muted/40 px-5 py-3">
-                    <Info className="mt-0.5 h-3.5 w-3.5 shrink-0 text-primary" />
-                    <p className="text-[11px] leading-relaxed text-muted-foreground">{DISCLAIMER_MINUTA}</p>
-                  </div>
+                  <ul className="space-y-3">
+                    {checklistSegurancaJuridica.map((item, indice) => (
+                      <li key={indice} className="flex items-start gap-2.5">
+                        <Checkbox
+                          id={`checklist-${indice}`}
+                          checked={checklistMarcado.has(indice)}
+                          onCheckedChange={() => alternarChecklistItem(indice)}
+                          className="mt-0.5"
+                        />
+                        <Label
+                          htmlFor={`checklist-${indice}`}
+                          className="text-xs font-normal leading-relaxed text-foreground"
+                        >
+                          {item}
+                        </Label>
+                      </li>
+                    ))}
+                  </ul>
+                  <p className="mt-3 text-[10px] italic leading-relaxed text-muted-foreground">
+                    Uso interno — este checklist não é impresso nem incluído no .docx ou PDF baixado.
+                  </p>
                 </div>
               </div>
 
-              <div className="flex shrink-0 gap-2 border-t border-border/50 px-6 py-4">
-                <Button type="button" variant="outline" onClick={copiarPreview} className="flex-1 gap-2">
-                  {copiado ? <Check className="h-4 w-4" /> : <Copy className="h-4 w-4" />}
-                  {copiado ? "Copiado" : "Copiar"}
-                </Button>
-                <Button
-                  onClick={baixarDocx}
-                  disabled={gerandoDocx}
-                  className="flex-1 gap-2 bg-primary text-primary-foreground hover:bg-primary/90"
-                >
-                  {gerandoDocx ? (
-                    <Loader2 className="h-4 w-4 animate-spin" />
-                  ) : (
+              {/* Aviso legal fixo na base da visualização — fora da área rolável, sempre
+                  visível independentemente do tamanho do documento renderizado acima. */}
+              <div className="flex shrink-0 items-start gap-2 border-t border-border/50 bg-muted/40 px-6 py-3">
+                <Info className="mt-0.5 h-3.5 w-3.5 shrink-0 text-primary" />
+                <p className="text-[11px] leading-relaxed text-muted-foreground">{DISCLAIMER_MINUTA}</p>
+              </div>
+
+              <div className="flex shrink-0 flex-col gap-2 border-t border-border/50 px-6 py-4">
+                {!checklistCompleto && (
+                  <p className="text-center text-[11px] text-amber-600">
+                    Confirme todos os itens do checklist para liberar o download.
+                  </p>
+                )}
+                <div className="flex flex-wrap gap-2">
+                  <Button
+                    type="button"
+                    variant="outline"
+                    onClick={copiarPreview}
+                    className="flex-1 gap-2 basis-full sm:basis-auto"
+                  >
+                    {copiado ? <Check className="h-4 w-4" /> : <Copy className="h-4 w-4" />}
+                    {copiado ? "Copiado" : "Copiar"}
+                  </Button>
+                  <Button
+                    onClick={baixarPdf}
+                    disabled={!previewHtml || gerandoPdf || !checklistCompleto}
+                    variant="outline"
+                    className="flex-1 gap-2"
+                  >
+                    {gerandoPdf ? <Loader2 className="h-4 w-4 animate-spin" /> : <Download className="h-4 w-4" />}
+                    {gerandoPdf ? "Gerando..." : "Baixar PDF"}
+                  </Button>
+                  <Button
+                    onClick={baixarDocx}
+                    disabled={!docxBlob || !checklistCompleto}
+                    className="flex-1 gap-2 bg-primary text-primary-foreground hover:bg-primary/90"
+                  >
                     <Download className="h-4 w-4" />
-                  )}
-                  {gerandoDocx ? "Gerando..." : "Baixar .docx"}
-                </Button>
+                    Baixar .docx
+                  </Button>
+                </div>
               </div>
             </>
           )}
