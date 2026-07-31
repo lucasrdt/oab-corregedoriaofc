@@ -196,25 +196,10 @@ const HonorariosIndex = () => {
                   <div aria-hidden className="pointer-events-none absolute -bottom-8 -left-6 z-[1] h-28 w-28 rounded-full bg-[#1D4E89]/25 blur-2xl" />
 
                   {/* Canto superior direito propositalmente limpo — sem badge de ⌘K aqui */}
-                  <div className="relative z-10 flex items-center gap-3 p-5 sm:p-6">
-                    <button
-                      type="button"
-                      onClick={() => setChatAberto(true)}
-                      aria-label="Abrir assistente de honorários"
-                      className="shrink-0 text-slate-400 transition-colors duration-300 hover:text-[#BC231A]"
-                    >
-                      <Search className="h-5 w-5" />
-                    </button>
+                  <div className="relative z-10 flex items-center p-5 sm:p-6">
                     <input
                       value={perguntaHero}
                       onChange={(e) => setPerguntaHero(e.target.value)}
-                      onFocus={() => {
-                        // A barra é um atalho para o assistente, não um campo de digitação
-                        // próprio — ao focar, já abrimos o modal e o usuário continua
-                        // digitando lá dentro (Radix move o foco automaticamente).
-                        setPerguntaHero("");
-                        setChatAberto(true);
-                      }}
                       placeholder="Ex: honorário para divórcio..."
                       aria-label="Pergunte ao assistente de honorários"
                       className="flex-1 bg-transparent font-body text-sm text-white outline-none placeholder:text-slate-400 sm:text-base"
@@ -314,6 +299,12 @@ const HonorariosIndex = () => {
           </button>
         </div>
 
+        {/* Nota de cabeçalho dos dados — só aparece quando a Tabela entra em foco no scroll,
+            ao contrário da antiga barra fixa no rodapé do Hero (removida daqui). */}
+        <p className="mt-2 border-t border-border/60 pt-3 font-body text-xs leading-relaxed text-muted-foreground">
+          {AVISO_TABELA}
+        </p>
+
         <RecentesStrip itens={recentes} onSelecionar={abrirCalculo} />
 
         <div className="mt-6 flex flex-col gap-8 lg:flex-row lg:items-start">
@@ -374,12 +365,6 @@ const HonorariosIndex = () => {
         mensagemInicial={perguntaHero}
         onMensagemInicialEnviada={() => setPerguntaHero("")}
       />
-
-      <div className="sticky bottom-0 z-30 border-t border-border/60 bg-background/90 py-3 backdrop-blur-md">
-        <p className="container-padding text-center font-body text-xs leading-relaxed text-muted-foreground">
-          {AVISO_TABELA}
-        </p>
-      </div>
     </>
   );
 };
