@@ -17,6 +17,7 @@ export default {
         sans: ['Roboto', 'sans-serif'],
         heading: ['Roboto', 'sans-serif'],
         body: ['Roboto', 'sans-serif'],
+        'serif-display': ['"Instrument Serif"', 'serif'],
       },
       colors: {
         border: "hsl(var(--border))",
@@ -109,5 +110,5 @@ export default {
       },
     },
   },
-  plugins: [require("tailwindcss-animate")],
+  plugins: [require("tailwindcss-animate"), require("@tailwindcss/typography")],
 } satisfies Config;
