@@ -18,6 +18,8 @@ import Cursos from "./pages/Cursos";
 import Cursor from "./pages/Cursor";
 import NotFound from "./pages/NotFound";
 
+import HonorariosIndex from "./pages/honorarios/Index";
+
 import AdminLogin from "./pages/admin/AdminLogin";
 import SiteEditor from "./pages/admin/SiteEditor";
 import CaseDetailsEditor from "./pages/admin/CaseDetailsEditor";
@@ -30,6 +32,11 @@ import DevDashboard from "./pages/portal/DevDashboard";
 import PresidenteDashboard from "./pages/portal/PresidenteDashboard";
 import UserDashboard from "./pages/portal/UserDashboard";
 import CasoEditor from "./pages/portal/CasoEditor";
+
+import { AdvogadoAuthProvider } from "./contexts/AdvogadoAuthContext";
+import AdvogadoProtectedRoute from "./components/AdvogadoProtectedRoute";
+import AdvogadoLogin from "./pages/honorarios/Login";
+import AdvogadoCadastro from "./pages/honorarios/Cadastro";
 
 const queryClient = new QueryClient();
 
@@ -70,6 +77,12 @@ const App = () => {
               </Route>
             </Route>
 
+            {/* Lawyer Honorarios Routes */}
+            <Route element={<AdvogadoAuthProvider><Outlet /></AdvogadoAuthProvider>}>
+              <Route path="/honorarios/login" element={<AdvogadoLogin />} />
+              <Route path="/honorarios/cadastro" element={<AdvogadoCadastro />} />
+            </Route>
+
             {/* Public Routes — com MainLayout (Header + Footer) */}
             <Route element={<MainLayout />}>
               <Route path="/" element={<Index />} />
@@ -81,6 +94,14 @@ const App = () => {
               <Route path="/subsecoes" element={<Subsecoes />} />
               <Route path="/cursos" element={<Cursos />} />
               <Route path="/cursor" element={<Cursor />} />
+              <Route
+                path="/honorarios"
+                element={
+                  <AdvogadoAuthProvider>
+                    <HonorariosIndex />
+                  </AdvogadoAuthProvider>
+                }
+              />
               <Route path="/:slug" element={<DetalheCaso />} />
             </Route>
 
