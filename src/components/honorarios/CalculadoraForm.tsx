@@ -4,6 +4,7 @@ import { calcularHonorario, type ItemTabela } from "@/data/tabelaHonorarios";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
 import {
   Select,
   SelectContent,
@@ -56,18 +57,20 @@ const CalculadoraForm = ({ item, onCalcular, onLimpar }: CalculadoraFormProps) =
   const valorCausaNum = Number(valorCausa) || 0;
   const percentual = item.percentual_minimo ?? 0;
   const pisoMinimo = item.valor_minimo ?? 0;
+  const temPiso = item.valor_minimo != null;
   const parcial = (valorCausaNum * percentual) / 100;
-  const usouPiso = pisoMinimo > 0 && parcial < pisoMinimo;
+  const usouPiso = temPiso && parcial < pisoMinimo;
   const honorarioFinal = Math.max(parcial, pisoMinimo);
 
   return (
-    <Card className="border-border/50">
-      <CardContent className="space-y-5 p-5 font-body">
+    <Card className="relative overflow-hidden rounded-3xl border border-white/20 bg-white/40 shadow-2xl backdrop-blur-xl">
+      <div className="pointer-events-none absolute -right-10 -top-10 h-32 w-32 rounded-full bg-[#1D4E89]/20 blur-2xl" />
+      <CardContent className="relative space-y-5 p-6 font-body">
         {item.situacoes && item.situacoes.length > 0 && (
           <div className="space-y-2">
-            <Label htmlFor="situacao">Situação</Label>
+            <Label htmlFor="situacao" className="text-primary">Situação</Label>
             <Select value={situacaoIdx} onValueChange={setSituacaoIdx}>
-              <SelectTrigger id="situacao">
+              <SelectTrigger id="situacao" className="border-white/40 bg-white/60">
                 <SelectValue placeholder="Selecione a situação" />
               </SelectTrigger>
               <SelectContent>
@@ -82,14 +85,24 @@ const CalculadoraForm = ({ item, onCalcular, onLimpar }: CalculadoraFormProps) =
         )}
 
         {item.requer_valor_causa && (
-          <div className="space-y-3 rounded-xl border border-primary/20 bg-primary/[0.03] p-4">
-            <p className="flex items-center gap-1.5 text-xs font-bold uppercase tracking-wide text-primary">
-              <Calculator className="h-3.5 w-3.5" />
-              Calculadora ({percentual}%)
-            </p>
+          <div className="space-y-3 rounded-2xl border border-white/30 bg-white/50 p-4 backdrop-blur-md">
+            <div className="flex items-center justify-between gap-2">
+              <p className="flex items-center gap-1.5 text-xs font-bold uppercase tracking-wide text-primary">
+                <Calculator className="h-3.5 w-3.5" />
+                Calculadora ({percentual}%)
+              </p>
+              {!temPiso && (
+                <Badge
+                  variant="outline"
+                  className="shrink-0 border-amber-300 bg-amber-50/80 text-[10px] font-medium text-amber-700"
+                >
+                  Sem piso definido
+                </Badge>
+              )}
+            </div>
 
             <div className="space-y-2">
-              <Label htmlFor="valorCausa">Valor base (R$)</Label>
+              <Label htmlFor="valorCausa" className="text-primary">Valor base (R$)</Label>
               <Input
                 id="valorCausa"
                 type="number"
@@ -99,6 +112,7 @@ const CalculadoraForm = ({ item, onCalcular, onLimpar }: CalculadoraFormProps) =
                 placeholder="0,00"
                 value={valorCausa}
                 onChange={(e) => setValorCausa(e.target.value)}
+                className="border-white/40 bg-white/70"
               />
             </div>
 
@@ -110,20 +124,22 @@ const CalculadoraForm = ({ item, onCalcular, onLimpar }: CalculadoraFormProps) =
                   </span>
                   <span className="font-medium tabular-nums text-foreground">{formatarMoeda(parcial)}</span>
                 </div>
-                <div
-                  className={cn(
-                    "flex items-center justify-between rounded-md px-2.5 py-1.5 text-sm transition-colors",
-                    usouPiso ? "bg-primary text-primary-foreground" : "text-muted-foreground",
-                  )}
-                >
-                  <span>Valor mínimo da Tabela</span>
-                  <span className="font-medium tabular-nums">{formatarMoeda(pisoMinimo)}</span>
-                </div>
+                {temPiso && (
+                  <div
+                    className={cn(
+                      "flex items-center justify-between rounded-md px-2.5 py-1.5 text-sm transition-colors",
+                      usouPiso ? "bg-primary text-primary-foreground" : "text-muted-foreground",
+                    )}
+                  >
+                    <span>Valor mínimo da Tabela</span>
+                    <span className="font-medium tabular-nums">{formatarMoeda(pisoMinimo)}</span>
+                  </div>
+                )}
                 <div className="flex items-center justify-between border-t border-primary/20 pt-2">
                   <span className="text-[11px] font-bold uppercase tracking-wide text-muted-foreground">
                     Honorários (Art. 3º)
                   </span>
-                  <span className="text-lg font-bold tabular-nums text-primary">
+                  <span className="font-heading text-lg font-black tabular-nums text-primary">
                     {formatarMoeda(honorarioFinal)}
                   </span>
                 </div>
@@ -134,10 +150,12 @@ const CalculadoraForm = ({ item, onCalcular, onLimpar }: CalculadoraFormProps) =
                 )}
               </div>
             ) : (
-              <div className="flex items-center justify-between pt-1 text-sm text-muted-foreground">
-                <span>Valor mínimo da Tabela</span>
-                <span className="font-medium tabular-nums text-foreground">{formatarMoeda(pisoMinimo)}</span>
-              </div>
+              temPiso && (
+                <div className="flex items-center justify-between pt-1 text-sm text-muted-foreground">
+                  <span>Valor mínimo da Tabela</span>
+                  <span className="font-medium tabular-nums text-foreground">{formatarMoeda(pisoMinimo)}</span>
+                </div>
+              )
             )}
           </div>
         )}

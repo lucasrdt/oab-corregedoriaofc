@@ -23,6 +23,7 @@ import { supabase } from "@/lib/supabase";
 import { useAdvogadoAuth } from "@/contexts/AdvogadoAuthContext";
 import { useToast } from "@/hooks/use-toast";
 import { cn } from "@/lib/utils";
+import { copiarTexto } from "@/lib/copiar";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -332,11 +333,11 @@ const BibliotecaMinutasSheet = ({ open, onOpenChange }: BibliotecaMinutasSheetPr
   }, [modelo, campos]);
 
   const copiarPreview = async () => {
-    try {
-      await navigator.clipboard.writeText(textoPreview);
+    const ok = await copiarTexto(textoPreview);
+    if (ok) {
       setCopiado(true);
       setTimeout(() => setCopiado(false), 2000);
-    } catch {
+    } else {
       toast({
         title: "Não foi possível copiar",
         description: "Copie o texto manualmente.",
