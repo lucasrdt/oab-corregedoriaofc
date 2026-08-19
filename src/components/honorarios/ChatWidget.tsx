@@ -7,6 +7,7 @@ import { AVISO_TABELA } from "@/data/tabelaHonorarios";
 import { useAdvogadoAuth } from "@/contexts/AdvogadoAuthContext";
 import { useToast } from "@/hooks/use-toast";
 import { cn } from "@/lib/utils";
+import { gerarId } from "@/lib/id";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
@@ -115,11 +116,11 @@ const ChatWidget = ({
     // ao histórico — por isso o turno atual não entra em `historico`.
     const historico = messages.map(({ role, content }) => ({ role, content }));
 
-    setMessages((prev) => [...prev, { id: crypto.randomUUID(), role: "user", content: mensagem }]);
+    setMessages((prev) => [...prev, { id: gerarId(), role: "user", content: mensagem }]);
     setInput("");
     setLoading(true);
 
-    const assistantId = crypto.randomUUID();
+    const assistantId = gerarId();
 
     try {
       // Chamada direta (não supabase.functions.invoke) porque a function agora responde
@@ -171,7 +172,7 @@ const ChatWidget = ({
         if (prev.some((m) => m.id === assistantId)) {
           return prev.map((m) => (m.id === assistantId ? { ...m, content: m.content || fallback } : m));
         }
-        return [...prev, { id: crypto.randomUUID(), role: "assistant", content: fallback }];
+        return [...prev, { id: gerarId(), role: "assistant", content: fallback }];
       });
     } finally {
       setLoading(false);

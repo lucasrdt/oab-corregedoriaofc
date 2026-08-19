@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { motion, useReducedMotion } from "framer-motion";
-import { ArrowUp, Calculator, FileSignature, ScrollText, Search } from "lucide-react";
+import { ArrowUp, Calculator, Coins, FileSignature, ScrollText, Search } from "lucide-react";
 import {
   areasDisponiveis,
   buscarPorArea,
@@ -17,11 +17,13 @@ import DetalheItemSheet from "@/components/honorarios/DetalheItemSheet";
 import PdfPreviewSheet from "@/components/honorarios/PdfPreviewSheet";
 import CalculadoraModal from "@/components/honorarios/CalculadoraModal";
 import BibliotecaMinutasSheet from "@/components/honorarios/BibliotecaMinutasSheet";
+import CalculadoraCustosSheet from "@/components/honorarios/CalculadoraCustosSheet";
 import { ShaderBackground } from "@/components/ui/blue-halftone";
 import ChatWidget from "@/components/honorarios/ChatWidget";
 import RecentesStrip from "@/components/honorarios/RecentesStrip";
 import { useRecentes } from "@/components/honorarios/useRecentes";
 import { formatarMoeda } from "@/components/honorarios/format";
+import { copiarTexto } from "@/lib/copiar";
 
 type Resultado = { resultado: number; explicacao: string };
 
@@ -48,6 +50,7 @@ const HonorariosIndex = () => {
   const [calculadoraAberta, setCalculadoraAberta] = useState(false);
   const [pdfAberto, setPdfAberto] = useState(false);
   const [minutasAberta, setMinutasAberta] = useState(false);
+  const [calculadoraCustosAberta, setCalculadoraCustosAberta] = useState(false);
 
   const [itemCalculo, setItemCalculo] = useState<ItemTabela | null>(null);
   const [calculoAberto, setCalculoAberto] = useState(false);
@@ -120,10 +123,10 @@ const HonorariosIndex = () => {
       return;
     }
 
-    try {
-      await navigator.clipboard.writeText(texto);
+    const ok = await copiarTexto(texto);
+    if (ok) {
       toast({ title: "Copiado", description: "Resumo copiado para a área de transferência." });
-    } catch {
+    } else {
       toast({
         title: "Não foi possível compartilhar",
         description: "Copie o resumo manualmente.",
@@ -242,6 +245,14 @@ const HonorariosIndex = () => {
                     <FileSignature className="h-3 w-3 text-slate-400" />
                     Minutas
                   </button>
+                  <button
+                    type="button"
+                    onClick={() => setCalculadoraCustosAberta(true)}
+                    className="inline-flex items-center gap-1 rounded-full border border-white/10 bg-white/5 px-2.5 py-1 font-body text-[11px] font-medium text-slate-200 transition-colors hover:border-white/20 hover:bg-white/10 hover:text-white"
+                  >
+                    <Coins className="h-3 w-3 text-slate-400" />
+                    Calculadora de Custos
+                  </button>
                 </div>
               </form>
             </div>
@@ -340,6 +351,8 @@ const HonorariosIndex = () => {
       <PdfPreviewSheet open={pdfAberto} onOpenChange={setPdfAberto} />
 
       <BibliotecaMinutasSheet open={minutasAberta} onOpenChange={setMinutasAberta} />
+
+      <CalculadoraCustosSheet open={calculadoraCustosAberta} onOpenChange={setCalculadoraCustosAberta} />
 
       <DetalheItemSheet
         item={itemCalculo}
