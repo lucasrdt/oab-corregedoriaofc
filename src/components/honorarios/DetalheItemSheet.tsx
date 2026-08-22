@@ -120,11 +120,11 @@ const DetalheItemSheet = ({
               </Button>
               {resultado && (
                 <div className="flex gap-2">
-                  <Button variant="outline" onClick={() => window.print()} className="flex-1 gap-2">
+                  <Button type="button" variant="outline" onClick={() => window.print()} className="flex-1 gap-2">
                     <Printer className="h-4 w-4" />
                     Imprimir
                   </Button>
-                  <Button variant="outline" onClick={onCompartilhar} className="flex-1 gap-2">
+                  <Button type="button" variant="outline" onClick={onCompartilhar} className="flex-1 gap-2">
                     <Share2 className="h-4 w-4" />
                     Compartilhar
                   </Button>

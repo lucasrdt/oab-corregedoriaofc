@@ -12,7 +12,6 @@ import {
 import { Input } from "@/components/ui/input";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Alert, AlertDescription } from "@/components/ui/alert";
-import { formatarMoeda } from "@/components/honorarios/format";
 
 interface CalculadoraModalProps {
   open: boolean;
@@ -116,25 +115,10 @@ const CalculadoraModal = ({ open, onOpenChange, onSelecionarItem }: CalculadoraM
                 <li key={item.id}>
                   <button
                     onClick={() => selecionar(item)}
-                    className="grid w-full grid-cols-1 items-center gap-2 rounded-lg px-4 py-5 text-left transition-colors hover:bg-muted/60 sm:grid-cols-[minmax(0,1fr)_auto] sm:gap-6"
+                    className="flex w-full items-center gap-3 rounded-lg px-4 py-4 text-left transition-colors hover:bg-muted/60"
                   >
-                    <div className="min-w-0">
-                      <p className="font-mono text-[11px] text-muted-foreground">{item.id}</p>
-                      <p className="truncate text-sm font-bold text-foreground">{item.descricao}</p>
-                      <p className="truncate text-xs text-muted-foreground">{item.area}</p>
-                    </div>
-                    <div className="shrink-0 text-left sm:text-right">
-                      <p className="text-lg font-bold tabular-nums text-primary">
-                        {item.percentual_minimo}%
-                      </p>
-                      {item.valor_minimo != null ? (
-                        <p className="text-sm font-semibold tabular-nums text-muted-foreground">
-                          {formatarMoeda(item.valor_minimo)}
-                        </p>
-                      ) : (
-                        <p className="text-xs italic text-muted-foreground">sem piso definido</p>
-                      )}
-                    </div>
+                    <p className="shrink-0 font-mono text-[11px] text-muted-foreground">{item.id}</p>
+                    <p className="min-w-0 truncate text-sm font-bold text-foreground">{item.descricao}</p>
                   </button>
                 </li>
               ))}
